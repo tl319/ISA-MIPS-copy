@@ -10,7 +10,6 @@ module ALU(
     input [3:0] ctrl,
     output [31:0] out
 );
-
     always_comb begin
         case(ctrl)
             4'b0000: out = a + b;   //ADD
@@ -25,7 +24,7 @@ module ALU(
             //not certain how MULT and DIV are implemented, 64 bit out bus containing high and low? 
             //discuss when approching registers
             4'b1001: out = a<<16; //LUI
+            //4'b1010: out = a>>16; //
         endcase
     end
-
 endmodule
