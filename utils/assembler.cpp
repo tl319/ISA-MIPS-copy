@@ -50,40 +50,7 @@ int main()
             exit(1);
         }
     }
-
-    /*
-    for (int i=0; i<instr_and_operands.size(); i++) {
-        cout << instr_and_operands[i].first << " " << instr_and_operands[i].second << endl;
-    }
-    */
-
-    /*
-    pair<string, string> thing = sep_word("ONE: 1");
-    string thang = thing.second;
-    thang.erase(thang.begin());
-    cout << thang << endl;
-    cout << mips_is_data(thang) << endl;
-    */
-    /*
-    cout << endl;
-    cout << "Now for the actual input: " << endl;
-
-    for (int i=0; i<lines.size(); i++) {
-        cout << lines[i] << endl;
-    }
-    */
-    /*
-    string ala = "addiu $1 $2 10";
-    pair<string, string> alb = sep_word(ala);
-    alb.second.erase(alb.second.begin());
-    cout << alb.second << endl;
-    vector<string> thg = string_break(alb.second);
-    for (int i=0; i<thg.size(); i++) {
-        cout << "'" << thg[i] << "'" << endl;
-    }
-    */
-
-    
+  
     for(int i=0; i<instr_and_operands.size(); i++) {
         if (mips_is_instruction(instr_and_operands[i].first)) {
             string opname = instr_and_operands[i].first;
