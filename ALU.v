@@ -17,7 +17,7 @@ module ALU(
             4'b0010: out = a & b;   //AND bitwise
             4'b0011: out = a | b;   //OR bitwise
             4'b0100: out = a ^ b;   //XOR bitwise
-            4'b0101: out = ~(a|b);  //NOT bitwise
+            4'b0101: out = ~(a|b);  //NOR bitwise
             4'b0110: out = a<<b; //SLL 
             4'b0111: out = a>>b; //SRL
             4'b1000: out = a>>>b; //SRA
