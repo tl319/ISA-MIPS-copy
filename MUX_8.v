@@ -1,6 +1,6 @@
 module MUX_8(
     input logic [31:0] a, b, c, d, e, f, g, h,
-    input logic [1:0] select,
+    input logic [2:0] select,
     output logic [31:0] out
 );
     
