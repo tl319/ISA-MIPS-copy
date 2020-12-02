@@ -30,3 +30,4 @@ module regfile (
             irw = rw;
             registers [irw] <= wd;
     end
+endmodule
