@@ -10,6 +10,7 @@ using namespace std;
 void simulate(vector<uint32_t> mem)
 {
     vector<int32_t> registers;
+    int32_t HI, LO;
     uint opcode;
     uint rd_index, rs_index, rt_index, shamt, funct;
     uint32_t jump_address;
@@ -94,12 +95,80 @@ void simulate(vector<uint32_t> mem)
             rd = rt>>(uint32_t)rs;
 
           //MULTIPLY
-          //else if(funct == ) //
+          else if(funct == 26) //011010 DIV
+          {
+            HI = rs % rt;
+            LO = rs/rt;
+          }
+          else if(funct == 27) //011011 DIVU
+          {
+             HI = (uint32_t)rs % (uint32_t)rt;
+             LO = (uint32_t)rs / (uint32_t)rt;
+          }
+          else if(funct == 16) //010000 MFHI
+            rd = HI;
+          else if(funct == 18) //010010 MFLO
+            rd = LO;
+          else if(funct == 17) // 010001 MTHI
+            HI = rs;
+          else if(funct == 19 ) //010011 MTLO
+            LO = rs;
+          else if(funct == 24) //011000 MULT
+          {
+            HI = rs*rt;
+            LO = rs*rt;
+          }
+          else if(funct ==25) //011001 MULTU
+          {
+            HI = (uint32_t)rs*(uint32_t)rt;
+            LO = (uint32_t)rs*(uint32_t)rt;
+          }
+
+          //BRANCH
+          else if(funct == 9) //001001 JALR
+          {
+            rd = PC;
+            PC = rs;
+          }
+          else if(funct == 8) //001000 JR
+            PC = rs;
+        //I TYPE INSTR
+        case 8://001000 ADDI
+          rt = rs + immediate;
+
+        case 9://001001 ADDIU
+          rt = (uint32_t)rs + immediate;
+        case 12: //001100 ANDI
+          rt = rs & immediate;
+        case 15: //001111 LUI
+          rt = immediate << 16;
+        case 13: //001101 ORI
+          rt = rs | immediate;
+        case 10: //001010 SLTI
+          rt = rs<immediate;
+        case 11: //001011 SLTIU
+          rt = (uint32_t)rs < (uint32_t)immediate;
+        case 14://001110 XORI
+          rt = rs ^ immediate;
+
+          //MEM ACCESS
+        case 32://100000 //LB
+          rt = (signed char)mem[rs+immediate];
+        case 36: //100100 LBU
+          rt = (unsigned char)mem[rs+immediate];
+        case 33: //100001 LH
+          rt = (short int)mem[rs+immediate];
+        case 37: //100101 LHU
+          rt = (unsigned int)mem[rs+immediate];
         case 35: //bin:100011, LW
           rt = mem[rs + immediate];
         case 43: //vin:101011, SW
           mem[rs + immediate] = rt;
-        //case
+        //case 40: //101000 SB
+          //mem[rs + immediate] = rt;
+        //case 41://101001 SH
+          //mem[rs+immediate] = rt;
+
       }
       PC++;
     }
