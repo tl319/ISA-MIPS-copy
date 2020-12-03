@@ -14,8 +14,8 @@ void simulate(vector<uint32_t> mem)
     uint opcode;
     uint rd_index, rs_index, rt_index, shamt, funct;
     uint32_t jump_address;
-    uint16_t immediate;
-    uint32_t PC = 0xBFC00000; //, executing starts here in the memory 3217031168
+    int16_t immediate;
+    uint32_t PC = 0xBFC00000; // executing starts here in the memory 3217031168
     uint32_t instr;
 
     bool running = true;
