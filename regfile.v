@@ -11,7 +11,10 @@ module regfile (
     registers[0] = 32'h00000000;
     integer irr1, irr2, iwr;
 
-    //reset registers to 0 during powerup?
+    //reset registers to 0 during powerup
+    always_ff @(rst) begin
+        registers = { 32{32{1'b0} } };
+    end
   
     //read from
     always_comb (rr1, rr2) begin
@@ -22,7 +25,7 @@ module regfile (
         rs = registers[ irr1 ];
         rt = registers[ irr2 ];
         v0 = registers[ 2 ];
-        r0 = registers[ 0 ]  
+        r0 = registers[ 0 ];  
     end
 
     //write to
