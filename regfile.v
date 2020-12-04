@@ -5,34 +5,30 @@ module regfile (
     output logic [31:0] rs, rt, v0, r0
 );
 
-    //register vector and integer read/write values
-    logic [31:0] registers [31:0];
-    //is this, legal? Also does it make the value immutable
-    registers[0] = 32'h00000000;
-    integer irr1, irr2, iwr;
+	//register vector and integer read/write values
+	logic [31:0] [31:0] registers;
 
-    //reset registers to 0 during powerup
-    always_ff @(rst) begin
-        registers = { 32{32{1'b0} } };
-    end
-  
-    //read from
-    always_comb (rr1, rr2) begin
-        //is this necessary? can it assign negative values? 
-        irr1 = rr1;
-        irr2 = rr2;
+	always @(posedge clk) begin
+	
+		//reset registers to 0 during powerup
+		 if(rst == 1) begin
+			  registers <= { 32{32'h0000} };
+		 end
+		 
+		 //write to	 
+		 if ( wren == 1) begin
+				registers [wr] <= wd;
+		 end	
 
-        rs = registers[ irr1 ];
-        rt = registers[ irr2 ];
-        v0 = registers[ 2 ];
-        r0 = registers[ 0 ];  
-    end
+	end
+	
+	//read from
+	 always_comb begin
+		  rs = registers[ rr1 ];
+		  rt = registers[ rr2 ];
+		  v0 = registers[ 2 ];
+		  r0 = registers[ 0 ];  
+	 end
 
-    //write to
-    always_ff @(posedge clk) begin
-        if (wren == 1)
-            //is this necessary? can it assign negative values?
-            irw = rw;
-            registers [irw] <= wd;
-    end
+    
 endmodule
