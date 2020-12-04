@@ -7,13 +7,13 @@ module regfile (
 
 	//register vector and integer read/write values
 	logic [31:0] [31:0] registers;
-
-	always @(posedge clk) begin
+	  
+	always_ff @( posedge clk, posedge rst ) begin
 	
-		//reset registers to 0 during powerup
+		 //reset registers to 0 during powerup
 		 if(rst == 1) begin
 			  registers <= { 32{32'h0000} };
-		 end
+		 end else 
 		 
 		 //write to	 
 		 if ( wren == 1) begin
@@ -21,6 +21,7 @@ module regfile (
 		 end	
 
 	end
+	
 	
 	//read from
 	 always_comb begin
