@@ -20,7 +20,9 @@ module regfile (
         irr2 = rr2;
 
         rs = registers[ irr1 ];
-        rt = registers[ irr2 ];  
+        rt = registers[ irr2 ];
+        v0 = registers[ 2 ];
+        r0 = registers[ 0 ]  
     end
 
     //write to
