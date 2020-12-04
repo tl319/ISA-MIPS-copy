@@ -161,7 +161,7 @@ void simulate(vector<uint32_t> mem)
         case 37: //100101 LHU
           rt = (unsigned int)mem[rs+immediate];
         case 35: //bin:100011, LW
-          rt = mem[rs + immediate];
+          rt = mem[rs/4 + immediate/4];
         case 43: //vin:101011, SW
           mem[rs + immediate] = rt;
         //case 40: //101000 SB
