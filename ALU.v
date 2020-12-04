@@ -10,33 +10,66 @@ module div(
     input logic signdiv,
     output logic [31:0] q, r
 );
-    integer limit 31;
-    logic [31:0] rega, regb, valreg;
+    integer msbindexa, msbindexb;
+    logic [31:0] rega, regb, regbuse, quotient;
 
-    //take magnitude of negative operands for signed div
-    if (signdiv == 1)
-        if( a[31] == 1 )
-            rega = ~(a-{16'h0001});
-        if( b[31] == 1 )
-            regb = ~(b-{16'h0001});
-    else
-        rega = a;
-        regb = b;        
-
-    //implement division
     always_comb begin
-        if ()
+       //take magnitude of negative operands for signed div
+        if (signdiv == 1)
+            if( a[31] == 1 )
+                rega = ~(a-{32'h00000001});
+            if( b[31] == 1 )
+                regb = ~(b-{32'h00000001});
+        else
+            rega = a;
+            regb = b; 
+
+        //very suboptimal: find the msb of rega and regb
+        msbindexa = 31;
+        while ( rega[msbindexa] == 0 ) begin
+            msbindexa = msbindexa - 1; //is this legal? found example of it
+        end
+        msbindexb = 31;
+        while ( regb[msbindexb] == 0 ) begin
+            msbindexb = msbindexb - 1; //is this legal? found example of it
+        end
+
+        //align a and b
+        rebg <= ( regb << (msbindexa - msbindexb) ); 
+
+        //implement division
+        while( regb[0] == 0 ) begin
+            quotient <= ( quotient << 1 );
+            if ( rega > regb )
+                rega <= (rega - regb);
+                quotient[0] = 1;
+        end
+        quotient <= ( quotient << 1 );
+            if ( rega > regb )
+                rega <= (rega - regb);
+                quotient[0] = 1;
+        
+        //negate output if div is signed and signs of operands dissagree
+        if ( signdiv )
+            if ( a[31] ^ b[31] )
+                q = ~quotient + 1;
+            else
+                q = quotient;
+
+            if ( a[31] == 1 )
+                r = ~rega + 1;
+            else
+                r = rega;
+
+        else
+            q = quotient;
+            r = rega; 
     end
 
-    //negate output if div is signed and signs of operands dissagree
-    if ( signdiv & ( a[31] ^ b[31] ) )
-        q =
-        r = 
-    else
-        q =
-        r = 
-
 endmodule
+
+
+
 
 module ALU(
     input logic [31:0] a, b,
