@@ -15,14 +15,17 @@ module div(
 
     always_comb begin
        //take magnitude of negative operands for signed div
-        if (signdiv == 1)
-            if( a[31] == 1 )
-                rega = ~(a-{32'h00000001});
-            if( b[31] == 1 )
-                regb = ~(b-{32'h00000001});
-        else
-            rega = a;
-            regb = b; 
+		  if (signdiv == 1 & a[31] == 1) begin
+				rega = ~(a-{32'h00000001});
+		  end else begin
+				rega = a;
+		  end
+			
+		if( signdiv == 1 & b[31] == 1 ) begin
+			 regb = ~(b-{32'h00000001});
+		end else begin            
+			regb = b;
+		end	
 
         //very suboptimal: find the msb of rega and regb
         msbindexa = 31;
@@ -40,30 +43,36 @@ module div(
         //implement division
         while( regb[0] == 0 ) begin
             quotient <= ( quotient << 1 );
-            if ( rega > regb )
+            if ( rega > regb ) begin
                 rega <= (rega - regb);
                 quotient[0] = 1;
+			   end
         end
         quotient <= ( quotient << 1 );
-            if ( rega > regb )
+            if ( rega > regb ) begin
                 rega <= (rega - regb);
                 quotient[0] = 1;
+			   end
         
         //negate output if div is signed and signs of operands dissagree
-        if ( signdiv )
-            if ( a[31] ^ b[31] )
+        if ( signdiv ) begin
+            if ( a[31] ^ b[31] ) begin
                 q = ~quotient + 1;
-            else
+            end else begin
                 q = quotient;
+				end
 
-            if ( a[31] == 1 )
+            if ( a[31] == 1 ) begin
                 r = ~rega + 1;
-            else
+            end else begin
                 r = rega;
+				end
 
-        else
+        end else begin
             q = quotient;
             r = rega; 
+		  end
+		  
     end
 
 endmodule
