@@ -1,6 +1,6 @@
 module sign_extend (
-    input logic [15:0] in
-    input logic [1:0] select
+    input logic [15:0] in,
+    input logic [1:0] select,
     output logic [31:0] out
 );
 
