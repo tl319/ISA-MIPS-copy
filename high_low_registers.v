@@ -21,15 +21,15 @@ module high_low_registers(
         case(WrEn)
 
         0:  case(ctrl_hi)
-            0: out <= { 16'h0000 , reg_lo };
-            1: out <= { reg_hi , 16'h0000 };
+            0: out <= reg_lo ;
+            1: out <= reg_hi ;
             endcase
 
         1:  case(ctrl_hi)
-            0:  out <= { 16'h0000 , reg_lo }
-                reg_lo <= { 16'h0000 , input_hi_lo[15:0] };
-            1:  out <= { reg_hi , 16'h0000 };
-                reg_hi <= { input_hi_lo[31:16] , 16'h0000 };
+            0:  out <= reg_lo ;
+                reg_lo <= input_hi_lo ;
+            1:  out <= reg_hi ;
+                reg_hi <= input_hi_lo ;
             endcase
         endcase
         
