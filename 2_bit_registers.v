@@ -15,11 +15,11 @@ module two_bit_registers(
     always_ff @(posedge clk) begin
         
         case(WrEn)
-
-        0: out <= two_bit_reg ;
-        1: out <= two_bit_reg ;
-            two_bit_reg <= two_bit_input ;
-
+			  0: out <= two_bit_reg ;
+			  1: begin 
+					out <= two_bit_reg ;
+					two_bit_reg <= two_bit_input ;
+				end
         endcase
         
     end
