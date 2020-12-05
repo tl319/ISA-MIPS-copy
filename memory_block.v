@@ -10,20 +10,22 @@ module memory_32x4GB(
     input logic clk,
     input logic[31:0] address,
     input logic write,
-    input logic read,
     input logic [3:0] byte_en,
     input logic[31:0] writedata,
     output logic[31:0] readdata
 );
     parameter RAM_INIT_FILE = "";
 
-    reg [31:0] memory [32'hFFFFFFFF:0];
+	 //2^32 bytes  
+    logic [7:0] memory [4294967295:0];
 
     initial begin
-        integer i;
         /* Initialise to zero by default */
-        for (i=0; i<32'hFFFFFFFF; i++) begin
-            memory[i]=0;
+		  
+		  //memory <= { 4294967296{ 8'hFF } };
+		  
+        for (integer i=0; i<4294967296; i++) begin
+            memory[i]=8'h00;
         end
         /* Load contents from file if specified */
         if (RAM_INIT_FILE != "") begin
@@ -33,13 +35,29 @@ module memory_32x4GB(
     end
 
     /* Combinatorial read path. */
-    assign readdata = read ? memory[address] : 32'hxxxxxxxx;
+	 always_comb begin
+			readdata = {memory[address+3], memory[address+2], memory[address+1], memory[address]};
+	end
 
     /* Synchronous write path */
     always_ff @(posedge clk) begin
-        $display("RAM : INFO : read=%h, addr = %h, mem=%h", read, address, memory[address]);
+        //$display("RAM : INFO : read=%h, addr = %h, mem=%h", read, address, memory[address]);
         if (write) begin
-            memory[address] <= writedata;
+				if(byte_en[0] == 1) begin
+					memory[address] <= writedata[7:0];
+				end
+					
+				if(byte_en[1] == 1) begin
+					memory[address+1] <= writedata[15:8];
+				end
+				
+				if(byte_en[2] == 1) begin
+					memory[address+2] <= writedata[23:16];
+				end
+				
+				if(byte_en[3] == 1) begin
+					memory[address+3] <= writedata[31:24];
+				end
         end
     end
 endmodule
