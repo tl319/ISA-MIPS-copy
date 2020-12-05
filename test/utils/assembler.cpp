@@ -125,11 +125,12 @@ int main()
                 }
             }
 
-            cout << bitset<6>(opcode);
-            cout << bitset<26>(othcode) << endl;
+            opcode<<26;
+            uint32_t lin = opcode + othcode;
+            cout << to_hex8(lin) << endl;
         } else {
             uint32_t data = stoi(instr_and_operands[i].first);
-            cout << bitset<32>(data) << endl;
+            cout << to_hex8(data) << endl;
         }
     }
 }
