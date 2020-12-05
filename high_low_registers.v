@@ -9,6 +9,7 @@
 module high_low_registers(
 
     input logic clk,
+    input logic reset,
     input logic ctrl_hi, WrEn,
     input logic [31:0] input_hi_lo,
     output logic [31:0] out
@@ -18,7 +19,8 @@ module high_low_registers(
     logic [31:0] reg_hi, reg_lo;
 
     always_ff @(posedge clk) begin
-        case(WrEn)
+    case(reset)
+      0:  case(WrEn)
 
         0:  case(ctrl_hi)
             0: out <= reg_lo ;
@@ -26,13 +28,21 @@ module high_low_registers(
             endcase
 
         1:  case(ctrl_hi)
-            0:  out <= reg_lo ;
+            0:  begin
+                out <= reg_lo ;
                 reg_lo <= input_hi_lo ;
-            1:  out <= reg_hi ;
+                end
+            1:  begin
+                out <= reg_hi ;
                 reg_hi <= input_hi_lo ;
+                end
             endcase
         endcase
-        
+      1:  begin
+          reg_lo <= 32'h00000000;
+          reg_hi <= 32'h00000000;
+          end
+          endcase
     end
-    
+
 endmodule
