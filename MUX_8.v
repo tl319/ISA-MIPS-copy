@@ -6,14 +6,14 @@ module MUX_8(
     
     always_comb begin
         case(select)
-        2'b000:  out = a;
-        2'b001:  out = b;
-        2'b010:  out = c;
-        2'b011:  out = d;
-        2'b100:  out = e;
-        2'b101:  out = f;
-        2'b110:  out = g;
-        2'b111:  out = h;
+        3'b000:  out = a;
+        3'b001:  out = b;
+        3'b010:  out = c;
+        3'b011:  out = d;
+        3'b100:  out = e;
+        3'b101:  out = f;
+        3'b110:  out = g;
+        3'b111:  out = h;
         endcase
     end
 
