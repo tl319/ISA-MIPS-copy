@@ -33,7 +33,7 @@ module memory_32x4GB(
     end
 
     /* Combinatorial read path. */
-    assign readdata = read ? memory[address] : 32'hxxxx;
+    assign readdata = read ? memory[address] : 32'hxxxxxxxx;
 
     /* Synchronous write path */
     always_ff @(posedge clk) begin
