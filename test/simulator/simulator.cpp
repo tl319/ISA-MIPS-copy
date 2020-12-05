@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
 
-#include "mips.h"
+#include "mips.hpp"
 
 using namespace std;
 
 int main()
 {
-  vector<uint32_t> mem;
+  vector<unsigned char> mem;
 
 
 
