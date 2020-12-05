@@ -80,9 +80,9 @@ void mips_simulate(vector<unsigned char> mem)
             rd = rs | rt;
           else if(funct == 39) //100111, nor
             rd = ~(rs | rt);
-          else if(funct == 42) //101010, set on less than
+          else if(funct == 42) //101010,  SLT set on less than
             rd = (rs<rt);
-          else if(funct == 43) //101011, set on less than unsigned
+          else if(funct == 43) //101011, SLTU set on less than unsigned
             rd = ((uint32_t)rs<(uint32_t)rt);
           else if(funct == 34) //100010, sub
             rd = rs-rt;
@@ -136,7 +136,7 @@ void mips_simulate(vector<unsigned char> mem)
           }
 
           //BRANCH
-          else if(funct == 9) //001001 JALR
+          else if(funct == 9) //0010001 JALR
           {
             assert(!prev_was_jump);
             is_jump = true;
@@ -230,6 +230,7 @@ void mips_simulate(vector<unsigned char> mem)
         }
         case 7: //000111, BGTZ
         {
+          assert(rt==0);
           if(rs>0)
           {
             assert(!prev_was_jump);
@@ -240,6 +241,7 @@ void mips_simulate(vector<unsigned char> mem)
         }
         case 6: //000110, BLEZ
         {
+          assert(rt==0);
           if(rs<=0)
           {
             assert(!prev_was_jump);
@@ -300,9 +302,24 @@ void mips_simulate(vector<unsigned char> mem)
         case 41://101001 SH
         {
           mem[rs+immediate] = rt; //which half word to store??? lowest???
-          mem[rs+immediate] = rt>>8;
+          mem[rs+immediate+1] = rt>>8;
         }
-        //LWL, LWR???? opcodes???
+
+        case 34://100010 LWL
+        {
+          rt = (rt<<16)>>16;
+          rt += mem[rs+immediate]*pow(2,24)+ mem[rs+immediate+1]*pow(2,16);
+        }
+        case 38://100110 LWR
+        {
+          rt = (rt>>16)<<16;
+          rt += mem[rs+immediate]*pow(2,8)+ mem[rs+immediate+1];
+        }
+        default:
+        {
+         cout<<"Invalid instruction";
+         assert(0);
+        }
 
 
       }
