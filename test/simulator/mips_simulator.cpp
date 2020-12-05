@@ -136,7 +136,7 @@ void mips_simulate(vector<unsigned char> mem)
           }
 
           //BRANCH
-          else if(funct == 9) //0010001 JALR
+          else if(funct == 9) //001001 JALR
           {
             assert(!prev_was_jump);
             is_jump = true;
