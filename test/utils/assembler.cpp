@@ -50,45 +50,12 @@ int main()
             exit(1);
         }
     }
-
-    /*
-    for (int i=0; i<instr_and_operands.size(); i++) {
-        cout << instr_and_operands[i].first << " " << instr_and_operands[i].second << endl;
-    }
-    */
-
-    /*
-    pair<string, string> thing = sep_word("ONE: 1");
-    string thang = thing.second;
-    thang.erase(thang.begin());
-    cout << thang << endl;
-    cout << mips_is_data(thang) << endl;
-    */
-    /*
-    cout << endl;
-    cout << "Now for the actual input: " << endl;
-
-    for (int i=0; i<lines.size(); i++) {
-        cout << lines[i] << endl;
-    }
-    */
-    /*
-    string ala = "addiu $1 $2 10";
-    pair<string, string> alb = sep_word(ala);
-    alb.second.erase(alb.second.begin());
-    cout << alb.second << endl;
-    vector<string> thg = string_break(alb.second);
-    for (int i=0; i<thg.size(); i++) {
-        cout << "'" << thg[i] << "'" << endl;
-    }
-    */
-
     
     for(int i=0; i<instr_and_operands.size(); i++) {
         if (mips_is_instruction(instr_and_operands[i].first)) {
             string opname = instr_and_operands[i].first;
-            uint16_t opcode = mips_instr_to_opcode(opname);
-            uint16_t othcode;
+            uint32_t opcode = mips_instr_to_opcode(opname);
+            uint32_t othcode;
             char type = mips_instruction_type(opname);
             if (type == 'j') {
                 string operand = instr_and_operands[i].second;
@@ -99,11 +66,11 @@ int main()
                 }
             } else if (type == 'r') {
                 vector<string> operands = string_break(instr_and_operands[i].second);
-                uint16_t rs = 0;
-                uint16_t rt = 0;
-                uint16_t rd = 0;
-                uint16_t sa = 0;
-                uint16_t fn = mips_r_instr_to_fncode(opname);
+                uint32_t rs = 0;
+                uint32_t rt = 0;
+                uint32_t rd = 0;
+                uint32_t sa = 0;
+                uint32_t fn = mips_r_instr_to_fncode(opname);
                 if (operands.size()==3) {
                     operands[0].erase(operands[0].begin());
                     operands[1].erase(operands[1].begin());
@@ -140,16 +107,16 @@ int main()
                     operands[0].erase(operands[0].begin());
                     operands[1].erase(operands[1].begin());
 
-                    uint16_t rs = stoi(operands[0]) << 21;
-                    uint16_t rt = stoi(operands[1]) << 16;
-                    uint16_t offset = stoi(operands[2]);
+                    uint32_t rs = stoi(operands[0]) << 21;
+                    uint32_t rt = stoi(operands[1]) << 16;
+                    uint32_t offset = stoi(operands[2]);
 
                     othcode = rs + rt + offset;
                 } else if (operands.size()==2) {
                     operands[0].erase(operands[0].begin());
 
-                    uint16_t rs = stoi(operands[0]) << 21;
-                    uint16_t offset = stoi(operands[1]);
+                    uint32_t rs = stoi(operands[0]) << 21;
+                    uint32_t offset = stoi(operands[1]);
 
                     othcode = rs + offset;
                 } else {
@@ -161,7 +128,7 @@ int main()
             cout << bitset<6>(opcode);
             cout << bitset<26>(othcode) << endl;
         } else {
-            uint16_t data = stoi(instr_and_operands[i].first);
+            uint32_t data = stoi(instr_and_operands[i].first);
             cout << bitset<32>(data) << endl;
         }
     }
