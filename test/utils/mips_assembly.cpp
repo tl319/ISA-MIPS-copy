@@ -208,7 +208,7 @@ uint16_t mips_r_instr_to_fncode(const string &s)
     return -1;
 }
 
-string to_hex8(uint16_t x)
+string to_hex8(uint32_t x)
 {
     char tmp[16]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
     string res;
@@ -219,6 +219,7 @@ string to_hex8(uint16_t x)
     res.push_back(tmp[(x>>12)&0xF]);
     res.push_back(tmp[(x>>8)&0xF]);
     res.push_back(tmp[(x>>4)&0xF]);
+    res.push_back(tmp[x&0xF]);
     return res;
 }
 
