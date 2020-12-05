@@ -7,7 +7,7 @@ module single_reg(
 	always_ff @(posedge clk, posedge rst) begin	
 
 		if (rst == 1) begin
-			q <= 32'h0000;
+			q <= 32'h00000000;
 		end else begin
 			q <= p; 
 		end

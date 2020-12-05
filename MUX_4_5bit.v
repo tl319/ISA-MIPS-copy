@@ -1,9 +1,9 @@
-module MUX_4(
-    input logic [31:0] a, b, c, d,
+module MUX_4_5bit(
+    input logic [4:0] a, b, c, d,
     input logic [1:0] select,
-    output logic [31:0] out
+    output logic [4:0] out
 );
-    
+
     always_comb begin
         case(select)
         2'b00:  out = a;
