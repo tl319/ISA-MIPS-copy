@@ -4,7 +4,7 @@ module MUX_8(
     output logic [31:0] out
 );
     
-    always_comb begin
+    always@(select) begin
         case(select)
         3'b000:  out = a;
         3'b001:  out = b;

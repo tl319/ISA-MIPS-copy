@@ -10,60 +10,79 @@ module div(
     input logic signdiv,
     output logic [31:0] q, r
 );
-    integer msbindexa, msbindexb;
+    integer msbindexa, msbindexb, lsoneb;
     logic [31:0] rega, regb, regbuse, quotient;
 
-    always_comb begin
+    always_ff begin
        //take magnitude of negative operands for signed div
-        if (signdiv == 1)
-            if( a[31] == 1 )
-                rega = ~(a-{32'h00000001});
-            if( b[31] == 1 )
-                regb = ~(b-{32'h00000001});
-        else
-            rega = a;
-            regb = b; 
+		  if (signdiv == 1 & a[31] == 1) begin
+				rega = ~(a-{32'h00000001});
+		  end else begin
+				rega = a;
+		  end
+			
+		if( signdiv == 1 & b[31] == 1 ) begin
+			 regb = ~(b-{32'h00000001});
+		end else begin            
+			regb = b;
+		end	
 
         //very suboptimal: find the msb of rega and regb
         msbindexa = 31;
-        while ( rega[msbindexa] == 0 ) begin
-            msbindexa = msbindexa - 1; //is this legal? found example of it
+		  for (int i = 0; i<32; i++) begin 
+				if(rega[31-i] == 1) begin
+					msbindexa = 31-i;
+					break;
+				end		  
         end
         msbindexb = 31;
-        while ( regb[msbindexb] == 0 ) begin
-            msbindexb = msbindexb - 1; //is this legal? found example of it
+		  for (int i = 0; i<32; i++) begin 
+				if(regb[31-i] == 1) begin
+					msbindexb = 31-i;
+					break;
+				end		  
+        end
+		  lsoneb = 0;
+		  for (int i = 0; i<32; i++) begin 
+				if(regb[i] == 1) begin
+					lsoneb = i;
+					break;
+				end		  
         end
 
         //align a and b
-        rebg <= ( regb << (msbindexa - msbindexb) ); 
+        regb = ( regb << (msbindexa - msbindexb) ); 
 
         //implement division
-        while( regb[0] == 0 ) begin
-            quotient <= ( quotient << 1 );
-            if ( rega > regb )
-                rega <= (rega - regb);
+		  
+		  for(int i = 0; i<(lsoneb+1); i++) begin
+				quotient = ( quotient << 1 );
+            if ( rega > regb ) begin
+                rega = (rega - regb);
                 quotient[0] = 1;
-        end
-        quotient <= ( quotient << 1 );
-            if ( rega > regb )
-                rega <= (rega - regb);
-                quotient[0] = 1;
+			   end
+		  end
+		  
         
         //negate output if div is signed and signs of operands dissagree
-        if ( signdiv )
-            if ( a[31] ^ b[31] )
+        if ( signdiv ) begin
+            if ( a[31] ^ b[31] ) begin
                 q = ~quotient + 1;
-            else
+            end else begin
                 q = quotient;
+				end
 
-            if ( a[31] == 1 )
+            if ( a[31] == 1 ) begin
                 r = ~rega + 1;
-            else
+            end else begin
                 r = rega;
+				end
 
-        else
+        end else begin
             q = quotient;
             r = rega; 
+		  end
+		  
     end
 
 endmodule
@@ -84,7 +103,7 @@ module ALU(
     //carry for multiplication
     logic C;
 
-    always_comb begin
+    always_ff @(a, b) begin
         case(ctrl)
             4'b0000: out = a + b;   //ADD
             4'b0001: out = a - b;   //SUB
@@ -94,15 +113,15 @@ module ALU(
             4'b0101: out = a<<b;  //SLL 
             4'b0110: out = a>>b;  //SRL
             4'b0111: out = a>>>b; //SRA 
-            4'b1000: out = { { {16{a[31]}}, a[31:16]} * { {16{b[31]}}, b[31:16]} + { {15{1'b0}} , C } }; //MULT TOP
-            4'b1001: begin //MULT BOT
+            4'b1001: out = { { {16{a[31]}}, a[31:16]} * { {16{b[31]}}, b[31:16]} + { {15{1'b0}} , C } }; //MULT TOP
+            4'b1000: begin //MULT BOT
                out = { {16{a[15]}}, a[15:0]} * { {16{b[15]}}, b[15:0]};
-               C = out[31] //not sure this is legal    
+               C = out[31]; //not sure this is legal    
             end
-            4'b1010: out = { {16'h0000, a[31:16]} * {16'h0000, b[31:16]} + { {15{1'b0}}, C } };        //MULTU TOP
-            4'b1011: begin //MULTU BOT
+            4'b1011: out = { {16'h0000, a[31:16]} * {16'h0000, b[31:16]} + { {15{1'b0}}, C } };        //MULTU TOP
+            4'b1010: begin //MULTU BOT
                 out = {16'h0000, a[15:0]} * {16'h0000, b[15:0]};
-                C = out[31] //not sure this is legal
+                C = out[31]; //not sure this is legal
             end
                      
             4'b1100: begin //DIV
