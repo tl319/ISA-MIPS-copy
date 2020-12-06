@@ -98,7 +98,7 @@ module ALU(
 );
     //signals and module for division
     logic S;
-    logic [31:0] divq, divr;
+    logic [31:0] divq, divr, multbot;
     //div divcirc(.a(a), .b(b), .signdiv(S), .q(divq), .r(divr));
 
     //carry for multiplication
@@ -127,13 +127,15 @@ module ALU(
             4'b0111: out = a>>>b; //SRA 
             4'b1001: out = { { {16{a[31]}}, a[31:16]} * { {16{b[31]}}, b[31:16]} + { {15{1'b0}} , C } }; //MULT TOP
             4'b1000: begin //MULT BOT
-               out = { {16{a[15]}}, a[15:0]} * { {16{b[15]}}, b[15:0]};
-               C = out[31]; //not sure this is legal    
+               multbot <= { {16{a[15]}}, a[15:0]} * { {16{b[15]}}, b[15:0]};
+               C <= multbot[31];
+               out = multbot;
             end
             4'b1011: out = { {16'h0000, a[31:16]} * {16'h0000, b[31:16]} + { {15{1'b0}}, C } };        //MULTU TOP
             4'b1010: begin //MULTU BOT
-                out = {16'h0000, a[15:0]} * {16'h0000, b[15:0]};
-                C = out[31]; //not sure this is legal
+                multbot <= {16'h0000, a[15:0]} * {16'h0000, b[15:0]};
+                C <= multbot[31];
+                out = multbot;
             end
                      
             /*4'b1100: begin //DIV
