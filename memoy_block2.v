@@ -2,6 +2,7 @@ module mips_memory (
     input logic clk,
     input logic[31:0] address,
     input logic wr_en,
+    input logic read_en,
     input logic[3:0] byte_en,
     input logic[31:0] data_in,
     output logic[31:0] data_out
@@ -39,6 +40,8 @@ module mips_memory (
                 memory[address+3] <= data_in[31:23];
             end
         end
-        data_out <= {memory[address], memory[address+1], memory[address+2], memory[address+3]};
+        if (read_en) begin
+            data_out <= {memory[address], memory[address+1], memory[address+2], memory[address+3]};
+        end
     end
 endmodule

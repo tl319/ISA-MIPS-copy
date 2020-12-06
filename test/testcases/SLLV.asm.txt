@@ -1,0 +1,6 @@
+addiu $2 $0 10
+addiu $4 $0 2
+addiu $5 $0 1  
+sll $3 $2 $4
+sll $2 $2 $5
+jr $0

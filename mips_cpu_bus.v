@@ -23,7 +23,7 @@ module mips_cpu_bus(
     logic [31:0] aluout;
     logic [31:0] pc4_jump2;
     logic [31:0] altpcsrc;
-    logic [31:0] altpcmux_cnt;
+    logic altpcmux_cnt;
     logic [31:0] altpcdata;
     logic alt_pc_write;
     logic [31:0] aluresult;
@@ -66,7 +66,7 @@ module mips_cpu_bus(
     logic [3:0] prev_state;
     logic jump;
     logic halt;
-    logic [31:0] Dst;
+    logic [4:0] Dst;
     logic [31:0] WriteRegData;
     logic [31:0] regaout;
     logic [31:0] regbout;
@@ -82,7 +82,6 @@ module mips_cpu_bus(
     logic [31:0] aout;
 
     const_reg const_register(
-    .clk (clk),
     .const_1 (constant_1),
     .const_4 (constant_4),
     .const_31 (constant_31),
@@ -248,7 +247,7 @@ module mips_cpu_bus(
       .r0 (constant_0)
       );
 
-      hiloreg hiloreg_a(
+      high_low_registers hiloreg_a(
       .clk (clk),
       .reset (reset),
       .ctrl_hi (hilosel),

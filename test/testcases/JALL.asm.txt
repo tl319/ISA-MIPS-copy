@@ -1,0 +1,5 @@
+addiu $2 $0 1
+jal 3
+addiu $2 $0 1
+jr $0
+jr $31
