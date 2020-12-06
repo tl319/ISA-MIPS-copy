@@ -93,7 +93,8 @@ endmodule
 module ALU(
     input logic [31:0] a, b,
     input logic [3:0] ctrl,
-    output logic [31:0] out
+    output logic [31:0] out,
+    output logic [1:0] comp
 );
     //signals and module for division
     logic S;
@@ -104,6 +105,17 @@ module ALU(
     logic C;
 
     always_ff @(a, b) begin
+       
+			if ($signed(a) == $signed(b)) begin
+				comp = 2'b00;
+			end else if 
+			($signed(a) < $signed(b)) begin
+				comp = 2'b01;
+			end else if	
+			($signed(a) > $signed(b)) begin
+				comp = 2'b10;
+			end
+
         case(ctrl)
             4'b0000: out = a + b;   //ADD
             4'b0001: out = a - b;   //SUB
