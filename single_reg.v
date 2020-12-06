@@ -4,14 +4,17 @@ module single_reg(
     output logic [31:0] q
 );
 
+	logic [31:0] single_reg;
+
 	always_ff @(posedge clk, posedge rst) begin	
 
 		if (rst == 1) begin
-			q <= 32'h00000000;
-		end else begin
-			q <= p; 
+			single_reg <= 32'h00000000;
 		end
-			
+		else begin
+			single_reg <= p; 
+		end
+		q <= single_reg;
 	end
 	
 endmodule
