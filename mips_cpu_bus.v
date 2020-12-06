@@ -78,6 +78,8 @@ module mips_cpu_bus(
     logic [1:0] cond;
     logic JumpIN;
     logic Jump_EN;
+    logic [31:0] irout;
+    logic [31:0] aout;
 
     const_reg const_register(
     .clk (clk),
@@ -127,15 +129,15 @@ module mips_cpu_bus(
     );
 
     MUX_4 IorD_mux(
-    a. (pc_out),
-    b. (aluout),
-    c. (aluout<<2),
-    d. (pc_out),
-    select. (IorD_cnt),
-    out. (address)
+    .a (pc_out),
+    .b (aluout),
+    .c (aluout<<2),
+    .d (pc_out),
+    .select (IorD_cnt),
+    .out (address)
     );
 
-    byte_decoder byte(
+    byte_decoder byte_a(
     .aluout (aluout[1:0]),
     .byte_cnt (byte_cnt),
     .byte_en (byte_EN)
@@ -196,7 +198,7 @@ module mips_cpu_bus(
         .hilosel (hilosel),
         .lr_en (lr_en),
         .lrmux (lrmuxMSB),
-        .mask_cnt msk_cnt,
+        .mask_cnt (msk_cnt),
         .byte_cnt (byte_cnt),
         .aluop (aluop),
         .link_en (link_en),
@@ -211,7 +213,7 @@ module mips_cpu_bus(
       .wait_request (waitrequest),
       .halt (halt),
       .state (state),
-      .active (active),
+      .active (active)
       );
 
       MUX_4_5bit RegDst_mux(
@@ -334,7 +336,7 @@ module mips_cpu_bus(
       .rst (reset),
       .wr_en (Jump_EN),
       .p (JumpIN),
-      .q (jump),
+      .q (jump)
       );
 
       jump_shift jumpshifter(
