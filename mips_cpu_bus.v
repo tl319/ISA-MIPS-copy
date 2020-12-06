@@ -80,7 +80,7 @@ module mips_cpu_bus(
     logic Jump_EN;
 
     const_reg const_register(
-    .clk (clk)
+    .clk (clk),
     .const_1 (constant_1),
     .const_4 (constant_4),
     .const_31 (constant_31),
