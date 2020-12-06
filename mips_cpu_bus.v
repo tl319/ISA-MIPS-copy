@@ -110,12 +110,12 @@ module mips_cpu_bus(
     );
 
     MUX_4 pcsrc_mux(
-    a. (aluresult),
-    b. (aluout),
-    c. (pc4_jump2),
-    d. (altpcdata),
-    select. (pc_src_mux),
-    out. (pc_data)
+    .a (aluresult),
+    .b (aluout),
+    .c (pc4_jump2),
+    .d (altpcdata),
+    .select (pc_src_mux),
+    .out (pc_data)
     );
 
     single_reg_en pc(
