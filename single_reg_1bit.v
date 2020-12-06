@@ -4,16 +4,17 @@ module single_reg_1bit(
     output logic q
 );
 
+	logic single_reg;
+
 	always_ff @(posedge clk, posedge rst) begin
 
 		if (rst == 1) begin
-			q <= 1'b0;
-		end else begin
-			q <= p;
+			single_reg <= 1'b0;
 		end
-
+		else begin
+			single_reg <= p;
+		end
+		q <= single_reg;
 	end
-
-
 
 endmodule
