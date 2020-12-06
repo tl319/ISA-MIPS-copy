@@ -1,4 +1,4 @@
-module CPU_MU0_delay0_tb;
+module mips_tb;
     timeunit 1ns / 10ps;
 
     parameter RAM_INIT_FILE = "test/binary/countdown.hex.txt";
@@ -7,19 +7,20 @@ module CPU_MU0_delay0_tb;
     logic clk;
     logic rst;
 
-    logic running;
+    logic active;
 
-    logic[11:0] address;
+    logic[31:0] address;
     logic write;
     logic read;
-    logic[15:0] writedata;
-    logic[15:0] readdata;
-    // logic[2:0] give_status;
-    // logic[2:0] get_status;
+    logic[31:0] writedata;
+    logic[31:0] readdata;
+    logic[31:0] register_v0;
+    logic[3:0] byte_en;
+    logic waterequest;
 
-    RAM_16x4096_delay0 #(RAM_INIT_FILE) ramInst(clk, address, write, read, byte_en, writedata, readdata);
+    mips_memory #(RAM_INIT_FILE) ramInst(clk, address, write, read, byte_en, writedata, readdata);
     
-    CPU_MU0_delay0 cpuInst(clk, rst, running, address, write, read, writedata, readdata);
+    mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata);
     
     // Generate clock
     initial begin
@@ -45,10 +46,10 @@ module CPU_MU0_delay0_tb;
         rst <= 0;
 
         @(posedge clk);
-        assert(running==1)
+        assert(active==1)
         else $display("TB : CPU did not set running=1 after reset.");
 
-        while (running) begin
+        while (active) begin
             @(posedge clk);
         end
 
