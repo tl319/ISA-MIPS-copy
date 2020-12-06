@@ -352,3 +352,4 @@ module mips_cpu_bus(
         .rst (reset),
         .halt (halt)
       );
+endmodule
