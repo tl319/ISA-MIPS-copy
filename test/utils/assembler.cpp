@@ -76,7 +76,7 @@ int main()
                     operands[1].erase(operands[1].begin());
                     operands[2].erase(operands[2].begin());
                     // Check if instruction is a SLL, SRL, SRA instruction;
-                    if (opname == "SLL" || opname == "SRL" || opname == "SRA") {
+                    if (opname == "sll" || opname == "srl" || opname == "sra") {
                         rd = stoi(operands[0]) << 11;
                         rt = stoi(operands[1]) << 16;
                         sa = stoi(operands[2]) << 6;
