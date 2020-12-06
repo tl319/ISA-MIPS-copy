@@ -17,7 +17,7 @@ module memory_32x4GB(
     parameter RAM_INIT_FILE = "";
 
 	 //2^32 bytes  
-    logic [7:0] memory [4294967295:0];
+    reg [7:0] memory [4294967295:0];
 
     initial begin
         /* Initialise to zero by default */
