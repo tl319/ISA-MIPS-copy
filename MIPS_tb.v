@@ -17,7 +17,7 @@ module CPU_MU0_delay0_tb;
     // logic[2:0] give_status;
     // logic[2:0] get_status;
 
-    RAM_16x4096_delay0 #(RAM_INIT_FILE) ramInst(clk, address, write, read, writedata, readdata);
+    RAM_16x4096_delay0 #(RAM_INIT_FILE) ramInst(clk, address, write, read, byte_en, writedata, readdata);
     
     CPU_MU0_delay0 cpuInst(clk, rst, running, address, write, read, writedata, readdata);
     
