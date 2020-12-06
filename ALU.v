@@ -1,94 +1,3 @@
-//MIPS ALU operations: 
-//ADD, SUB, AND, NOR, OR, XOR, MULT, DIV, Shifts
-//a/b are rs/rt, rs/imm, etc. assumed to have been appropriately routed to the ALU 
-//convention: a is the value operated on (shifts) or the rs/only source register for other instructions
-//b is the other value, regardless of origin
-//ctrl is a signal from the control path, rather than a field of the instructon
-
-/*module div(
-    input logic [31:0] a, b,
-    input logic signdiv,
-    output logic [31:0] q, r
-);
-    integer msbindexa, msbindexb, lsoneb;
-    logic [31:0] rega, regb, regbuse, quotient;
-
-    always_ff @(a, b) begin
-       //take magnitude of negative operands for signed div
-		  if (signdiv == 1 & a[31] == 1) begin
-				rega = ~(a-{32'h00000001});
-		  end else begin
-				rega = a;
-		  end
-			
-		if( signdiv == 1 & b[31] == 1 ) begin
-			 regb = ~(b-{32'h00000001});
-		end else begin            
-			regb = b;
-		end	
-
-        //very suboptimal: find the msb of rega and regb
-        msbindexa = 31;
-		  for (int i = 0; i<32; i++) begin 
-				if(rega[31-i] == 1) begin
-					msbindexa = 31-i;
-					// break;
-				end		  
-        end
-        msbindexb = 31;
-		  for (int i = 0; i<32; i++) begin 
-				if(regb[31-i] == 1) begin
-					msbindexb = 31-i;
-					// break;
-				end		  
-        end
-		  lsoneb = 0;
-		  for (int i = 0; i<32; i++) begin 
-				if(regb[i] == 1) begin
-					lsoneb = i;
-					// break;
-				end		  
-        end
-
-        //align a and b
-        regb = ( regb << (msbindexa - msbindexb) ); 
-
-        //implement division
-		  
-		  for(int i = 0; i<(lsoneb+1); i++) begin
-				quotient = ( quotient << 1 );
-            if ( rega > regb ) begin
-                rega = (rega - regb);
-                quotient[0] = 1;
-			   end
-		  end
-		  
-        
-        //negate output if div is signed and signs of operands dissagree
-        if ( signdiv ) begin
-            if ( a[31] ^ b[31] ) begin
-                q = ~quotient + 1;
-            end else begin
-                q = quotient;
-				end
-
-            if ( a[31] == 1 ) begin
-                r = ~rega + 1;
-            end else begin
-                r = rega;
-				end
-
-        end else begin
-            q = quotient;
-            r = rega; 
-		  end
-		  
-    end
-
-endmodule*/
-
-
-
 
 module ALU(
     input logic [31:0] a, b,
@@ -98,7 +7,7 @@ module ALU(
 );
     //signals and module for division
     logic S;
-    logic [31:0] divq, divr,
+    logic [31:0] divq, divr;
     //div divcirc(.a(a), .b(b), .signdiv(S), .q(divq), .r(divr));
 
     //carry for multiplication

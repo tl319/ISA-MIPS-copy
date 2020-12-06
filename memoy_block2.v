@@ -10,12 +10,12 @@ module mips_memory (
 
     parameter RAM_INIT_FILE = "";
 
-    reg[7:0] memory [4294967295:0];
+    reg[7:0] memory [1073741824:0];
 
     initial begin
         integer i;
         /* Initialise to zero by default */
-        for (i=0; i<4294967295; i++) begin
+        for (i=0; i<1073741824; i++) begin
             memory[i]=0;
         end
         /* Load contents from file if specified */
