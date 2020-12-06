@@ -32,21 +32,21 @@ module div(
 		  for (int i = 0; i<32; i++) begin 
 				if(rega[31-i] == 1) begin
 					msbindexa = 31-i;
-					break;
+					// break;
 				end		  
         end
         msbindexb = 31;
 		  for (int i = 0; i<32; i++) begin 
 				if(regb[31-i] == 1) begin
 					msbindexb = 31-i;
-					break;
+					// break;
 				end		  
         end
 		  lsoneb = 0;
 		  for (int i = 0; i<32; i++) begin 
 				if(regb[i] == 1) begin
 					lsoneb = i;
-					break;
+					// break;
 				end		  
         end
 

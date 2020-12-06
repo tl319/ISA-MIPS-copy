@@ -1,6 +1,6 @@
 module shift_l(
-    input [31:0] in,
-    output [31:0] out
+    input logic [31:0] in,
+    output logic [31:0] out
 );
 
     always_comb begin
