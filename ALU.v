@@ -35,18 +35,18 @@ module ALU(
             4'b0101: out = a<<b;  //SLL 
             4'b0110: out = a>>b;  //SRL
             4'b0111: out = a>>>b; //SRA 
-            4'b1001: out = { { {16{a[31]}}, a[31:16]} * { {16{b[31]}}, b[31:16]} + { {15{1'b0}} , C } }; //MULT TOP
-            4'b1000: begin //MULT BOT
-               out = { {16{a[15]}}, a[15:0]} * { {16{b[15]}}, b[15:0]};
-               C = multbot[32];
-               out = multbot;
-            end
-            4'b1011: out = { {16'h0000, a[31:16]} * {16'h0000, b[31:16]} + { {15{1'b0}}, C } };        //MULTU TOP
-            4'b1010: begin //MULTU BOT
-                multbot = {16'h0000, a[15:0]} * {16'h0000, b[15:0]};
-                C = multbot[32];
-                out = multbot;
-            end
+            // 4'b1001: out = { { {16{a[31]}}, a[31:16]} * { {16{b[31]}}, b[31:16]} + { {15{1'b0}} , C } }; //MULT TOP
+            // 4'b1000: begin //MULT BOT
+            //    out = { {16{a[15]}}, a[15:0]} * { {16{b[15]}}, b[15:0]};
+            //    C = multbot[32];
+            //    out = multbot;
+            // end
+            // 4'b1011: out = { {16'h0000, a[31:16]} * {16'h0000, b[31:16]} + { {15{1'b0}}, C } };        //MULTU TOP
+            // 4'b1010: begin //MULTU BOT
+            //     multbot = {16'h0000, a[15:0]} * {16'h0000, b[15:0]};
+            //     C = multbot[32];
+            //     out = multbot;
+            // end
                      
             /*4'b1100: begin //DIV
                 S = 1;

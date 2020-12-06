@@ -4,7 +4,8 @@ module regfile (
     input logic [31:0] wd,
     output logic [31:0] rs, rt, v0, r0
 );
-
+	logic a = 2;
+	logic b = 0;
 	//register vector and integer read/write values
 	logic [31:0] [31:0] registers;
 	  
@@ -12,7 +13,7 @@ module regfile (
 	
 		 //reset registers to 0 during powerup
 		 if(rst == 1) begin
-			  registers <= { 32{32'h0000} };
+			  registers <= { 32{32'h00000000} };
 		 end else 
 		 
 		 //write to	 
@@ -27,8 +28,8 @@ module regfile (
 	 always_comb begin
 		  rs = registers[ rr1 ];
 		  rt = registers[ rr2 ];
-		  v0 = registers[ 2 ];
-		  r0 = registers[ 0 ];  
+		  v0 = registers[ a ];
+		  r0 = registers[ b ];  
 	 end
 
     
