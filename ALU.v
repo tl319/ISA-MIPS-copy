@@ -5,7 +5,7 @@
 //b is the other value, regardless of origin
 //ctrl is a signal from the control path, rather than a field of the instructon
 
-module div(
+/*module div(
     input logic [31:0] a, b,
     input logic signdiv,
     output logic [31:0] q, r
@@ -13,7 +13,7 @@ module div(
     integer msbindexa, msbindexb, lsoneb;
     logic [31:0] rega, regb, regbuse, quotient;
 
-    always_ff begin
+    always_ff @(a, b) begin
        //take magnitude of negative operands for signed div
 		  if (signdiv == 1 & a[31] == 1) begin
 				rega = ~(a-{32'h00000001});
@@ -85,7 +85,7 @@ module div(
 		  
     end
 
-endmodule
+endmodule*/
 
 
 
@@ -99,12 +99,12 @@ module ALU(
     //signals and module for division
     logic S;
     logic [31:0] divq, divr;
-    div divcirc(.a(a), .b(b), .signdiv(S), .q(divq), .r(divr));
+    //div divcirc(.a(a), .b(b), .signdiv(S), .q(divq), .r(divr));
 
     //carry for multiplication
     logic C;
 
-    always_ff @(a, b) begin
+    always_ff @(posedge a, posedge b) begin
        
 			if ($signed(a) == $signed(b)) begin
 				comp = 2'b00;
@@ -136,7 +136,7 @@ module ALU(
                 C = out[31]; //not sure this is legal
             end
                      
-            4'b1100: begin //DIV
+            /*4'b1100: begin //DIV
                 S = 1;
                 out = divq;
             end     
@@ -151,7 +151,12 @@ module ALU(
             4'b1111: begin //MODU
                 S = 0;
                 out = divr;
-            end      
+            end*/
+            //placeholder for DIV and MOD operations
+            4'b1100: out = 32'h00000000; 
+            4'b1101: out = 32'h00000000; 
+            4'b1110: out = 32'h00000000; 
+            4'b1111: out = 32'h00000000;       
         endcase
     end
 endmodule
