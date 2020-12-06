@@ -33,28 +33,28 @@ void mips_simulate(vector<unsigned char> mem)
       assert(opcode < 32);
 
       rs_index = (instr << 6) >> 27;
-      assert(rs_index<32);
+      //assert(rs_index<32);
       int32_t& rs = registers[rs_index];
 
       rt_index = (instr << 11) >> 27;
-      assert(rt_index<32);
+      //assert(rt_index<32);
       int32_t& rt = registers[rt_index];
 
       rd_index = (instr << 16) >> 27;
-      assert(rd_index<32);
+      //assert(rd_index<32);
       int32_t& rd = registers[rd_index];
 
       shamt = (instr << 21) >> 27;
-      assert(shamt<32);
+      //assert(shamt<32);
 
       funct = (instr<<26) >> 26;
-      assert(funct < 64);
+      //assert(funct < 64);
 
       immediate = (instr<<16)>>16;
-      assert(immediate<pow(2,16));
+      //assert(immediate<pow(2,16));
 
       jump_address = (instr<<6)>>6;
-      assert(jump_address<pow(2,26));
+      //assert(jump_address<pow(2,26));
 
       is_jump = false;
 
@@ -141,7 +141,7 @@ void mips_simulate(vector<unsigned char> mem)
             assert(!prev_was_jump);
             is_jump = true;
             PC_delay_slot = PC + 4;
-            rd = PC;
+            registers[31] = PC+4;
             PC = rs;
 
           }
@@ -196,11 +196,12 @@ void mips_simulate(vector<unsigned char> mem)
           }
           else if(rt == 33/*100001*/) //BGEZAL
           {
-            registers[31]=PC;
+
             if(rs>=0) //delay slot!
             {
               assert(!prev_was_jump);
               is_jump = true;
+              registers[31]=PC;
               PC_delay_slot = PC + 4;
               PC+=immediate*4;
             }
@@ -217,11 +218,11 @@ void mips_simulate(vector<unsigned char> mem)
           }
           else if(rt == 32/*100000*/) //BLTZAL
           {
-            registers[31]=PC;
             if(rs<0)
             {
               assert(!prev_was_jump);
               is_jump = true;
+              registers[31]=PC;
               PC_delay_slot = PC + 4;
               PC+=immediate*4;
             }
@@ -265,7 +266,8 @@ void mips_simulate(vector<unsigned char> mem)
           assert(!prev_was_jump);
           is_jump = true;
           PC_delay_slot = PC + 4;
-          PC=/*pc_upper|*/(jump_address<<2); //?????????
+          uint32_t pc_upper = (PC>>26)<<26;
+          PC=pc_upper*pow(2,16) + (jump_address<<2); //?????????
         }
 
         case 3: //000011 JAL
@@ -273,8 +275,9 @@ void mips_simulate(vector<unsigned char> mem)
           assert(!prev_was_jump);
           is_jump = true;
           PC_delay_slot = PC + 4;
-          registers[31]=PC;
-          PC=jump_address<<2;
+          registers[31]=PC+4;
+          uint32_t pc_upper = (PC>>26)<<26;
+          PC=pc_upper*pow(2,16) + (jump_address<<2);
         }
 
           //MEM ACCESS
