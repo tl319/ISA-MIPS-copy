@@ -36,6 +36,8 @@ uint16_t mips_r_instr_to_fncode(const string &s);
 // Returns the hex string of uint16_t 'x'
 string to_hex8(uint32_t x);
 
+string to_hex1(unsigned char x);
+
 // Returns a vector words in sentence 's'
 vector<string> string_break(string s);
 
