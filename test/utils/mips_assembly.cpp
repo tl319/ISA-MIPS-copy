@@ -250,3 +250,54 @@ pair<string, string> sep_word (string s)
     }
     return {"ERR", "ERR"};
 }
+
+vector<string> opr_break(string s)
+{
+    vector<string> res;
+    string word = "";
+    for(int i=0; i<s.size(); i++){
+        if (s[i] == ',') {
+            res.push_back(word);
+            word = "";
+        } else if (i == s.size()-1) {
+            word = word + s[i];
+            res.push_back(word);
+        } else {
+            word = word + s[i];
+        }
+    }
+    return res;
+}
+
+pair<string, string> addr_break(string s)
+{
+    int openb;
+    int closeb;
+    for (int i=0; i<s.size(); i++) {
+        if (s[i] == '(') {
+            openb = i;
+        }
+        if (s[i] == ')') {
+            closeb = i;
+        }
+    }
+    string rs = s.substr(openb+1, closeb-1);
+    string offset = s.substr(0, openb);
+    rs.pop_back();
+    return {rs, offset};
+}
+
+bool mips_is_mem_acc_instr(const string &s)
+{
+    if (s == "lb") return true;
+    if (s == "lbu") return true;
+    if (s == "lh") return true;
+    if (s == "lhu") return true;
+    if (s == "lw") return true;
+    if (s == "lwl") return true;
+    if (s == "lwr") return true;
+    if (s == "sb") return true;
+    if (s == "sh") return true;
+    if (s == "sw") return true;
+    return false;
+}
