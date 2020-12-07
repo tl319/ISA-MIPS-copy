@@ -18,46 +18,46 @@ module mips_tb;
     logic[3:0] byte_en;
     logic waterequest;
 
-    mips_memory #(RAM_INIT_FILE) ramInst(clk, address, write, read, byte_en, writedata, readdata);
+    // mips_memory #(RAM_INIT_FILE) ramInst(clk, active, address, write, read, byte_en, writedata, readdata);
     
     mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata);
     
     // Generate clock
-    initial begin
-        clk=0;
+    // initial begin
+    //     clk=0;
+    //     $display("CPU reset");
+    //     repeat (TIMEOUT_CYCLES) begin
+    //         #10;
+    //         clk = !clk;
+    //         #10;
+    //         clk = !clk;
+    //     end
 
-        repeat (TIMEOUT_CYCLES) begin
-            #10;
-            clk = !clk;
-            #10;
-            clk = !clk;
-        end
+    //     $fatal(2, "Simulation did not finish within %d cycles.", TIMEOUT_CYCLES);
+    // end
 
-        $fatal(2, "Simulation did not finish within %d cycles.", TIMEOUT_CYCLES);
-    end
+    // initial begin
+    //     rst <= 0;
 
-    initial begin
-        rst <= 0;
+    //     @(posedge clk);
+    //     rst <= 1;
 
-        @(posedge clk);
-        rst <= 1;
+    //     @(posedge clk);
+    //     rst <= 0;
+    //     $display("CPU reset");
+    //     @(posedge clk);
+    //     assert(active==1)
+    //     else $display("TB : CPU did not set running=1 after reset.");
 
-        @(posedge clk);
-        rst <= 0;
+    //     // while (active) begin
+    //     //     @(posedge clk);
+    //     // end
 
-        @(posedge clk);
-        assert(active==1)
-        else $display("TB : CPU did not set running=1 after reset.");
+    //     $display("TB : finished; running=0");
 
-        while (active) begin
-            @(posedge clk);
-        end
-
-        $display("TB : finished; running=0");
-
-        $finish;
+    //     $finish;
         
-    end
+    // end
 
     
 

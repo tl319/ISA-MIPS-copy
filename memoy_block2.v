@@ -1,11 +1,11 @@
 module mips_memory (
     input logic clk,
+    input logic active,
     input logic[31:0] address,
     input logic wr_en,
     input logic read_en,
     input logic[3:0] byte_en,
     input logic[31:0] data_in,
-    input logic active,
     output logic[31:0] data_out
 );
 
