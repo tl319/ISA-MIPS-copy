@@ -10,9 +10,12 @@ module mips_cpu_bus(
   input logic waitrequest,
   output logic [31:0] writedata,
   output logic [3:0] byteenable,
-  input logic [31:0] readdata
-);
-    logic [31:0] constant_1;
+  input logic [31:0] readdata,
+  output logic [3:0] state,
+  output logic [31:0] WriteRegData,
+  output logic RegWrite
+  );
+   logic [31:0] constant_1;
     logic [31:0] constant_4;
     logic [31:0] constant_31;
     logic [31:0] constant_0;
@@ -40,7 +43,7 @@ module mips_cpu_bus(
     logic [1:0] lrmuxLSB;
     logic [31:0] bout;
     logic [31:0] final_data;
-    logic [3:0] state;
+    // logic [3:0] state;
     logic link;
     logic [5:0] ir_opcode;
     logic [5:0] ir_function;
@@ -54,7 +57,7 @@ module mips_cpu_bus(
     logic [1:0] ALUSrcA;
     logic [2:0] ALUSrcB;
     logic ir_write;
-    logic RegWrite;
+    // logic RegWrite;
     logic ABswitch_cnt;
     logic [1:0] extendcont;
     logic hilowrite;
@@ -67,7 +70,7 @@ module mips_cpu_bus(
     logic jump;
     logic halt;
     logic [4:0] Dst;
-    logic [31:0] WriteRegData;
+    // logic [31:0] WriteRegData;
     logic [31:0] regaout;
     logic [31:0] regbout;
     logic [31:0] hiloout;
@@ -81,6 +84,8 @@ module mips_cpu_bus(
     logic [31:0] irout;
     logic [31:0] aout;
 
+   
+assign writedata = regbout;
     const_reg const_register(
     .const_1 (constant_1),
     .const_4 (constant_4),
@@ -119,7 +124,7 @@ module mips_cpu_bus(
     .out (pc_data)
     );
 
-    single_reg_en pc(
+    single_reg_en_pc pc(
     .clk (clk),
     .rst (reset),
     .wr_en (pc_write),
@@ -206,7 +211,7 @@ module mips_cpu_bus(
 
       state_machine state_machine_a(
       .clk (clk),
-      .prev_state (prev_state),
+      .prev_state (state),
       .reset (reset),
       .jump (jump),
       .wait_request (waitrequest),
@@ -262,13 +267,6 @@ module mips_cpu_bus(
       .out (signimm)
       );
 
-      single_reg alutstore(
-      .clk (clk),
-      .rst (reset),
-      .p (aluresult),
-      .q (aluout)
-      );
-
       shift_l shifter2(
       .in (signimm),
       .out (shiftimm)
@@ -310,6 +308,12 @@ module mips_cpu_bus(
       .ctrl (aluop),
       .out (aluresult),
       .comp (cond)
+      );
+      single_reg alutstore(
+      .clk (clk),
+      .rst (reset),
+      .p (aluresult),
+      .q (aluout)
       );
 
       single_reg_2bit alu2(

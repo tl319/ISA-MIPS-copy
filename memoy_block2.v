@@ -15,7 +15,7 @@ module mips_memory (
 
     logic[31:0] simp_address;
 
-    assign simp_address=(address<32'b10111100111100000000000000000000) ? address : address-32'b10111100111100000000000000000000 + 32'b00000000000000000000010000000000;
+    assign simp_address=(address<32'hBCF00000) ? address : address-32'hBFC00000 + 32'h00000400;
     initial begin
         integer i;
         /* Initialise to zero by default */
@@ -35,7 +35,8 @@ module mips_memory (
         // end
     end
 
-    always_ff @(posedge clk) begin
+    always @(posedge clk) begin
+        // $display("%h",address);
         if (wr_en) begin
             if (byte_en[0]) begin
                 memory[simp_address] <= data_in[7:0];
@@ -49,9 +50,10 @@ module mips_memory (
             if (byte_en[0]) begin
                 memory[simp_address+3] <= data_in[31:23];
             end
-        end
+        end 
         if (read_en) begin
-            data_out <= {memory[address], memory[address+1], memory[address+2], memory[address+3]};
+            $display("inside ram address %h",simp_address);
+            data_out <= {memory[simp_address], memory[simp_address+1], memory[simp_address+2], memory[simp_address+3]};
         end
     end
 
@@ -59,7 +61,7 @@ module mips_memory (
         // if ( !active ) begin
             integer i;
            
-            // $display("Displaying Memory contents : ");
+            $display("Displaying Memory contents : ");
             // $display("address(hex): memory_content(hex) ");
             for (i = 0 ; i < 1024; i++) begin
                 if(memory[i] != 0 ) begin

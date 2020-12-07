@@ -17,10 +17,14 @@ module mips_tb;
     logic[31:0] register_v0;
     logic[3:0] byte_en;
     logic waterequest;
+    logic [3:0] state;
+    logic [31:0] WriteRegData;
+    logic RegWrite;
+
 
     mips_memory #(RAM_INIT_FILE) ramInst(clk, active, address, write, read, byte_en, writedata, readdata);
     
-    mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata);
+    mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata,state, WriteRegData, RegWrite);
     
     //Generate clock
     initial begin
@@ -34,8 +38,14 @@ module mips_tb;
             #10;
             clk = !clk;
             i=i+1;
+            $display("WriteRegData : %h",WriteRegData );
+            $display("RegWrite : %h", RegWrite );
             $display("%d cycle",i);
-            $display("active: %b",active);
+            $display("address: %h",address);
+            $display("state: %h", state);
+            $display("readdata: %h", readdata);
+            
+            // $display("active: %b",active);
         end
 
         $fatal(2, "Simulation did not finish within %d cycles.", TIMEOUT_CYCLES);
@@ -46,18 +56,6 @@ module mips_tb;
 
         @(posedge clk);
         rst <= 1;
-        @(posedge clk);
-        @(posedge clk);
-        @(posedge clk);
-        @(posedge clk);
-        @(posedge clk);
-        @(posedge clk);
-        @(posedge clk);
-        @(posedge clk);
-        @(posedge clk);
-        @(posedge clk);
-        @(posedge clk);
-        @(posedge clk);
         @(posedge clk);
         rst <= 0;
         $display("CPU reset");

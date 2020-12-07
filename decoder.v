@@ -91,32 +91,7 @@ module decoder(
     always_ff @(posedge clk) begin
         case(state)
         4'b000: begin
-        MemToReg = 2'b00;
-        RegDst = 2'b00;
-        IorD = 2'b00;
-        PCSrc = 2'b00;
-        ALUSrcA = 2'b00;
-        ALUSrcB = 3'b 001;
-        IrWrite = 1;
-        MemWrite = 0;
-        MemRead = 1;
-        PcWrite = 1;
-        RegWrite = 0;
-        ABswitch_cnt =0;
-        extendcont = 2'b00;
-        altpcWrite = 0;
-        altpcmux = 0;
-        resetmux = 0;
-        hilowrite = 0;
-        hilosel = 0;
-        lr_en = 0;
-        lrmux = 0;
-        mask_cnt = 3'b000;
-        byte_cnt = 2'b00;
-        aluop = 4'b0000;
-        link_en = 0;
-        link_in = 0;
-        beq = 0;
+ beq = 0;
         bgez = 0;
         bgtz = 0;
         blez = 0;
@@ -167,10 +142,34 @@ module decoder(
         j = 0;
         jal = 0;
         nop = 0;
+        MemToReg = 2'b00;
+        RegDst = 2'b00;
+        IorD = 2'b00;
+        PCSrc = 2'b00;
+        ALUSrcA = 2'b00;
+        ALUSrcB = 3'b 001;
+        IrWrite = 1;
+        MemWrite = 0;
+        MemRead = 1;
+        PcWrite = 1;
+        RegWrite = 0;
+        ABswitch_cnt =0;
+        extendcont = 2'b00;
+        altpcWrite = 0;
+        altpcmux = 0;
+        resetmux = 0;
+        hilowrite = 0;
+        hilosel = 0;
+        lr_en = 0;
+        lrmux = 0;
+        mask_cnt = 3'b000;
+        byte_cnt = 2'b00;
+        aluop = 4'b0000;
+        link_en = 0;
+        link_in = 0;
         end
-
       4'b0001: begin
-               if(mem_opcode == 6'b000100) begin
+        if(mem_opcode == 6'b000100) begin
         beq = 1;
         end else if(mem_opcode == 6'b000001 && mem_info == 5'b00001) begin
         bgez = 1;
@@ -434,7 +433,7 @@ module decoder(
         RegDst = 2'b01;
         end
         if(lw == 1 || sw == 1) begin
-        IorD = 2'b00;
+        IorD = 2'b01;
         end else begin
         IorD = 2'b10;
         end
@@ -632,7 +631,7 @@ module decoder(
         IrWrite = 0;
         MemWrite = 0;
         MemRead = 0;
-        PcWrite = 0;
+        PcWrite = 1;
         RegWrite = 0;
         ABswitch_cnt =0;
         if(addiu == 1 || lw == 1 || sw == 1 || slti == 1 || sltiu == 1 || lui == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || sb == 1 || sh == 1 || lwl == 1 || lwr == 1 || beq == 1 || bgez == 1 || bgtz == 1 || blez == 1 || bltz == 1 || bne == 1 || bgezal == 1 || bltzal == 1) begin
@@ -644,7 +643,7 @@ module decoder(
         end
         altpcWrite = 0;
         altpcmux = 1;
-        resetmux = 0;
+        resetmux = 1;
         hilowrite = 0;
         hilosel = 0;
         lr_en = 0;
