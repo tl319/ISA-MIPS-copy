@@ -5,6 +5,7 @@ module mips_memory (
     input logic read_en,
     input logic[3:0] byte_en,
     input logic[31:0] data_in,
+    input logic active,
     output logic[31:0] data_out
 );
 
@@ -44,4 +45,20 @@ module mips_memory (
             data_out <= {memory[address], memory[address+1], memory[address+2], memory[address+3]};
         end
     end
+
+    always@(posedge clk)begin
+        if ( active == 1'b0  ) begin
+            integer i;
+            for (i = 0 ; i < 1073741824; i++) begin
+                if(memory[i] != 0 ) begin
+                    $display("RAM : INIT : Loading RAM contents from %s", RAM_INIT_FILE);
+                end
+            end
+        end
+    end
+
+
+           
+ 
+
 endmodule
