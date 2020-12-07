@@ -1,0 +1,5 @@
+addiu $3 $0 10
+sltu $2 $3 11
+sltu $4 $3 -7
+sltu $5 $3 10
+jr $0
