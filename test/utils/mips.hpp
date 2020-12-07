@@ -42,4 +42,13 @@ vector<string> string_break(string s);
 // Returns a pair of opname and operands from a word 'w'
 pair<string, string> sep_word (string s);
 
+// Returns a vector of words seperated by comas 's'
+vector<string> opr_break(string s);
+
+// Returns a pair of strings 'rs' and 'offset' from a string in the form of 'offset(rs)'
+pair<string, string> addr_break(string s);
+
+// Returns true if instruction 's' is a memory access instruction
+bool mips_is_mem_acc_instr(const string &s);
+
 #endif
