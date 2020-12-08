@@ -13,7 +13,16 @@ module mips_cpu_bus(
   input logic [31:0] readdata,
   output logic [3:0] state,
   output logic [31:0] WriteRegData,
-  output logic RegWrite
+  output logic RegWrite,
+  output logic [31:0] aluresult,
+  output logic [31:0] SrcAOut,
+  output logic [31:0] SrcBOut,
+  output logic [1:0] ALUSrcA,
+  output logic [2:0] ALUSrcB,
+  output logic [31:0] regaout,
+  output logic [31:0] regbout,
+  output logic [4:0] Dst
+
   );
    logic [31:0] constant_1;
     logic [31:0] constant_4;
@@ -29,7 +38,7 @@ module mips_cpu_bus(
     logic altpcmux_cnt;
     logic [31:0] altpcdata;
     logic alt_pc_write;
-    logic [31:0] aluresult;
+  //  logic [31:0] aluresult;
     logic [1:0] pc_src_mux;
     logic pc_write;
     logic [31:0] pc_out;
@@ -54,8 +63,8 @@ module mips_cpu_bus(
     logic branch;
     logic [1:0] MemToReg;
     logic [1:0] RegDst;
-    logic [1:0] ALUSrcA;
-    logic [2:0] ALUSrcB;
+    //logic [1:0] ALUSrcA;
+    //logic [2:0] ALUSrcB;
     logic ir_write;
     // logic RegWrite;
     logic ABswitch_cnt;
@@ -69,15 +78,15 @@ module mips_cpu_bus(
     logic [3:0] prev_state;
     logic jump;
     logic halt;
-    logic [4:0] Dst;
+    //logic [4:0] Dst;
     // logic [31:0] WriteRegData;
-    logic [31:0] regaout;
-    logic [31:0] regbout;
+    //logic [31:0] regaout;
+    //logic [31:0] regbout;
     logic [31:0] hiloout;
     logic [31:0] signimm;
     logic [31:0] shiftimm;
-    logic [31:0] SrcAOut;
-    logic [31:0] SrcBOut;
+    //logic [31:0] SrcAOut;
+    //logic [31:0] SrcBOut;
     logic [1:0] cond;
     logic JumpIN;
     logic Jump_EN;
@@ -230,7 +239,7 @@ assign writedata = regbout;
       );
 
       MUX_4 MemToReg_mux(
-      .a (aluresult),
+      .a (aluout),
       .b (final_data),
       .c (constant_1),
       .d (aluresult),
