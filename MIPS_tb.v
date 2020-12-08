@@ -23,9 +23,9 @@ module mips_tb;
 
 
     mips_memory #(RAM_INIT_FILE) ramInst(clk, active, address, write, read, byte_en, writedata, readdata);
-    
+
     mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata,state, WriteRegData, RegWrite);
-    
+
     //Generate clock
     initial begin
         integer i;
@@ -44,7 +44,8 @@ module mips_tb;
             $display("address: %h",address);
             $display("state: %h", state);
             $display("readdata: %h", readdata);
-            
+            $display("write: %b", write);
+
             // $display("active: %b",active);
         end
 
@@ -76,9 +77,9 @@ module mips_tb;
         $display("TB : finished; running=0");
 
         $finish;
-        
+
     end
 
-    
+
 
 endmodule

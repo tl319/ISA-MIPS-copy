@@ -6,17 +6,17 @@ module single_reg_en_pc(
 
     logic [31:0] single_reg;
 
-	always_ff @(posedge clk, posedge rst) begin	
+	always_ff @(posedge clk, posedge rst) begin
 
 		if (rst == 1) begin
-			single_reg <= 32'hBFC00000 ;
-		end 
-        else if (wr_en == 1) begin
-            single_reg <= p ;
+			q <= 32'hBFC00000 ;
 		end
-        else begin
-            q <= single_reg ;
-        end
+        else if (wr_en == 1) begin
+            q <= p ;
+		end
+      //  else begin
+      //      q <= single_reg ;
+      //  end
 	end
-    
+
 endmodule

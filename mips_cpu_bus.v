@@ -84,7 +84,7 @@ module mips_cpu_bus(
     logic [31:0] irout;
     logic [31:0] aout;
 
-   
+
 assign writedata = regbout;
     const_reg const_register(
     .const_1 (constant_1),
@@ -230,7 +230,7 @@ assign writedata = regbout;
       );
 
       MUX_4 MemToReg_mux(
-      .a (aluout),
+      .a (aluresult),
       .b (final_data),
       .c (constant_1),
       .d (aluresult),
