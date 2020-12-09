@@ -258,7 +258,7 @@ assign writedata = regbout;
       .out (WriteRegData)
       );
 
-      regfile Registers(
+      regfile2 Registers(
       .clk (clk),
       .rst (reset),
       .wren (RegWrite),

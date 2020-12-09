@@ -1,4 +1,4 @@
-module mips_memory3 (
+module mips_memory (
     input logic clk,
     input logic active,
     input logic[31:0] address,
