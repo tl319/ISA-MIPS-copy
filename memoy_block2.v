@@ -11,11 +11,7 @@ module mips_memory (
 
     parameter RAM_INIT_FILE = "./test/binary/basics.hex.txt";
 
-<<<<<<< HEAD
-    reg[7:0] memory [4095:0];
-=======
     reg[7:0] memory [2047:0];
->>>>>>> 442f70b211ecc4506ecb770d5c198dbb9b2e9895
 
     logic[31:0] simp_address;
 
@@ -23,11 +19,7 @@ module mips_memory (
     initial begin
         integer i;
         /* Initialise to zero by default */
-<<<<<<< HEAD
-        for (i=0; i<4095; i++) begin
-=======
         for (i=0; i<2048; i++) begin
->>>>>>> 442f70b211ecc4506ecb770d5c198dbb9b2e9895
             memory[i]=0;
         end
         /* Load contents from file if specified */
@@ -58,12 +50,7 @@ module mips_memory (
             if (byte_en[0]) begin
                 memory[simp_address+3] <= data_in[31:23];
             end
-<<<<<<< HEAD
-        end
-        
-=======
         end 
->>>>>>> 442f70b211ecc4506ecb770d5c198dbb9b2e9895
         if (read_en) begin
             $display("inside ram address %h",simp_address);
             data_out <= {memory[simp_address], memory[simp_address+1], memory[simp_address+2], memory[simp_address+3]};
