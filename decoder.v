@@ -88,7 +88,7 @@ module decoder(
     logic j;
     logic jal;
     logic nop;
-    always_ff @(posedge clk) begin
+    always_comb begin
         case(state)
         4'b000: begin
  beq = 0;
@@ -630,7 +630,7 @@ module decoder(
         ALUSrcB = 3'b001;
         IrWrite = 0;
         MemWrite = 0;
-        MemRead = 0;
+        MemRead = 1;
         PcWrite = 1;
         RegWrite = 0;
         ABswitch_cnt =0;
@@ -667,7 +667,7 @@ module decoder(
         ALUSrcB = 3'b001;
         IrWrite = 0;
         MemWrite = 0;
-        MemRead = 0;
+        MemRead = 1;
         PcWrite = 1;
         RegWrite = 0;
         ABswitch_cnt =0;

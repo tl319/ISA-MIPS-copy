@@ -33,8 +33,8 @@ module regfile2 (
 	 always_comb begin
 		  rs = registers[ rr1 ];
 		  rt = registers[ rr2 ];
-		  v0 = registers[ x ];
-		  r0 = registers[ y ];
+		  v0 = registers[ y ];
+		  r0 = registers[ x ];
 	 end
 
 

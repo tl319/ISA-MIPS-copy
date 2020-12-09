@@ -164,7 +164,7 @@ assign writedata = regbout;
     byte_decoder byte_a(
     .aluout (aluout[1:0]),
     .byte_cnt (byte_cnt),
-    .byte_en (byte_EN)
+    .byte_en (byteenable)
     );
 
     single_reg_en ir(

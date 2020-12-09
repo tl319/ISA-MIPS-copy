@@ -38,17 +38,17 @@ module mips_memory (
     always @(posedge clk) begin
         // $display("%h",address);
         if (wr_en) begin
-            if (byte_en[0]) begin
-                memory[simp_address] <= data_in[7:0];
+            if (byte_en[0]==1) begin
+                memory[simp_address] <= data_in[31:24];
             end
-            if (byte_en[1]) begin
-                memory[simp_address+1] <= data_in[15:8];
+            if (byte_en[1]==1) begin
+                memory[simp_address+1] <= data_in[23:16];
             end
-            if (byte_en[0]) begin
-                memory[simp_address+2] <= data_in[23:16];
+            if (byte_en[2]==1) begin
+                memory[simp_address+2] <= data_in[15:8];
             end
-            if (byte_en[0]) begin
-                memory[simp_address+3] <= data_in[31:23];
+            if (byte_en[3]===1) begin
+                memory[simp_address+3] <= data_in[7:0];
             end
         end
         if (read_en) begin
