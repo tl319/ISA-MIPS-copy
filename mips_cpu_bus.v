@@ -262,6 +262,13 @@ module mips_cpu_bus(
       .out (signimm)
       );
 
+      single_reg alutstore(
+      .clk (clk),
+      .rst (reset),
+      .p (aluresult),
+      .q (aluout)
+      );
+
       shift_l shifter2(
       .in (signimm),
       .out (shiftimm)

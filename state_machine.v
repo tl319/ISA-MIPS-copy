@@ -16,7 +16,7 @@ module state_machine(
       end else if(wait_request) begin
       state <= prev_state;
       end else
-      case(prev_state)
+      case(state)
       4'b0000:if(jump)
               state <= 4'b1001;
               else
@@ -28,7 +28,11 @@ module state_machine(
               state <= 4'b0101;
               else
               state <= 4'b0000;
-      4'b0101:state <= 4'b0101;
+      4'b0101:  begin
+                active = 0;
+                state <= 4'b0101;
+                end       
+      4'b1001:state <= 4'b0010;
       4'b1111:state <= 4'b1110;
       4'b1110:state <= 4'b0000;
       endcase

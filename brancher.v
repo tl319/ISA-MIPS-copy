@@ -9,7 +9,7 @@ module brancher(
 );
     always_comb begin
     if(state == 4'b0010) begin
-    Jump_EN = 0;
+    Jump_EN = 1;
       if(opcode == 6'b000010) begin
       JumpIN = 1;
       end
