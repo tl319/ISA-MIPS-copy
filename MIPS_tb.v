@@ -79,7 +79,8 @@ module mips_tb;
 
     initial begin
         rst <= 0;
-
+        $dumpfile("cpu_toplvl_waves.vcd");
+        $dumpvars(1,cpuInst);
         @(posedge clk);
         rst <= 1;
         @(posedge clk);
@@ -94,11 +95,11 @@ module mips_tb;
             $display( "v0 : %h",register_v0);
         end
         $display( "v0 : %h",register_v0);
-        // $dumpfile("cpu_all_waves.vcd");
-        // $dumpvars(0,mips_tb);
+         //$dumpfile("cpu_all_waves.vcd");
+         //$dumpvars(0,mips_tb);
         $display("active: %b",active);
-        $dumpfile("cpu_toplvl_waves.vcd");
-        $dumpvars(0,cpuInst);
+        //$dumpfile("cpu_toplvl_waves.vcd");
+        //$dumpvars(0,cpuInst);
         $display("TB : finished; running=0");
 
         $finish;
