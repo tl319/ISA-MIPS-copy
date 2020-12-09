@@ -8,8 +8,8 @@ logic a = 5'b00010;
 logic b = 0;
 //register vector and integer read/write values
 reg [31:0] register [31:0];
-assign rs = register[rr2];
-assign rt = register[rr1];
+assign rs = register[rr1];
+assign rt = register[rr2];
 assign v0 = register [2];
 assign r0 = register[0];
 integer i;

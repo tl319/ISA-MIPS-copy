@@ -28,11 +28,14 @@ module mips_tb;
     logic [31:0] regaout;
     logic [31:0] regbout;
     logic [4:0] Dst;
-
+    logic [31:0] aluout;
+    logic [1:0] MemToReg;
+    logic [31:0] final_data;
+    logic [31:0] masked_data;
 
     mips_memory #(RAM_INIT_FILE) ramInst(clk, active, address, write, read, byte_en, writedata, readdata);
 
-    mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata,state, WriteRegData, RegWrite, aluresult, SrcAOut, SrcBOut, ALUSrcA, ALUSrcB, regaout, regbout, Dst );
+    mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata,state, WriteRegData, RegWrite, aluresult, SrcAOut, SrcBOut, ALUSrcA, ALUSrcB, regaout, regbout, Dst, aluout, MemToReg, final_data, masked_data );
 
     //Generate clock
     initial begin
@@ -48,6 +51,9 @@ module mips_tb;
             i=i+1;
             $display("%d cycle",i);
             $display("state: %h", state);
+            $display("MemToReg: %b", MemToReg);
+            $display("final_data: %h", final_data);
+            $display("masked_data: %h", masked_data);
             $display("WriteRegData : %h",WriteRegData );
             $display("RegWrite : %h", RegWrite );
             $display("Dst: %d", Dst);
@@ -64,6 +70,7 @@ module mips_tb;
             $display("SrcBOut: %h", SrcBOut);
             $display("writedata: %h", writedata);
             $display("aluresult: %h", aluresult);
+            $display("aluout: %h", aluout);
             // $display("active: %b",active);
         end
 
