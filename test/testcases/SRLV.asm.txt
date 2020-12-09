@@ -1,8 +1,8 @@
-addiu $2 $0 10
-addiu $10 $0 2
-addiu $11 $0 1
-subu $11 $11 $10
-srlv $3 $2 $0
-srlv $4 $2 $10
-srlv $5 $2 $11
+addiu $3,$0,10
+addiu $10,$0,2
+addiu $11,$0,1
+subu $11,$11,$10
+srlv $2,$3,$0
+srlv $2,$3,$10
+srlv $2,$3,$11
 jr $0

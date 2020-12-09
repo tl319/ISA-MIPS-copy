@@ -1,8 +1,9 @@
-addiu $2 $0 65520
-addiu $10 $0 2
-addiu $11 $0 1
-subu $11 $11 $10
-sra $3 $2 $0
-sra $4 $2 $10
-sra $5 $2 $11
+addiu $3,$0,65520
+addiu $10,$0,2
+addiu $11,$0,1
+addiu $12,$0,4
+subu $11,$11,$10
+srav $2,$3,$0
+srav $2,$3,$10
+srav $2,$3,$12
 jr $0
