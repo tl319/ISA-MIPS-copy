@@ -10,12 +10,12 @@ module mips_memory (
 
     parameter RAM_INIT_FILE = "";
 
-    reg[7:0] memory [4294967295:0];
+    reg[7:0] memory [4095:0];
 
     initial begin
         integer i;
         /* Initialise to zero by default */
-        for (i=0; i<4294967295; i++) begin
+        for (i=0; i<4095; i++) begin
             memory[i]=0;
         end
         /* Load contents from file if specified */
@@ -40,6 +40,7 @@ module mips_memory (
                 memory[address+3] <= data_in[31:23];
             end
         end
+        
         if (read_en) begin
             data_out <= {memory[address], memory[address+1], memory[address+2], memory[address+3]};
         end
