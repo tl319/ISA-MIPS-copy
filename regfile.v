@@ -7,7 +7,13 @@ module regfile (
 
 	//register vector and integer read/write values
 	logic [31:0] [31:0] registers;
-	  
+	logic [31:0] z, t;	
+
+	initial begin
+		z <= 0;
+		t <= 32'h00000002; 
+	end
+  
 	always_ff @( posedge clk, posedge rst ) begin
 	
 		 //reset registers to 0 during powerup
@@ -27,8 +33,8 @@ module regfile (
 	 always_comb begin
 		  rs = registers[ rr1 ];
 		  rt = registers[ rr2 ];
-		  v0 = registers[ 2 ];
-		  r0 = registers[ 0 ];  
+		  v0 = registers[ t ];
+		  r0 = registers[ z ];  
 	 end
 
     
