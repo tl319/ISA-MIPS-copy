@@ -10,9 +10,25 @@ module mips_cpu_bus(
   input logic waitrequest,
   output logic [31:0] writedata,
   output logic [3:0] byteenable,
-  input logic [31:0] readdata
-);
-    logic [31:0] constant_1;
+  input logic [31:0] readdata,
+  output logic [3:0] state,
+  output logic [31:0] WriteRegData,
+  output logic RegWrite,
+  output logic [31:0] aluresult,
+  output logic [31:0] SrcAOut,
+  output logic [31:0] SrcBOut,
+  output logic [1:0] ALUSrcA,
+  output logic [2:0] ALUSrcB,
+  output logic [31:0] regaout,
+  output logic [31:0] regbout,
+  output logic [4:0] Dst,
+  output logic [31:0] aluout,
+  output logic [1:0] MemToReg,
+  output logic [31:0] final_data,
+  output logic [31:0] masked_data
+
+  );
+   logic [31:0] constant_1;
     logic [31:0] constant_4;
     logic [31:0] constant_31;
     logic [31:0] constant_0;
@@ -20,13 +36,13 @@ module mips_cpu_bus(
     logic reset_mux_cnt;
     logic [31:0] pc_data;
     logic [31:0] final_pc_data;
-    logic [31:0] aluout;
+    //logic [31:0] aluout;
     logic [31:0] pc4_jump2;
     logic [31:0] altpcsrc;
     logic altpcmux_cnt;
     logic [31:0] altpcdata;
     logic alt_pc_write;
-    logic [31:0] aluresult;
+  //  logic [31:0] aluresult;
     logic [1:0] pc_src_mux;
     logic pc_write;
     logic [31:0] pc_out;
@@ -35,12 +51,12 @@ module mips_cpu_bus(
     logic [1:0] byte_cnt;
     logic [3:0] byte_EN;
     logic [2:0] msk_cnt;
-    logic [31:0] masked_data;
+    //logic [31:0] masked_data;
     logic lr_en;
     logic [1:0] lrmuxLSB;
     logic [31:0] bout;
-    logic [31:0] final_data;
-    logic [3:0] state;
+    //logic [31:0] final_data;
+    // logic [3:0] state;
     logic link;
     logic [5:0] ir_opcode;
     logic [5:0] ir_function;
@@ -49,12 +65,12 @@ module mips_cpu_bus(
     logic [5:0] mem_function;
     logic [4:0] mem_info;
     logic branch;
-    logic [1:0] MemToReg;
+    //logic [1:0] MemToReg;
     logic [1:0] RegDst;
-    logic [1:0] ALUSrcA;
-    logic [2:0] ALUSrcB;
+    //logic [1:0] ALUSrcA;
+    //logic [2:0] ALUSrcB;
     logic ir_write;
-    logic RegWrite;
+    // logic RegWrite;
     logic ABswitch_cnt;
     logic [1:0] extendcont;
     logic hilowrite;
@@ -66,20 +82,29 @@ module mips_cpu_bus(
     logic [3:0] prev_state;
     logic jump;
     logic halt;
-    logic [4:0] Dst;
-    logic [31:0] WriteRegData;
-    logic [31:0] regaout;
-    logic [31:0] regbout;
+    //logic [4:0] Dst;
+    // logic [31:0] WriteRegData;
+    //logic [31:0] regaout;
+    //logic [31:0] regbout;
     logic [31:0] hiloout;
     logic [31:0] signimm;
     logic [31:0] shiftimm;
-    logic [31:0] SrcAOut;
-    logic [31:0] SrcBOut;
+    //logic [31:0] SrcAOut;
+    //logic [31:0] SrcBOut;
     logic [1:0] cond;
     logic JumpIN;
     logic Jump_EN;
     logic [31:0] irout;
     logic [31:0] aout;
+
+
+assign writedata = regbout;
+  //    single_reg testreg(
+  //    .clk (clk),
+  //    .rst (reset),
+  //    .p (regbout),
+  //    .q (writedata)
+  //    );
 
     const_reg const_register(
     .const_1 (constant_1),
@@ -119,7 +144,7 @@ module mips_cpu_bus(
     .out (pc_data)
     );
 
-    single_reg_en pc(
+    single_reg_en_pc pc(
     .clk (clk),
     .rst (reset),
     .wr_en (pc_write),
@@ -206,7 +231,7 @@ module mips_cpu_bus(
 
       state_machine state_machine_a(
       .clk (clk),
-      .prev_state (prev_state),
+      .prev_state (state),
       .reset (reset),
       .jump (jump),
       .wait_request (waitrequest),
@@ -303,6 +328,12 @@ module mips_cpu_bus(
       .ctrl (aluop),
       .out (aluresult),
       .comp (cond)
+      );
+      single_reg alutstore(
+      .clk (clk),
+      .rst (reset),
+      .p (aluresult),
+      .q (aluout)
       );
 
       single_reg_2bit alu2(

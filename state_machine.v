@@ -28,9 +28,13 @@ module state_machine(
               state <= 4'b0101;
               else
               state <= 4'b0000;
-      4'b0101:state <= 4'b0101;
+      4'b0101:begin
+ state <= 4'b0101;
+ active <= 1'b0;
+ end
       4'b1111:state <= 4'b1110;
       4'b1110:state <= 4'b0000;
+4'b1001:state <= 4'b0010;
       endcase
       end
 endmodule

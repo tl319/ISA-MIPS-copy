@@ -91,32 +91,7 @@ module decoder(
     always_ff @(posedge clk) begin
         case(state)
         4'b000: begin
-        MemToReg = 2'b00;
-        RegDst = 2'b00;
-        IorD = 2'b00;
-        PCSrc = 2'b00;
-        ALUSrcA = 2'b00;
-        ALUSrcB = 3'b 001;
-        IrWrite = 1;
-        MemWrite = 0;
-        MemRead = 1;
-        PcWrite = 1;
-        RegWrite = 0;
-        ABswitch_cnt =0;
-        extendcont = 2'b00;
-        altpcWrite = 0;
-        altpcmux = 0;
-        resetmux = 0;
-        hilowrite = 0;
-        hilosel = 0;
-        lr_en = 0;
-        lrmux = 0;
-        mask_cnt = 3'b000;
-        byte_cnt = 2'b00;
-        aluop = 4'b0000;
-        link_en = 0;
-        link_in = 0;
-        beq = 0;
+ beq = 0;
         bgez = 0;
         bgtz = 0;
         blez = 0;
@@ -167,6 +142,33 @@ module decoder(
         j = 0;
         jal = 0;
         nop = 0;
+        MemToReg = 2'b00;
+        RegDst = 2'b00;
+        IorD = 2'b00;
+        PCSrc = 2'b00;
+        ALUSrcA = 2'b00;
+        ALUSrcB = 3'b 001;
+        IrWrite = 1;
+        MemWrite = 0;
+        MemRead = 1;
+        PcWrite = 1;
+        RegWrite = 0;
+        ABswitch_cnt =0;
+        extendcont = 2'b00;
+        altpcWrite = 0;
+        altpcmux = 0;
+        resetmux = 0;
+        hilowrite = 0;
+        hilosel = 0;
+        lr_en = 0;
+        lrmux = 0;
+        mask_cnt = 3'b000;
+        byte_cnt = 2'b00;
+        aluop = 4'b0000;
+        link_en = 0;
+        link_in = 0;
+        end
+      4'b0001: begin
         if(mem_opcode == 6'b000100) begin
         beq = 1;
         end else if(mem_opcode == 6'b000001 && mem_info == 5'b00001) begin
@@ -197,19 +199,19 @@ module decoder(
         lw = 1;
         end else if(mem_opcode == 6'b101011) begin
         sw =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b100001) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b100001) begin
         addu =1;
         end else if(mem_opcode == 6'b001001) begin
         addiu =1;
         end else if(mem_opcode == 6'b001111) begin
         lui =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b010001) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b010001) begin
         mthi =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b010011) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b010011) begin
         mtlo =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b010000) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b010000) begin
         mfhi =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b010010) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b010010) begin
         mflo =1;
         end else if(mem_opcode == 6'b100000) begin
         lb =1;
@@ -227,41 +229,41 @@ module decoder(
         lwl =1;
         end else if(mem_opcode == 6'b100110) begin
         lwr =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b001000) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b001000) begin
         jr =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b001001) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b001001) begin
         jalr =1;
         end else if(mem_opcode == 6'b001111) begin
         andi =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b100100) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b100100) begin
         andINT=1;
         end else if(mem_opcode == 6'b001101) begin
         ori =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b100101) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b100101) begin
         orINT=1;
         end else if(mem_opcode == 6'b001110) begin
         xori =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b100110) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b100110) begin
         xorINT=1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b000000) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b000000) begin
         sll =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b000100) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b000100) begin
         sllv =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b000011) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b000011) begin
         sra =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b000111) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b000111) begin
         srav =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b000010) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b000010) begin
         srl =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b000110) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b000110) begin
         srlv =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b011010) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b011010) begin
         div =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b011011) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b011011) begin
         divu =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b011000) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b011000) begin
         mult =1;
-        end else if(mem_opcode == 6'b000000 && mem_opcode == 6'b011001) begin
+        end else if(mem_opcode == 6'b000000 && mem_function == 6'b011001) begin
         multu =1;
         end else if(mem_opcode == 6'b000010) begin
         j =1;
@@ -270,8 +272,6 @@ module decoder(
         end else begin
         nop =1;
         end
-        end
-      4'b0001: begin
         MemToReg = 2'b00;
         if(addiu == 1 || andi == 1 || ori == 1 || xori == 1 || lw == 1 || sw == 1 || slti == 1 || sltiu == 1 || lui == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || sb == 1 || sh == 1 || lwl == 1 || lwr == 1 || beq == 1 || bgez == 1 || bgtz == 1 || blez == 1 || bltz == 1 || bne == 1 || bgezal == 1 || bltzal == 1) begin
         RegDst = 2'b00;
@@ -433,7 +433,7 @@ module decoder(
         RegDst = 2'b01;
         end
         if(lw == 1 || sw == 1) begin
-        IorD = 2'b00;
+        IorD = 2'b01;
         end else begin
         IorD = 2'b10;
         end
@@ -631,7 +631,7 @@ module decoder(
         IrWrite = 0;
         MemWrite = 0;
         MemRead = 0;
-        PcWrite = 0;
+        PcWrite = 1;
         RegWrite = 0;
         ABswitch_cnt =0;
         if(addiu == 1 || lw == 1 || sw == 1 || slti == 1 || sltiu == 1 || lui == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || sb == 1 || sh == 1 || lwl == 1 || lwr == 1 || beq == 1 || bgez == 1 || bgtz == 1 || blez == 1 || bltz == 1 || bne == 1 || bgezal == 1 || bltzal == 1) begin
@@ -643,7 +643,7 @@ module decoder(
         end
         altpcWrite = 0;
         altpcmux = 1;
-        resetmux = 0;
+        resetmux = 1;
         hilowrite = 0;
         hilosel = 0;
         lr_en = 0;
