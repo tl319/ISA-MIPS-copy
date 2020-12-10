@@ -56,6 +56,9 @@ int main(int argc, char** argv)
             instr_and_operands.push_back({head,address});
         }else if(mips_is_data(head)){
             instr_and_operands.push_back({head, ""});
+        }else if(head[0] == '#') {
+            // If there is a hash ("#") in the beginning of a line, the line is a comment
+            continue;
         }else{
             cerr<<"Couldn't parse '"<<head<<"'\n";
             exit(1);

@@ -36,6 +36,8 @@ uint16_t mips_r_instr_to_fncode(const string &s);
 // Returns the hex string of uint16_t 'x'
 string to_hex8(uint32_t x);
 
+string to_hex1(unsigned char x);
+
 // Returns a vector words in sentence 's'
 vector<string> string_break(string s);
 
@@ -62,7 +64,7 @@ void mips_mem_init(istream& src, vector<unsigned char>& mem);
 
 //runs the simulation, when the data is already in the RAM, outputs the values of the registers after every instruction
 //should instr_mem be const???
-void mips_simulate(vector<unsigned char> mem);
+int32_t mips_simulate(vector<unsigned char> mem);
 
 void ram_write_out(const vector<unsigned char>& mem);
 

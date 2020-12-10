@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void mips_simulate(vector<unsigned char> mem)
+int32_t mips_simulate(vector<unsigned char> mem)
 {
     vector<int32_t> registers;
     int32_t HI, LO;
@@ -330,6 +330,8 @@ void mips_simulate(vector<unsigned char> mem)
         PC+=4;
       prev_was_jump = is_jump;
       assert(registers[0] == 0);
+
+      return registers[2];
     }
 
 

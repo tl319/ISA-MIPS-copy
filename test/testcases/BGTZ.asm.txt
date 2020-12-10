@@ -1,14 +1,10 @@
-lw $0 $2 FIVE
+addiu $2,$0,5
+bgtz $2,2
+jr $0
+addiu $2,$0,-2
+bgtz $2 2
+addiu $2,$0,0
 bgtz $2 2
 jr $0
-lw $0 $2 NEG_TWO
-bgtz $2 2
-lw $0 $2 ZERO
-bgtz $2 2
+addiu $2,$0,10
 jr $0
-addiu $2 $1 100
-jr $0
-
-ZERO: 0
-NEG_TWO: 2
-FIVE: 5
