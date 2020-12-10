@@ -1,25 +1,26 @@
 module divu(
     //division algorithm requires a that has been shifted left such that newa<b<2*newa
-    input logic [31:0] a, b, realb,
-	input logic clk, rst,
-    output logic [31:0] q, r,
-	output logic done
+    input logic [31:0] divua, divub, realb,
+	input logic clk, divurst,
+    output logic [31:0] divuq, divur,
+	output logic divudone
 );
-    logic [31:0] rega, regb, quotient, finished;
+    logic [31:0] rega, regb, quotient;
+	logic finished;
 
 	 //takes many cycles, requires rst to be high during clk posedge
 	 
 	 always_comb begin
-		q = quotient;
-		r = rega;
-		done = finished;
+		divuq = quotient;
+		divur = rega;
+		divudone = finished;
 	 end
 	 
-	 always_ff@ ( posedge clk, posedge rst ) begin
-			if(rst == 1) begin
+	 always_ff@ ( posedge clk) begin
+			if(divurst == 1) begin
 				quotient <= 32'h00000000;
-				rega <= a;
-				regb <= b;
+				rega <= divua;
+				regb <= divub;
 				finished <= 0;
 			end else begin
 			

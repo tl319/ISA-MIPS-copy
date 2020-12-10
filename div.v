@@ -2,7 +2,7 @@
 
 module div(
     input logic [31:0] a, b,
-    input logic signdiv, clk, rst,
+    input logic signdiv, clk, divrst,
     output logic [31:0] q, r,
 	output logic done
 );
@@ -14,16 +14,16 @@ module div(
 	logic [4:0] constind;
 
 	align aligner (
-		.clk(clk), .rst(rst), 
-		.a(ua), .b(ub), .shiftb(shiftedb),
-		.done(nxt)
+		.clk(clk), .alrst(divrst), 
+		.ala(ua), .alb(ub), .shiftb(shiftedb),
+		.aldone(nxt)
 	);
 
 	divu divider (
-		.clk(clk), .rst(nxt),
-		.a(ua), .b(shiftedb), .realb(ub),
-		.q(uq), .r(ur),
-		.done(done)
+		.clk(clk), .divurst(nxt),
+		.divua(ua), .divub(shiftedb), .realb(ub),
+		.divuq(uq), .divur(ur),
+		.divudone(done)
 	);
 
 	initial begin
