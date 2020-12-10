@@ -7,9 +7,11 @@ module div(
 	output logic done
 );
 
-	logic rst, nxt;
+	logic nxt;
 	//internal operand and result values, as division is unsigned and begins with the divisor shifted to the MSB of quotient (unclear explanation)
 	logic [31:0] ua, ub, shiftedb, uq, ur;
+
+	logic [4:0] constind;
 
 	align aligner (
 		.clk(clk), .rst(rst), 
@@ -24,6 +26,10 @@ module div(
 		.done(done)
 	);
 
+	initial begin
+		constind <= 5'b11111;
+	end
+
 	//first align b and a, then perform unsigned division
 	//always_ff @(posedge clk) begin
 		
@@ -32,7 +38,7 @@ module div(
 	//properly assign operands, quotient and remainder for signed/unsigned division and the signs of each operand 
 	always_comb begin
 		if(signdiv == 1) begin
-			if( a[31] == 1 ) begin
+			if( a[constind] == 1 ) begin
 				ua = ~(a - 1);
 				r = ~ur + 1;
 			end else begin
@@ -40,13 +46,13 @@ module div(
 				r = ur;
 			end
 
-			if( b[31] == 1 ) begin
+			if( b[constind] == 1 ) begin
 				ub = ~(b - 1);
 			end else begin
 				ub = b;
 			end
 
-			if( a[31] ^ b[31] ) begin
+			if( a[constind] ^ b[constind] ) begin
 				q = ~uq + 1;
 			end else begin
 				q = uq;
