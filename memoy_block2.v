@@ -9,8 +9,8 @@ module mips_memory (
     output logic[31:0] data_out
 );
 
-    parameter RAM_INIT_FILE = "./test/binary/basics.hex.txt";
-    parameter DATA_INIT_FILE = "./test/binary/data.hex.txt";
+    parameter RAM_INIT_FILE = "";
+    parameter DATA_INIT_FILE = "data_binary/jalr.hex.txt";
 
     reg[7:0] memory [2047:0];
 
@@ -23,12 +23,28 @@ module mips_memory (
         for (i=0; i<2048; i++) begin
             memory[i]=0;
         end
+        if (RAM_INIT_FILE == "binary/jalr.hex.txt")begin
+            $readmemh(DATA_INIT_FILE, memory, 4, 1023);
+        end
         /* Load contents from file if specified */
         if (RAM_INIT_FILE != "") begin
             $display("RAM : INIT : Loading RAM contents from %s", RAM_INIT_FILE);
-            $readmemh(DATA_INIT_FILE, memory, 4, 1023); 
+            
             $readmemh(RAM_INIT_FILE, memory,1024,2047); 
+            $display("RAM : INIT : DISPLAYING INITIALSIED RAM");
+            for (i = 4 ; i < 1024; i++) begin
+                if(memory[i] != 0 ) begin
+                    $display("%h: %h", i ,memory[i]);
+                end
+            end
+            for (i = 1024 ; i < 2048; i++) begin
+                if(memory[i] != 0 ) begin
+                    $display("%h: %h", (i+3217031168-1024) , memory[i]);
+                end
+            end
         end
+
+        
         // /* displays content at the start*/
         // for (i=0; i<2048; i++) begin
         //     if(memory[i]!=0)begin
@@ -53,12 +69,12 @@ module mips_memory (
             end
         end
         if (read_en) begin
-            data_out <= {memory[address], memory[address+1], memory[address+2], memory[address+3]};
+            data_out <= {memory[simp_address], memory[simp_address+1], memory[simp_address+2], memory[simp_address+3]};
         end
     end
 
-    always @(!active)begin
-        // if ( !active ) begin
+    always @(posedge clk) begin
+        if(memory[simp_address] == 8'h00 & memory[simp_address+1]==8'h00 & memory[simp_address+2]==8'h00 & memory[simp_address+3]==8'h08)begin
             integer i;
            
             // $display("Displaying Memory contents : ");
@@ -74,6 +90,7 @@ module mips_memory (
                     $display("%h: %h", (i-1024+3169845248) , memory[i]);
                 end
             end
+        end
     end
 
 
