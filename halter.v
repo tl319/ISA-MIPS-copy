@@ -8,9 +8,9 @@ module halter(
 
     always_ff @(posedge clk)
     if (rst == 1) begin
-    halt <=0;
-    end else if (state == 4'b0000 && pcout == 32'h00000000) begin
-    halt <=1;
+    halt <= 0;
+    end else if (state == 4'b0000 && pcout == 32'h0000001) begin
+    halt <= 1;
     end else begin
     halt <= halt;
     end
