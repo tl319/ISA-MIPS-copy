@@ -1,9 +1,9 @@
 module divu(
     //division algorithm requires a that has been shifted left such that newa<b<2*newa
     input logic [31:0] a, b, realb,
-	 input logic clk, rst,
+	input logic clk, rst,
     output logic [31:0] q, r,
-	 output logic done
+	output logic done
 );
     logic [31:0] rega, regb, quotient, finished;
 
