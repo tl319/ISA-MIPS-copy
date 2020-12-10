@@ -2,6 +2,7 @@ module mips_tb;
     timeunit 1ns / 10ps;
 
     parameter RAM_INIT_FILE = "test/binary/basics.hex.txt";
+    parameter DATA_INIT_FILE = "test/binary/data.hex.txt";
     parameter TIMEOUT_CYCLES = 10000;
 
     logic clk;

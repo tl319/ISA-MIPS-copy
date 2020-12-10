@@ -10,12 +10,13 @@ module mips_memory (
 );
 
     parameter RAM_INIT_FILE = "./test/binary/basics.hex.txt";
+    parameter DATA_INIT_FILE = "./test/binary/data.hex.txt";
 
     reg[7:0] memory [2047:0];
 
     logic[31:0] simp_address;
 
-    assign simp_address=(address<32'b10111100111100000000000000000000) ? address : address-32'b10111100111100000000000000000000 + 32'b00000000000000000000010000000000;
+    assign simp_address=(address<32'b10111100111100000000000000000000) ? address : address-32'hBFC00000 + 32'd1024;
     initial begin
         integer i;
         /* Initialise to zero by default */
@@ -25,7 +26,8 @@ module mips_memory (
         /* Load contents from file if specified */
         if (RAM_INIT_FILE != "") begin
             $display("RAM : INIT : Loading RAM contents from %s", RAM_INIT_FILE);
-            $readmemh(RAM_INIT_FILE, memory,1024,2047);
+            $readmemh(DATA_INIT_FILE, memory, 4, 1023); 
+            $readmemh(RAM_INIT_FILE, memory,1024,2047); 
         end
         // /* displays content at the start*/
         // for (i=0; i<2048; i++) begin
