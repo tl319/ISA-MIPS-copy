@@ -5,19 +5,22 @@ TESTCASE="$1" #name of the testcase
 
 >&2 echo "CPU being tested for ${TESTCASE} testcase..."
 
-
+echo "${TESTCASE}"
 #assembling the instructions
 >&2 echo "Assembling instructions..."
-./bin/assembler <test/testcases/{TESTCASE}.asm.txt >test/binary/[TESTCASE}.hex.txt
+./bin/assembler ./test/testcases/${TESTCASE}.asm.txt >|test/binary/${TESTCASE}.hex.txt
+./bin/assembler ./test/testcases/${TESTCASE}.asm.txt >|test/binary/basics.hex.txt
 
 
 >&2 echo "Compiling verilog files..."
 
-iverilog -g 2012 \
-   src/*.v  \
-   -s src/MIPS_tb.v \ #test bench what's the name???
-   -PMIPS_tb.RAM_INIT_FILE=\"test/binary/${TESTCASE}.hex.txt\" \
-   -o test/simulator/MIPS_tb_${TESTCASE}
+#iverilog -g 2012 \
+#   src/*.v  \
+#   -s src/MIPS_tb.v \ #test bench what's the name???
+#   -PMIPS_tb.RAM_INIT_FILE=\"test/binary/${TESTCASE}.hex.txt\" \
+#   -o test/simulator/MIPS_tb_${TESTCASE}
+
+   iverilog -g 2012 ./src/*.v -s ./src/MIPS_tb.v -o test/simulator/MIPS_tb_${TESTCASE} && ./test/simulator/MIPS_tb_${TESTCASE} >| basics.stdou
 
 >&2 echo "Running verilog files..."
 

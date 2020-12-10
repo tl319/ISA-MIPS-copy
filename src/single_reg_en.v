@@ -9,14 +9,14 @@ module single_reg_en(
 	always_ff @(posedge clk, posedge rst) begin	
 
 		if (rst == 1) begin
-			single_reg <= 32'h00000000 ;
+			q <= 32'h00000000 ;
 		end 
         else if (wr_en == 1) begin
-            single_reg <= p ;
+            q <= p ;
 		end
-        else begin
-            q <= single_reg ;
-        end
+        //else begin
+          //  q <= single_reg ;
+        //end
 	end
     
 endmodule

@@ -9,12 +9,12 @@ module single_reg_1bit(
 	always_ff @(posedge clk, posedge rst) begin
 
 		if (rst == 1) begin
-			single_reg <= 1'b0;
+			q <= 1'b0;
 		end
 		else begin
-			single_reg <= p;
+			q <= p;
 		end
-		q <= single_reg;
+	//	q <= single_reg;
 	end
 
 endmodule

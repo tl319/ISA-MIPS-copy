@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include "mips.hpp"
 
 using namespace std;
@@ -15,9 +16,21 @@ string to_hex1(unsigned char x)
 
 void ram_write_out(const vector<unsigned char>& mem)
 {
-  for(unsigned int i = 0xBFC00000-1024; i<0xBFC00000+1024; i++)
+  /*for(unsigned int i = 0; i<mem.size(); i++)
   {
     if(mem[i]!=0)
       cout<<i<<":"<<to_hex1(mem[i]) << endl;
+  }*/
+
+  for (unsigned int i = 0 ; i < 1024; i++)
+  {
+      if(mem[i] != 0 )
+          cout<<i<<":"<<to_hex1(mem[i])<<endl;
+  }
+
+  for (unsigned int i = 1024 ; i < 2048; i++)
+  {
+      if(mem[i] != 0 )
+        cout<<i-1024+3169845248<<": " <<  to_hex1(mem[i])<<endl;
   }
 }

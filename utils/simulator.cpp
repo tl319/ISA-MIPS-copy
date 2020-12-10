@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#include "mips.hpp"
+#include "mips2.hpp"
 
 using namespace std;
 

@@ -13,13 +13,7 @@ module mips_cpu_bus(
   input logic [31:0] readdata,
   output logic [3:0] state,
   output logic [31:0] WriteRegData,
-  output logic RegWrite,
-  output logic [1:0] MemToReg,
-  output logic [1:0] RegDst,
-  output logic [1:0] ALUSrcA,
-  output logic [2:0] ALUSrcB,
-  output logic [31:0] aluout,
-  output logic [31:0] aluresult
+  output logic RegWrite
   );
    logic [31:0] constant_1;
     logic [31:0] constant_4;
@@ -29,13 +23,13 @@ module mips_cpu_bus(
     logic reset_mux_cnt;
     logic [31:0] pc_data;
     logic [31:0] final_pc_data;
-    //logic [31:0] aluout;
+    logic [31:0] aluout;
     logic [31:0] pc4_jump2;
     logic [31:0] altpcsrc;
     logic altpcmux_cnt;
     logic [31:0] altpcdata;
     logic alt_pc_write;
-    //logic [31:0] aluresult;
+    logic [31:0] aluresult;
     logic [1:0] pc_src_mux;
     logic pc_write;
     logic [31:0] pc_out;
@@ -58,10 +52,10 @@ module mips_cpu_bus(
     logic [5:0] mem_function;
     logic [4:0] mem_info;
     logic branch;
-    //logic [1:0] MemToReg;
-    //logic [1:0] RegDst;
-    //logic [1:0] ALUSrcA;
-    //logic [2:0] ALUSrcB;
+    logic [1:0] MemToReg;
+    logic [1:0] RegDst;
+    logic [1:0] ALUSrcA;
+    logic [2:0] ALUSrcB;
     logic ir_write;
     // logic RegWrite;
     logic ABswitch_cnt;
@@ -236,7 +230,7 @@ assign writedata = regbout;
       );
 
       MUX_4 MemToReg_mux(
-      .a (aluout),
+      .a (aluresult),
       .b (final_data),
       .c (constant_1),
       .d (aluresult),
