@@ -23,17 +23,68 @@ module ALU_div_tb;
     end
 
     initial begin
+        $dumpfile("ALU_div_waves.vcd");
+        $dumpvars(0,ALU_div);
+
         rst <= 0;
-        dividend <= 32'hF0000000;
+        dividend <= 32'h00000005;
         divisor <= 32'h00000002;
         ctrl <= 4'b1100;
         @(posedge clk);
         rst <= 1;
         @(posedge clk);
         rst <= 0;
-
-        $dumpfile("ALU_div_waves.vcd");
-        $dumpvars(0,ALU_div);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        @(posedge clk);
+        ctrl <= 4'b1101;
     end
 
 endmodule 

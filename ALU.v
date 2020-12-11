@@ -58,7 +58,7 @@ module ALU(
                 out = divq;
             end     
             4'b1101: begin //MOD
-                S = 1;
+                //S = 1;
                 out = divr;
             end     
             4'b1110: begin //DIVU
@@ -66,7 +66,7 @@ module ALU(
                 out = divq;
             end      
             4'b1111: begin //MODU
-                S = 0;
+                //S = 0;
                 out = divr;
             end
 
