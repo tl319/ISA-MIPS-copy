@@ -35,11 +35,11 @@ module div(
 	
 	always_ff @(posedge clk) begin
 		
-		if(aligncnt < 5'h12 ) begin
+		if(aligncnt < 5'h13 ) begin
 			aligncnt <= (aligncnt + 1);
 		end
 
-		if(aligncnt == 5'h11) begin
+		if(aligncnt == 5'h12) begin
 			nxt <= 1;
 		end else begin
 			nxt <= 0;

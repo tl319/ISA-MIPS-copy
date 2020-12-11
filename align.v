@@ -11,7 +11,7 @@ module align (
 	logic [15:0] ahi, alo;
 	//the bs have an extra bit to avoid overflow when shifting  
 	logic [16:0] bhi, blo;
-	logic [3:0] i, blo_cnt;
+	logic [4:0] i, blo_cnt;
 	logic end_lo, ahizero;
 
 	/*initial begin
@@ -39,8 +39,8 @@ module align (
 			alo <= ala[15:0];
 			bhi <= alb[31:16];
 			blo <= alb[15:0];
-			i <= 4'h0;
-			blo_cnt <= 4'h0;
+			i <= 5'b00000;
+			blo_cnt <= 5'h00;
 			//ahi_cnt <= 4'h0;
 			//alfinished <= 0; 
 			end_lo <= 0;
@@ -52,7 +52,7 @@ module align (
 				shifted <= (alb<<(i-1));
 				//alfinished <= 1;
 			end else begin
-				if(i == 4'hF) begin
+				if(i == 5'b10000) begin
 					if( ahizero == 1 ) begin
 						shifted <= (alb<<(blo_cnt-1));
 						//alfinished <= 1;
