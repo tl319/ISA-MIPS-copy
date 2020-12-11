@@ -46,7 +46,7 @@ set -e
 
 
 set +e
-diff -w test/reference/${TESTCASE}.out test/output/MIPS_tb_${TESTCASE}.out
+diff -i -w test/reference/${TESTCASE}.out test/output/MIPS_tb_${TESTCASE}.out
 RES=$?
 set -e
 
