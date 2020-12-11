@@ -3,11 +3,11 @@
 module div(
     input logic [31:0] a, b,
     input logic signdiv, clk, divrst,
-    output logic [31:0] q, r,
-	output logic done
+    output logic [31:0] q, r
+	//output logic done
 );
 
-	logic nxt, aligndone, buff;
+	logic nxt;
 	//internal operand and result values, as division is unsigned and begins with the divisor shifted to the MSB of quotient (unclear explanation)
 	logic [31:0] ua, ub, shiftedb, uq, ur;
 
@@ -15,15 +15,15 @@ module div(
 
 	align aligner (
 		.clk(clk), .alrst(divrst), 
-		.ala(ua), .alb(ub), .shiftb(shiftedb),
-		.aldone(aligndone)
+		.ala(ua), .alb(ub), .shiftb(shiftedb)
+		//.aldone(aligndone)
 	);
 
 	divu divider (
 		.clk(clk), .divurst(nxt),
 		.divua(ua), .divub(shiftedb), .realb(ub),
-		.divuq(uq), .divur(ur),
-		.divudone(done)
+		.divuq(uq), .divur(ur)
+		//.divudone(done)
 	);
 
 	initial begin
@@ -31,14 +31,17 @@ module div(
 		//nxt <= 0;
 		//buff <= 0;
 		aligncnt <= 0;
+		nxt <= 0;
 	end
 
 	
 	always_ff @(posedge clk) begin
 		
-		aligncnt <= (aligncnt + 1);
+		if(aligncnt < 5'h12 ) begin
+			aligncnt <= (aligncnt + 1);
+		end
 
-		if(aligncnt == 5'h2F) begin
+		if(aligncnt == 5'h11) begin
 			nxt <= 1;
 		end else begin
 			nxt <= 0;

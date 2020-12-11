@@ -6,8 +6,8 @@ module div_tb;
     div division(
         .a(dividend), .b(divisor),
         .clk(clk), .divrst(rst), .signdiv(signdiv),
-        .q(quotient), .r(remainder),
-        .done(done)
+        .q(quotient), .r(remainder)
+        //.done(done)
     );
 
     initial begin
@@ -22,7 +22,7 @@ module div_tb;
 
     initial begin
         rst <= 0;
-        dividend <= 32'h00000008;
+        dividend <= 32'h00000009;
         divisor <= 32'h00000002;
         @(posedge clk);
         rst <= 1;

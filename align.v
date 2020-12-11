@@ -2,26 +2,26 @@
 module align (
 	input logic clk, alrst,
 	input logic [31:0] ala, alb,
-	output logic [31:0] shiftb, 
+	output logic [31:0] shiftb 
 	//output logic [15:0] bhigh, blow,
 	//output logic [3:0] cnt, botcnt,
-	output logic aldone
+	//output logic aldone
 );
 	logic [31:0] shifted;
 	logic [15:0] ahi, alo, bhi, blo;
 	logic [3:0] i, blo_cnt;
-	logic alfinished, end_lo;
+	logic end_lo;
 
-	initial begin
+	/*initial begin
 		alfinished <= 0;
-	end
+	end*/
 	
 	always_comb begin
 		//cnt = i;
 		shiftb = shifted;
 		//bhigh = bhi;
 		//blow = blo;
-		aldone = alfinished;
+		//aldone = alfinished;
 		//botcnt = blo_cnt;
 	end
 
@@ -40,18 +40,18 @@ module align (
 			i <= 4'h0;
 			blo_cnt <= 4'h0;
 			//ahi_cnt <= 4'h0;
-			alfinished <= 0; 
+			//alfinished <= 0; 
 			end_lo <= 0;
 		end else begin
 				
             //shift both b halves and compare to corresponding a half-word, to determine amount by which to shift whole b.
 			if (bhi > ahi) begin
 				shifted <= (alb<<(i-1));
-				alfinished <= 1;
+				//alfinished <= 1;
 			end else begin
 				if(i == 4'hF) begin
 					shifted <= (alb<<(blo_cnt-1));
-					alfinished <= 1;
+					//alfinished <= 1;
 				end else begin
 					i <= (i + 1);
 					bhi <= (bhi << 1);
