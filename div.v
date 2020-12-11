@@ -1,5 +1,3 @@
-//DIV, currently broken
-
 module div(
     input logic [31:0] a, b,
     input logic signdiv, clk, divrst,

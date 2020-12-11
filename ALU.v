@@ -1,18 +1,23 @@
-
 module ALU(
     input logic [31:0] a, b,
     input logic [3:0] ctrl,
+    input logic clk, divrst,
     output logic [31:0] out,
     output logic [1:0] comp
 );
     //signals and module for division
     logic S;
     logic [31:0] divq, divr;
-    //div divcirc(.a(a), .b(b), .signdiv(S), .q(divq), .r(divr));
 
     //carry for multiplication
     logic C;
     logic [32:0] multbot;
+
+    div division(
+        .a(a), .b(b),
+        .clk(clk), .divrst(divrst), .signdiv(S),
+        .q(divq), .r(divr)
+    );
 
     always_comb begin
        
@@ -47,8 +52,8 @@ module ALU(
             //     C = multbot[32];
             //     out = multbot;
             // end
-                     
-            /*4'b1100: begin //DIV
+
+            4'b1100: begin //DIV
                 S = 1;
                 out = divq;
             end     
@@ -63,12 +68,14 @@ module ALU(
             4'b1111: begin //MODU
                 S = 0;
                 out = divr;
-            end*/
+            end
+
+            /*
             //placeholder for DIV and MOD operations
             4'b1100: out = 32'h00000000; 
             4'b1101: out = 32'h00000000; 
             4'b1110: out = 32'h00000000; 
-            4'b1111: out = 32'h00000000;       
+            4'b1111: out = 32'h00000000;  */     
         endcase
     end
 endmodule
