@@ -16,32 +16,33 @@ module mips_tb;
     logic[31:0] readdata;
     logic[31:0] register_v0;
     logic[3:0] byte_en;
-    logic waterequest;
-    logic [3:0] state;
-    logic [31:0] WriteRegData;
-    logic RegWrite;
-    logic [31:0] aluresult;
-    logic [31:0] SrcAOut;
-    logic [31:0] SrcBOut;
-    logic [1:0] ALUSrcA;
-    logic [2:0] ALUSrcB;
-    logic [31:0] regaout;
-    logic [31:0] regbout;
-    logic [4:0] Dst;
-    logic [31:0] aluout;
-    logic [1:0] MemToReg;
-    logic [31:0] final_data;
-    logic [31:0] masked_data;
+    logic waitrequest;
+    //logic [3:0] state;
+    //logic [31:0] WriteRegData;
+    //logic RegWrite;
+    //logic [31:0] aluresult;
+    //logic [31:0] SrcAOut;
+    //logic [31:0] SrcBOut;
+    //logic [1:0] ALUSrcA;
+    //logic [2:0] ALUSrcB;
+    //logic [31:0] regaout;
+    //logic [31:0] regbout;
+    //logic [4:0] Dst;
+    //logic [31:0] aluout;
+    //logic [1:0] MemToReg;
+    //logic [31:0] final_data;
+    //logic [31:0] masked_data;
 
     mips_memory #(RAM_INIT_FILE) ramInst(clk, active, address, write, read, byte_en, writedata, readdata);
 
-    mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata,state, WriteRegData, RegWrite, aluresult, SrcAOut, SrcBOut, ALUSrcA, ALUSrcB, regaout, regbout, Dst, aluout, MemToReg, final_data, masked_data );
+    mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata );
 
     //Generate clock
     initial begin
         integer i;
         i=0;
         clk=0;
+        waitrequest=0;
         $display("CPU reset");
         repeat (TIMEOUT_CYCLES) begin
             #10;
@@ -50,27 +51,27 @@ module mips_tb;
             clk = !clk;
             i=i+1;
             $display("%d cycle",i);
-            $display("state: %h", state);
-            $display("MemToReg: %b", MemToReg);
-            $display("final_data: %h", final_data);
-            $display("masked_data: %h", masked_data);
-            $display("WriteRegData : %h",WriteRegData );
-            $display("RegWrite : %h", RegWrite );
-            $display("Dst: %d", Dst);
+            //$display("state: %h", state);
+            //$display("MemToReg: %b", MemToReg);
+            //$display("final_data: %h", final_data);
+            //$display("masked_data: %h", masked_data);
+            //$display("WriteRegData : %h",WriteRegData );
+            //$display("RegWrite : %h", RegWrite );
+            //$display("Dst: %d", Dst);
 
             $display("address: %h",address);
 
             $display("readdata: %h", readdata);
             $display("write: %b", write);
-            $display("ALUSrcA: %b", ALUSrcA);
-            $display("regaout %h", regaout);
-            $display("SrcAOut: %h", SrcAOut);
-            $display("ALUSrcB: %b", ALUSrcB);
-            $display("regbout: %h", regbout);
-            $display("SrcBOut: %h", SrcBOut);
+          //  $display("ALUSrcA: %b", ALUSrcA);
+            //$display("regaout %h", regaout);
+            //$display("SrcAOut: %h", SrcAOut);
+            //$display("ALUSrcB: %b", ALUSrcB);
+          //  $display("regbout: %h", regbout);
+          //  $display("SrcBOut: %h", SrcBOut);
             $display("writedata: %h", writedata);
-            $display("aluresult: %h", aluresult);
-            $display("aluout: %h", aluout);
+          //  $display("aluresult: %h", aluresult);
+          //  $display("aluout: %h", aluout);
             // $display("active: %b",active);
         end
 

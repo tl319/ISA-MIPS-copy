@@ -9,7 +9,7 @@ module decoder(
     input logic [5:0] mem_function,
     input logic [4:0] mem_info,
     input logic wait_request,
-    input logic branch,
+    //input logic branch,
     output logic [1:0] MemToReg,
     output logic [1:0] RegDst,
     output logic [1:0] PCSrc,
