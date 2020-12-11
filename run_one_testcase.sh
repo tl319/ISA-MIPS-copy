@@ -20,7 +20,9 @@ echo "${TESTCASE}"
 #   -PMIPS_tb.RAM_INIT_FILE=\"test/binary/${TESTCASE}.hex.txt\" \
 #   -o test/simulator/MIPS_tb_${TESTCASE}
 
-   iverilog -g 2012 ./src/*.v -s ./src/MIPS_tb.v -o test/simulator/MIPS_tb_${TESTCASE} && ./test/simulator/MIPS_tb_${TESTCASE} >| basics.stdou
+iverilog -g 2012   src/*.v  -s mips_tb  -o test/simulator/MIPS_tb_${TESTCASE}
+
+#./test/simulator/MIPS_tb_${TESTCASE} >| basics.stdou
 
 >&2 echo "Running verilog files..."
 

@@ -23,7 +23,7 @@ string to_hex1(unsigned char x);
 
 //runs the simulation, when the data is already in the RAM, outputs the values of the registers after every instruction
 //should instr_mem be const???
-int32_t mips_simulate(vector<unsigned char> mem);
+int32_t mips_simulate(vector<unsigned char>& mem);
 
 void ram_write_out(const vector<unsigned char>& mem);
 
