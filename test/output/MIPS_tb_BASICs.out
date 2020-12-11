@@ -6,16 +6,16 @@ WARNING: src/memoy_block2.v:30: $readmemh(test/binary/basics.hex.txt): Not enoug
 0bcf00003: ff
 0bcf00004: ac
 0bcf00005: 02
-0bcf00007: 01
+0bcf00007: 04
 0bcf00008: 8c
 0bcf00009: 03
-0bcf0000b: 01
+0bcf0000b: 04
 0bcf0000c: 24
 0bcf0000d: 62
 0bcf0000e: 01
 0bcf0000f: 01
 0bcf00010: ac
 0bcf00011: 02
-0bcf00013: 02
+0bcf00013: 08
 0bcf00017: 08
 v0 : 00000000

@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(int argc, char** argv)
-{   
+{
     if (argc < 2) {
         cerr << "ERR: Please include assembly program as program argument." << endl;
         exit(1);
@@ -59,12 +59,15 @@ int main(int argc, char** argv)
         }else if(head[0] == '#') {
             // If there is a hash ("#") in the beginning of a line, the line is a comment
             continue;
+        }else if(lines[i] == "") {
+            // If a line on the assembly file is empty, ignore it.
+            continue;
         }else{
             cerr<<"Couldn't parse '"<<head<<"'\n";
             exit(1);
         }
     }
-    
+
     for(int i=0; i<instr_and_operands.size(); i++) {
         if (mips_is_instruction(instr_and_operands[i].first)) {
             string opname = instr_and_operands[i].first;
@@ -142,7 +145,7 @@ int main(int argc, char** argv)
                         rs = stoi(operands[1]) << 21;
                         imm = stoi(operands[2]);
                     }
-                
+
                     othcode = rs + rt + imm;
                 } else if (operands.size()==2) {
                     if (mips_is_mem_acc_instr(opname)) {
@@ -159,7 +162,7 @@ int main(int argc, char** argv)
                         uint32_t rs = 0;
                         uint32_t rt = 0;
                         uint32_t imm = stoi(operands[1]);
-                        
+
                         if (opname == "lui") {
                             rt = stoi(operands[0]) << 16;
                         } else {
@@ -179,7 +182,7 @@ int main(int argc, char** argv)
                         othcode = rs + rt + imm;
                     }
                 } else {
-                    cerr << "ERR: Invalid number of operands for i-type instruction '" << opname << "'." << endl; 
+                    cerr << "ERR: Invalid number of operands for i-type instruction '" << opname << "'." << endl;
                     exit(1);
                 }
             }

@@ -325,14 +325,14 @@ registers[0] = 0;
           registers[rt_index] = ((unsigned char)mem[simp_address(registers[rs_index]+immediate+1)]<<8) + (unsigned char)mem[simp_address(registers[rs_index]+immediate)];
           break;
         case 35: //bin:100011, LW what if addressing is incorrect???
-          registers[rt_index] = (mem[simp_address(registers[rs_index] + (immediate<<2)+3)]<<24) + (mem[simp_address(registers[rs_index]+(immediate<<2) +2)]<<16) + (mem[simp_address(registers[rs_index]+(immediate<<2)+1)]<<8) + mem[simp_address(registers[rs_index]+(immediate<<2))];
+          registers[rt_index] = (mem[simp_address(registers[rs_index] + immediate+3)]<<24) + (mem[simp_address(registers[rs_index]+immediate +2)]<<16) + (mem[simp_address(registers[rs_index]+immediate+1)]<<8) + mem[simp_address(registers[rs_index]+immediate)];
           break;
         case 43: //vin:101011, SW what if addressing not correst? so doesn't start at 4*k address
 
-          mem[simp_address(registers[rs_index] + (immediate<<2) +3)] = registers[rt_index]>>24; //msB
-          mem[simp_address(registers[rs_index] + (immediate<<2)+2)] = (registers[rt_index]<<8)>>24;
-          mem[simp_address(registers[rs_index] + (immediate<<2)+1)] = (registers[rt_index]<<16)>>24;
-          mem[simp_address(registers[rs_index] + (immediate)<<2)] = (registers[rt_index]<<24)>>24; //lsB
+          mem[simp_address(registers[rs_index] + immediate +3)] = registers[rt_index]>>24; //msB
+          mem[simp_address(registers[rs_index] + immediate+2)] = (registers[rt_index]<<8)>>24;
+          mem[simp_address(registers[rs_index] + immediate+1)] = (registers[rt_index]<<16)>>24;
+          mem[simp_address(registers[rs_index] + immediate)] = (registers[rt_index]<<24)>>24; //lsB
           break;
         case 40: //101000 SB
           mem[simp_address(registers[rs_index] + immediate)] = registers[rt_index]; //which byte to store??? lowest??
