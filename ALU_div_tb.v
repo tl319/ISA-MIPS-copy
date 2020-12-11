@@ -24,9 +24,9 @@ module ALU_div_tb;
 
     initial begin
         rst <= 0;
-        dividend <= 32'h00000009;
+        dividend <= 32'hF0000000;
         divisor <= 32'h00000002;
-        ctrl <= 4'b1110;
+        ctrl <= 4'b1100;
         @(posedge clk);
         rst <= 1;
         @(posedge clk);

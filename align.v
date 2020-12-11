@@ -8,7 +8,9 @@ module align (
 	//output logic aldone
 );
 	logic [31:0] shifted;
-	logic [15:0] ahi, alo, bhi, blo;
+	logic [15:0] ahi, alo;
+	//the bs have an extra bit to avoid overflow when shifting  
+	logic [16:0] bhi, blo;
 	logic [3:0] i, blo_cnt;
 	logic end_lo;
 
