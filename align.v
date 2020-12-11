@@ -12,7 +12,7 @@ module align (
 	//the bs have an extra bit to avoid overflow when shifting  
 	logic [16:0] bhi, blo;
 	logic [3:0] i, blo_cnt;
-	logic end_lo;
+	logic end_lo, ahizero;
 
 	/*initial begin
 		alfinished <= 0;
@@ -44,6 +44,7 @@ module align (
 			//ahi_cnt <= 4'h0;
 			//alfinished <= 0; 
 			end_lo <= 0;
+			ahizero <= ( ala[31:16] == 16'h0000 );
 		end else begin
 				
             //shift both b halves and compare to corresponding a half-word, to determine amount by which to shift whole b.
@@ -52,8 +53,12 @@ module align (
 				//alfinished <= 1;
 			end else begin
 				if(i == 4'hF) begin
-					shifted <= (alb<<(blo_cnt-1));
-					//alfinished <= 1;
+					if( ahizero == 1 ) begin
+						shifted <= (alb<<(blo_cnt-1));
+						//alfinished <= 1;
+					end else begin
+						shifted <= {alb<<(blo_cnt-1), {16'h0000} };
+					end					
 				end else begin
 					i <= (i + 1);
 					bhi <= (bhi << 1);
@@ -62,7 +67,7 @@ module align (
 	
 	
 			if(end_lo == 0) begin
-				if(blo > alo) begin
+				if( ( (blo > alo) & (ahizero == 1) ) | ( (blo > ahi) & (ahizero == 0) ) ) begin
 					end_lo <= 1;
 				end else begin
 					blo <= (blo << 1);

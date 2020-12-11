@@ -22,8 +22,8 @@ module div_tb;
 
     initial begin
         rst <= 0;
-        dividend <= 32'hF0000000;
-        divisor <= 32'h10000000;
+        dividend <= 32'h50000000;
+        divisor <= 32'h00000002;
         signdiv <= 0;
         @(posedge clk);
         rst <= 1;
