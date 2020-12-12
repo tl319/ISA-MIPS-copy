@@ -53,7 +53,7 @@ module div(
 			nxt <= 0;
 		end
 		
-		if(aligncnt == 6'h32) begin
+		if(aligncnt == 6'h33) begin
 			divdone <= 1;
 		end
 	end

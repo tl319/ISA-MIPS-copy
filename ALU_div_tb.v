@@ -15,7 +15,8 @@ module ALU_div_tb;
         .a(a), .b(b),
         .ctrl(ctrl),
         .clk(clk), .divrst(rst),
-        .out(result), .comp(comp)
+        .out(result), .comp(comp),
+        .divdone(done)
     );
 
     initial begin
@@ -74,6 +75,7 @@ module ALU_div_tb;
             @(posedge clk);
             @(posedge clk);
             @(posedge clk);
+            
             $fwrite(wrq, "%h\n", result);
             //$display(result);
             @(posedge clk);
@@ -121,7 +123,7 @@ module ALU_div_tb;
             @(posedge clk);
             @(posedge clk);
             @(posedge clk);
-
+            @(posedge clk);
             
             $fwrite(wrq, "%h\n", result);
             //$display(result);
