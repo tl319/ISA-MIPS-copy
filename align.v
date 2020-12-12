@@ -3,9 +3,6 @@ module align (
 	input logic clk, alrst,
 	input logic [31:0] ala, alb,
 	output logic [31:0] shiftb 
-	//output logic [15:0] bhigh, blow,
-	//output logic [3:0] cnt, botcnt,
-	//output logic aldone
 );
 	logic [31:0] shifted;
 	logic [15:0] ahi, alo;
@@ -13,50 +10,37 @@ module align (
 	logic [16:0] bhi, blo;
 	logic [4:0] i, blo_cnt;
 	logic end_lo, ahizero;
-
-	/*initial begin
-		alfinished <= 0;
-	end*/
 	
+	//constantly update output (shifted b value)
 	always_comb begin
-		//cnt = i;
 		shiftb = shifted;
-		//bhigh = bhi;
-		//blow = blo;
-		//aldone = alfinished;
-		//botcnt = blo_cnt;
 	end
 
 	always_ff @(posedge clk, negedge clk) begin
 
-		//if( alfinished == 1 ) begin
-		//	alfinished <= 0;
-		//end
-
 		if(alrst == 1) begin
-            //for speed, a and b are divided into two halves
+            //to reduce CPI, a and b are divided into two halves
 			ahi <= ala[31:16];
 			alo <= ala[15:0];
 			bhi <= alb[31:16];
 			blo <= alb[15:0];
 			i <= 5'b00000;
 			blo_cnt <= 5'h00;
-			//ahi_cnt <= 4'h0;
-			//alfinished <= 0;
 			shifted <= 32'h00000000; 
 			end_lo <= 0;
 			ahizero <= ( ala[31:16] == 16'h0000 );
 		end else begin
 				
-            //shift both b halves and compare to corresponding a half-word, to determine amount by which to shift whole b.
+            //shift both b halves and compare to a half-words, 
+			//thus determine amount by which to shift whole b.
 			if (bhi > ahi) begin
 				shifted <= (alb<<(i-1));
-				//alfinished <= 1;
 			end else begin
 				if(i == 5'b10000) begin
+					//if bhi has been shifted without finding a value > ahi, look to results from blo
+					//this may be less efficient than a method that checks if bhi is empty
 					if( ahizero == 1 ) begin
 						shifted <= (alb<<(blo_cnt-1));
-						//alfinished <= 1;
 					end else begin
 						shifted <= {alb<<(blo_cnt-1), {16'h0000} };
 					end					
@@ -68,6 +52,7 @@ module align (
 	
 	
 			if(end_lo == 0) begin
+				//checks blo against ahi and alo for both cases: ahi is and isn't zero
 				if( ( (blo > alo) & (ahizero == 1) ) | ( (blo > ahi) & (ahizero == 0) ) ) begin
 					end_lo <= 1;
 				end else begin

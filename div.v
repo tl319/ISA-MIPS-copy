@@ -15,30 +15,26 @@ module div(
 	align aligner (
 		.clk(clk), .alrst(divrst), 
 		.ala(ua), .alb(ub), .shiftb(shiftedb)
-		//.aldone(aligndone)
 	);
 
 	divu divider (
 		.clk(clk), .divurst(nxt),
 		.divua(ua), .divub(shiftedb), .realb(ub),
 		.divuq(uq), .divur(ur)
-		//.divudone(done)
 	);
 
 	initial begin
 		constind <= 5'b11111;
-		//nxt <= 0;
-		//buff <= 0;
 		aligncnt <= 0;
 		nxt <= 0;
 		divdone <= 0;
 	end
 
-	
+	//on the 18th half cycle b has been aligned for division, on the 51st the division is complete (worst case values):
+	//in 26 clock cycles the division is finished
 	always_ff @(posedge clk, negedge clk) begin
 
 		if(divrst == 1) begin
-			constind <= 5'b11111;
 			aligncnt <= 6'b000000;
 			divdone <= 0;
 		end	
