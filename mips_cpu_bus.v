@@ -96,6 +96,8 @@ module mips_cpu_bus(
     logic Jump_EN;
     logic [31:0] irout;
     logic [31:0] aout;
+    logic divrst;
+    logic divdone;
 
 assign lrmuxLSB = alu2out;
 assign writedata = regbout;
@@ -226,7 +228,9 @@ assign writedata = regbout;
         .byte_cnt (byte_cnt),
         .aluop (aluop),
         .link_en (link_en),
-        .link_in (link_in)
+        .link_in (link_in),
+        .divrst (divrst),
+        .divdone (divdone)
       );
 
       state_machine state_machine_a(
@@ -237,7 +241,8 @@ assign writedata = regbout;
       .wait_request (waitrequest),
       .halt (halt),
       .state (state),
-      .active (active)
+      .active (active),
+      .divdone (divdone)
       );
 
       MUX_4_5bit RegDst_mux(
@@ -326,8 +331,11 @@ assign writedata = regbout;
       .a (SrcAOut),
       .b (SrcBOut),
       .ctrl (aluop),
+      .clk (clk),
+      .divrst (divrst),
       .out (aluresult),
-      .comp (cond)
+      .comp (cond),
+      .divdone (divdone)
       );
       single_reg alutstore(
       .clk (clk),

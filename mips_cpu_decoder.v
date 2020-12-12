@@ -34,7 +34,9 @@ module decoder(
     output logic [1:0] byte_cnt,
     output logic [3:0] aluop,
     output logic link_en,
-    output logic link_in
+    output logic link_in,
+    input logic divdone,
+    output logic divrst
 
 );
     logic beq;
@@ -167,6 +169,7 @@ module decoder(
         aluop = 4'b0000;
         link_en = 0;
         link_in = 0;
+        divrst = 0;
         end
       4'b0001: begin
         if(mem_opcode == 6'b000100) begin
@@ -323,6 +326,7 @@ module decoder(
         end
         link_en = 0;
         link_in = 0;
+        divrst = 0;
         end
       4'b0010: begin
         MemToReg = 2'b00;
@@ -420,6 +424,11 @@ module decoder(
         end else begin
         link_in = 0;
         end
+        if (divdone == 1 && (divu == 1 || div ==1)) begin
+        divrst = 1;
+        end else begin
+        divrst =0;
+        end
         end
       4'b0011: begin
         if(slt ==1 || slti ==1 || sltiu == 1 || sltu == 1) begin
@@ -509,6 +518,7 @@ module decoder(
         end
         link_en = 0;
         link_in = 0;
+        divrst = 0;
         end
       4'b0100: begin
         if(div == 1 || divu == 1 || mult == 1 || multu == 1) begin
@@ -583,6 +593,7 @@ module decoder(
         aluop = 4'b0000;
         link_en = 0;
         link_in = 0;
+        divrst = 0;
         end
       4'b0101: begin
         MemToReg = 2'b00;
@@ -620,6 +631,7 @@ module decoder(
         aluop = 4'b0000;
         link_en = 0;
         link_in = 0;
+        divrst = 0;
         end
       4'b1111: begin
         MemToReg = 2'b00;
@@ -657,6 +669,7 @@ module decoder(
         aluop = 4'b0000;
         link_en = 0;
         link_in = 0;
+        divrst = 0;
         end
       4'b1110: begin
         MemToReg = 2'b00;
@@ -694,6 +707,7 @@ module decoder(
         aluop = 4'b0000;
         link_en = 0;
         link_in = 0;
+        divrst = 0;
         end
       4'b1001: begin
         MemToReg = 2'b11;
@@ -743,6 +757,7 @@ module decoder(
         end
         link_en = 1;
         link_in = 0;
+        divrst =0;
         end
       endcase
       end
