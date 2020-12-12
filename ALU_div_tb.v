@@ -6,7 +6,7 @@ module ALU_div_tb;
     logic [31:0] a, b, result;
     logic [3:0] ctrl;
     logic [1:0] comp;
-    integer wrq, wrr, i, c;
+    integer wrq, wrr, i;
 
     //parameter dividend = "dividend.txt";
     //parameter divisor = "divisor.txt";
@@ -35,9 +35,9 @@ module ALU_div_tb;
         $readmemh( "divisor.txt", divisor );
         wrq = $fopen("quotient_out.txt");
         wrr = $fopen("remainder_out.txt");
-        //for(i = 0; i<3; i++) begin
-            a = dividend[0];
-            b = divisor[0];
+        //for(i = 0; i<2; i++) begin
+            a = dividend[1];
+            b = divisor[1];
             $display("-0-");
             $display(a);
             $display(b);
@@ -74,30 +74,6 @@ module ALU_div_tb;
             @(posedge clk);
             @(posedge clk);
             @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
             $fwrite(wrq, "%h\n", result);
             //$display(result);
             @(posedge clk);
@@ -106,7 +82,7 @@ module ALU_div_tb;
             $fwrite(wrr, "%h\n", result);
             //$display(result);
         //end
-
+        
             a = dividend[1];
             b = divisor[1];
             $display("-1-");
@@ -115,7 +91,7 @@ module ALU_div_tb;
             rst = 0;
             //dividend <= 32'h00000005;
             //divisor <= 32'h00000002;
-            ctrl = 4'b1100;
+            ctrl = 4'b1110;
             @(posedge clk);
             rst = 1;
             @(posedge clk);
@@ -145,37 +121,16 @@ module ALU_div_tb;
             @(posedge clk);
             @(posedge clk);
             @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
-            @(posedge clk);
+
+            
             $fwrite(wrq, "%h\n", result);
             //$display(result);
             @(posedge clk);
-            ctrl = 4'b1101;
+            ctrl = 4'b1111;
             @(posedge clk);
             $fwrite(wrr, "%h\n", result);
             //$display(result);
+            
     end
 
 endmodule 
