@@ -1,7 +1,8 @@
 module mips_tb;
     timeunit 1ns / 10ps;
 
-    parameter RAM_INIT_FILE = "test/binary/basics.hex.txt";
+    parameter RAM_INIT_FILE = "";
+    parameter DATA_INIT_FILE = "";
     parameter TIMEOUT_CYCLES = 10000;
 
     logic clk;
@@ -17,22 +18,7 @@ module mips_tb;
     logic[31:0] register_v0;
     logic[3:0] byte_en;
     logic waitrequest;
-    //logic [3:0] state;
-    //logic [31:0] WriteRegData;
-    //logic RegWrite;
-    //logic [31:0] aluresult;
-    //logic [31:0] SrcAOut;
-    //logic [31:0] SrcBOut;
-    //logic [1:0] ALUSrcA;
-    //logic [2:0] ALUSrcB;
-    //logic [31:0] regaout;
-    //logic [31:0] regbout;
-    //logic [4:0] Dst;
-    //logic [31:0] aluout;
-    //logic [1:0] MemToReg;
-    //logic [31:0] final_data;
-    //logic [31:0] masked_data;
-
+    
     mips_memory #(RAM_INIT_FILE) ramInst(clk, active, address, write, read, byte_en, writedata, readdata);
 
     mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata );

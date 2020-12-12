@@ -1,63 +1,95 @@
-/*  Implements a 32-bit x 4GB Memory
-2^2 across, 2^30 down
-print 2^0 down
-2^0across, 2^32 down
-print 2^2 down
-- do byte_enable
-*/
-
-module memory_32x4GB(
+module mips_memory (
     input logic clk,
+    input logic active,
     input logic[31:0] address,
-    input logic write,
-    input logic [3:0] byte_en,
-    input logic[31:0] writedata,
-    output logic[31:0] readdata
+    input logic wr_en,
+    input logic read_en,
+    input logic[3:0] byte_en,
+    input logic[31:0] data_in,
+    output logic[31:0] data_out
 );
+
     parameter RAM_INIT_FILE = "";
+    parameter DATA_INIT_FILE = "data_binary/jalr.hex.txt";
 
-	 //2^32 bytes  
-    reg [7:0] memory [4294967295:0];
+    reg[7:0] memory [4095:0];
 
+    logic[31:0] simp_address;
+
+    assign simp_address=(address<32'hBCF00000) ? address : address-32'hBFC00000 + 32'h00000400;
     initial begin
+        integer i;
         /* Initialise to zero by default */
-		  
-		  //memory <= { 4294967296{ 8'hFF } };
-		  
-        for (integer i=0; i<4294967296; i++) begin
-            memory[i]=8'h00;
+        for (i=0; i<4096; i++) begin
+            memory[i]=0;
+        end
+        /* Load contents from file if specified */
+       if (RAM_INIT_FILE == "binary/jalr.hex.txt")begin
+            $readmemh(DATA_INIT_FILE, memory, 4, 1023);
         end
         /* Load contents from file if specified */
         if (RAM_INIT_FILE != "") begin
             $display("RAM : INIT : Loading RAM contents from %s", RAM_INIT_FILE);
-            $readmemh(RAM_INIT_FILE, memory);
+
+            $readmemh(RAM_INIT_FILE, memory,1024,2047);
+            $display("RAM : INIT : DISPLAYING INITIALSIED RAM");
+            for (i = 4 ; i < 1024; i++) begin
+                if(memory[i] != 0 ) begin
+                    $display("%h: %h", i ,memory[i]);
+                end
+            end
+            for (i = 1024 ; i < 2048; i++) begin
+                if(memory[i] != 0 ) begin
+                    $display("%h: %h", (i+3217031168-1024) , memory[i]);
+                end
+            end
         end
     end
 
-    /* Combinatorial read path. */
-	 always_comb begin
-			readdata = {memory[address+3], memory[address+2], memory[address+1], memory[address]};
-	end
-
-    /* Synchronous write path */
-    always_ff @(posedge clk) begin
-        //$display("RAM : INFO : read=%h, addr = %h, mem=%h", read, address, memory[address]);
-        if (write) begin
-				if(byte_en[0] == 1) begin
-					memory[address] <= writedata[7:0];
-				end
-					
-				if(byte_en[1] == 1) begin
-					memory[address+1] <= writedata[15:8];
-				end
-				
-				if(byte_en[2] == 1) begin
-					memory[address+2] <= writedata[23:16];
-				end
-				
-				if(byte_en[3] == 1) begin
-					memory[address+3] <= writedata[31:24];
-				end
+    always @(posedge clk) begin
+        // $display("%h",address);
+        if (wr_en) begin
+            if (byte_en[0]==1) begin
+                memory[simp_address] <= data_in[31:24];
+            end
+            if (byte_en[1]==1) begin
+                memory[simp_address+1] <= data_in[23:16];
+            end
+            if (byte_en[2]==1) begin
+                memory[simp_address+2] <= data_in[15:8];
+            end
+            if (byte_en[3]===1) begin
+                memory[simp_address+3] <= data_in[7:0];
+            end
+        end
+        if (read_en) begin
+            $display("inside ram address %h",simp_address);
+            data_out <= {memory[simp_address], memory[simp_address+1], memory[simp_address+2], memory[simp_address+3]};
         end
     end
+
+    always @(posedge clk) begin
+        if(memory[simp_address] == 8'h00 & memory[simp_address+1]==8'h00 & memory[simp_address+2]==8'h00 & memory[simp_address+3]==8'h08)begin
+            integer i;
+
+            // $display("Displaying Memory contents : ");
+            // $display("address(hex): memory_content(hex) ");
+            for (i = 0 ; i < 1024; i++) begin
+                if(memory[i] != 0 ) begin
+                    $display("%h: %h", i ,memory[i]);
+                end
+            end
+
+            for (i = 1024 ; i < 2048; i++) begin
+                if(memory[i] != 0 ) begin
+                    $display("%h: %h", (i-1024+3169845248) , memory[i]);
+                end
+            end
+        end
+    end
+
+
+
+
+
 endmodule
