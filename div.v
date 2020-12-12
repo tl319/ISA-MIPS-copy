@@ -1,15 +1,16 @@
 module div(
     input logic [31:0] a, b,
     input logic signdiv, clk, divrst,
-    output logic [31:0] q, r
-	//output logic done
+    output logic [31:0] q, r,
+	output logic divdone
 );
 
 	logic nxt;
 	//internal operand and result values, as division is unsigned and begins with the divisor shifted to the MSB of quotient (unclear explanation)
 	logic [31:0] ua, ub, shiftedb, uq, ur;
 
-	logic [4:0] constind, aligncnt;
+	logic [4:0] constind; 
+	logic [5:0] aligncnt;
 
 	align aligner (
 		.clk(clk), .alrst(divrst), 
@@ -30,6 +31,7 @@ module div(
 		//buff <= 0;
 		aligncnt <= 0;
 		nxt <= 0;
+		divdone <= 0;
 	end
 
 	
@@ -37,19 +39,23 @@ module div(
 
 		if(divrst == 1) begin
 			constind <= 5'b11111;
-			aligncnt <= 5'b00000;
+			aligncnt <= 6'b000000;
+			divdone <= 0;
 		end	
 		
-		if(aligncnt < 5'h13 ) begin
+		if(aligncnt < 6'h33 ) begin
 			aligncnt <= (aligncnt + 1);
 		end
 
-		if(aligncnt == 5'h12) begin
+		if(aligncnt == 6'h12) begin
 			nxt <= 1;
 		end else begin
 			nxt <= 0;
 		end
 		
+		if(aligncnt == 6'h32) begin
+			divdone <= 1;
+		end
 	end
 
 	//properly assign operands, quotient and remainder for signed/unsigned division and the signs of each operand 
