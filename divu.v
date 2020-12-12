@@ -16,7 +16,7 @@ module divu(
 		//divudone = finished;
 	 end
 	 
-	 always_ff@ ( posedge clk) begin
+	 always_ff@ ( posedge clk, negedge clk ) begin
 			if(divurst == 1) begin
 				quotient <= 32'h00000000;
 				rega <= divua;

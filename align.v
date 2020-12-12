@@ -27,7 +27,7 @@ module align (
 		//botcnt = blo_cnt;
 	end
 
-	always_ff @(posedge clk) begin
+	always_ff @(posedge clk, negedge clk) begin
 
 		//if( alfinished == 1 ) begin
 		//	alfinished <= 0;
@@ -42,7 +42,8 @@ module align (
 			i <= 5'b00000;
 			blo_cnt <= 5'h00;
 			//ahi_cnt <= 4'h0;
-			//alfinished <= 0; 
+			//alfinished <= 0;
+			shifted <= 32'h00000000; 
 			end_lo <= 0;
 			ahizero <= ( ala[31:16] == 16'h0000 );
 		end else begin

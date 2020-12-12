@@ -33,7 +33,12 @@ module div(
 	end
 
 	
-	always_ff @(posedge clk) begin
+	always_ff @(posedge clk, negedge clk) begin
+
+		if(divrst == 1) begin
+			constind <= 5'b11111;
+			aligncnt <= 5'b00000;
+		end	
 		
 		if(aligncnt < 5'h13 ) begin
 			aligncnt <= (aligncnt + 1);
