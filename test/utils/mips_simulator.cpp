@@ -170,7 +170,7 @@ registers[0] = 0;
             is_jump = true;
             PC_delay_slot = PC + 4;
             PC = registers[rs_index];
-            return registers[2];
+            //return registers[2];
           }
         break;
         //I TYPE INSTR
@@ -182,13 +182,13 @@ registers[0] = 0;
           registers[rt_index] = (uint32_t)registers[rs_index] + immediate;
           break;
         case 12: //001100 ANDI
-          registers[rt_index] = registers[rs_index] & immediate;
+          registers[rt_index] = (uint32_t)registers[rs_index] & (uint16_t)immediate;
           break;
         case 15: //001111 LUI
           registers[rt_index] = immediate << 16;
           break;
         case 13: //001101 ORI
-          registers[rt_index] = registers[rs_index] | immediate;
+          registers[rt_index] = (uint32_t)registers[rs_index] | (uint16_t)immediate;
           break;
         case 10: //001010 SLTI
           registers[rt_index] = registers[rs_index]<immediate;
@@ -197,7 +197,7 @@ registers[0] = 0;
           registers[rt_index] = (uint32_t)registers[rs_index] < (uint32_t)immediate;
           break;
         case 14://001110 XORI
-          registers[rt_index] = registers[rs_index] ^ immediate;
+          registers[rt_index] = (uint32_t)registers[rs_index] ^ (uint16_t)immediate;
           break;
 
           //BRANCHES

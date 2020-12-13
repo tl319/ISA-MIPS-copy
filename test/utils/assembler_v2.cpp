@@ -15,10 +15,10 @@ int main(int argc, char** argv)
     file.open(filename);
 
     if (!file.is_open()) {
-        cerr << "ERR: File cannot be read" << endl;
+        cerr << "ERR: File cannot be read, filename:" << filename <<endl;
         exit(1);
     } else {
-        cerr << "Reading from file '" << filename << "'" << endl;
+        // cerr << "Reading from file '" << filename << "'" << endl;
     }
 
     vector<string> lines;
@@ -207,5 +207,5 @@ int main(int argc, char** argv)
             cout << word.substr(0,2) << endl;
         }
     }
-    cerr << "SUCCESS: Assembly has been compiled into machine code." << endl;
+    // cerr << "SUCCESS: Assembly has been compiled into machine code." << endl;
 }

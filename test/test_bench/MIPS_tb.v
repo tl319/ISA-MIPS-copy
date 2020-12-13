@@ -86,7 +86,7 @@ module mips_tb;
          //$dumpfile("cpu_all_waves.vcd");
          //$dumpvars(0,mips_tb);
         if(!active)begin
-          $display( "v0 : %h",register_v0);
+          $display( "v0: %h",register_v0);
         end
         $display("active: %b",active);
         //$dumpfile("cpu_toplvl_waves.vcd");

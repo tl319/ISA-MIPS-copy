@@ -18,7 +18,7 @@ int main(int argc, char** argv)
         cerr << "ERR: File cannot be read" << endl;
         exit(1);
     } else {
-        cerr << "Reading from file '" << filename << "'" << endl;
+        // cerr << "Reading from file '" << filename << "'" << endl;
     }
 
     vector<string> lines;
@@ -35,7 +35,7 @@ int main(int argc, char** argv)
         if(lines[i]=="----------"){
             address_index.push_back(i);
         }else{
-            if(get_address(lines[i]).first== "v0 : "){
+            if(get_address(lines[i]).first== "v0: "){
                 
                 v0 = lines[i];
             }
