@@ -139,7 +139,7 @@ int main(int argc, char** argv)
 
                     uint32_t rs = 0;
                     uint32_t rt = 0;
-                    uint32_t imm;
+                    uint16_t imm;
                     if (opname == "beq" || opname == "bne") {
                         rs = stoi(operands[0]) << 21;
                         rt = stoi(operands[1]) << 16;
