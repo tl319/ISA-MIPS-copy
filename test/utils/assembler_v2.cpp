@@ -194,17 +194,17 @@ int main(int argc, char** argv)
             opcode = opcode<<26;
             uint32_t lin = opcode + othcode;
             string word = to_hex8(lin);
-            cout << word.substr(0,2) << endl;
-            cout << word.substr(2,2) << endl;
-            cout << word.substr(4,2) << endl;
             cout << word.substr(6,2) << endl;
+            cout << word.substr(4,2) << endl;
+            cout << word.substr(2,2) << endl;
+            cout << word.substr(0,2) << endl;
         } else {
             uint32_t data = stoi(instr_and_operands[i].first);
             string word = to_hex8(data);
-            cout << word.substr(0,2) << endl;
-            cout << word.substr(2,2) << endl;
-            cout << word.substr(4,2) << endl;
             cout << word.substr(6,2) << endl;
+            cout << word.substr(4,2) << endl;
+            cout << word.substr(2,2) << endl;
+            cout << word.substr(0,2) << endl;
         }
     }
     cerr << "SUCCESS: Assembly has been compiled into machine code." << endl;

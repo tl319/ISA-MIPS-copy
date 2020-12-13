@@ -23,7 +23,36 @@ else
 mkdir binary
 fi 
 
-FILE="./bin/assembler"
+
+OUTPUT_DIRECTORY="./output"
+if [ -d "${OUTPUT_DIRECTORY}" ]
+then
+>&2 echo "output directory already created"
+else
+>&2 echo "Creating output directory..."
+mkdir output
+fi 
+
+
+WAVEFORM_DIRECTORY="./waveforms"
+if [ -d "${WAVEFORM_DIRECTORY}" ]
+then
+>&2 echo "waveforms directory already created"
+else
+>&2 echo "Creating waveforms directory..."
+mkdir waveforms
+fi 
+
+VERILOG_DIRECTORY="./verilog_sim"
+if [ -d "${VERILOG_DIRECTORY}" ]
+then
+>&2 echo "verilog_sim directory already created"
+else
+>&2 echo "Creating veriog_sim directory..."
+mkdir verilog_sim
+fi 
+
+FILE="./bin/assembler1"
 if [ -f "$FILE" ]
 then
 >&2 echo "Assembler already created."
@@ -35,9 +64,9 @@ fi
 FILE="./bin/output_filter"
 if [ -f "$FILE" ]
 then
->&2 echo "Assembler already created."
+>&2 echo "output_filter already created."
 else
->&2 echo "Creating assembler..."
+>&2 echo "Creating output_filter..."
 g++ ./utils/output_filter.cpp ./utils/mips_filter.cpp -o ./bin/output_filter
 fi 
 
@@ -48,7 +77,7 @@ fi
 
 >&2 echo "CPU being tested for ${TESTCASE} testcase..."
 
->&2 echo "Compiling test-bench"
+>&2 echo "Compiling test-bench..."
 # Compile a specific simulator for this variant and testbench.
 # -s specifies exactly which testbench should be top-level
 # The -P command is used to modify the RAM_INIT_FILE parameter on the test-bench at compile-time
@@ -63,8 +92,9 @@ iverilog -g 2012 \
 if [[ $? -eq 0 ]]
 then
    ./verilog_sim/mips_tb_${TESTCASE} >| ./output/${TESTCASE}.stdout
+   mv ./cpu_toplvl_waves.vcd ./waveforms/${TESTCASE}.vcd
 else
-   echo "something went wrong, please check name of test case"
+   >&2 echo "something went wrong, please check name of test case"
 fi
 
 >&2 echo "Extracting memory output..."
