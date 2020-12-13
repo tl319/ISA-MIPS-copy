@@ -3,4 +3,17 @@ addiu $2,$0,256
 addiu $4,$0,4
 sw $2,0($4)
 lb $2,0($4)
+#jr $0
+#^if LB functions, v0 will go from 256 to 0 as 255 is the largest 8-bit value
+addiu $2,$0,256
+addiu $4,$0,4
+sw $2,2($4)
+lb $2,2($4)
+#^same as above, but with two identical offsets
+addiu $2,$0,256
+addiu $4,$0,4
+sw $2,0($4)
+lb $2,1($4)
+#^same as above, but with different offsets: should load 1
+#might want to add one with one-off addresses
 jr $0
