@@ -362,7 +362,7 @@ registers[0] = 0;
 
 
       }
-    if(!is_jump && !prev_was_jump)
+    if(!prev_was_jump)
         PC+=4;
       prev_was_jump = is_jump;
       assert(registers[0] == 0);

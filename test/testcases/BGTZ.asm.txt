@@ -1,5 +1,6 @@
 addiu $2,$0,5
 bgtz $2,2
+addiu $2,$0,0
 jr $0
 addiu $2,$0,-2
 bgtz $2,2
@@ -7,4 +8,7 @@ addiu $2,$0,0
 bgtz $2,2
 jr $0
 addiu $2,$0,10
+jr $0
+jr $0
+jr $0
 jr $0

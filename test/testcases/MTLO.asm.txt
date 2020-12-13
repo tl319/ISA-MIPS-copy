@@ -7,3 +7,4 @@ addiu $4,$0,-391
 mtlo $4
 mflo $1
 sw $1,24($0)
+jr $0

@@ -34,7 +34,10 @@ module decoder(
     output logic [1:0] byte_cnt,
     output logic [3:0] aluop,
     output logic link_en,
-    output logic link_in
+    output logic link_in,
+    input logic divdone,
+    output logic divrst,
+    output logic extend_mux
 
 );
     logic beq;
@@ -159,7 +162,11 @@ module decoder(
         altpcmux = 0;
         resetmux = 0;
         hilowrite = 0;
+        if (mfhi ==1) begin
+        hilosel =1;
+        end else begin
         hilosel = 0;
+        end
         lr_en = 0;
         lrmux = 0;
         mask_cnt = 3'b000;
@@ -167,6 +174,8 @@ module decoder(
         aluop = 4'b0000;
         link_en = 0;
         link_in = 0;
+        divrst = 0;
+        extend_mux = 0;
         end
       4'b0001: begin
         if(mem_opcode == 6'b000100) begin
@@ -233,7 +242,7 @@ module decoder(
         jr =1;
         end else if(mem_opcode == 6'b000000 && mem_function == 6'b001001) begin
         jalr =1;
-        end else if(mem_opcode == 6'b001111) begin
+        end else if(mem_opcode == 6'b001100) begin
         andi =1;
         end else if(mem_opcode == 6'b000000 && mem_function == 6'b100100) begin
         andINT=1;
@@ -292,7 +301,7 @@ module decoder(
         PcWrite = 0;
         RegWrite = 0;
         ABswitch_cnt =0;
-        if(addiu == 1 || lw == 1 || sw == 1 || slti == 1 || sltiu == 1 || lui == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || sb == 1 || sh == 1 || lwl == 1 || lwr == 1 || beq == 1 || bgez == 1 || bgtz == 1 || blez == 1 || bltz == 1 || bne == 1 || bgezal == 1 || bltzal == 1) begin
+        if(addiu == 1 || lw == 1 || sw == 1 || slti == 1 || sltiu == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || sb == 1 || sh == 1 || lwl == 1 || lwr == 1 || beq == 1 || bgez == 1 || bgtz == 1 || blez == 1 || bltz == 1 || bne == 1 || bgezal == 1 || bltzal == 1) begin
         extendcont = 2'b10;
         end else if(lui == 1) begin
         extendcont = 2'b11;
@@ -307,7 +316,11 @@ module decoder(
         altpcmux = 1;
         resetmux = 0;
         hilowrite = 0;
+        if (mfhi ==1) begin
+        hilosel =1;
+        end else begin
         hilosel = 0;
+        end
         lr_en = 0;
         if (lwr == 1) begin
         lrmux = 1;
@@ -323,6 +336,8 @@ module decoder(
         end
         link_en = 0;
         link_in = 0;
+        divrst = 0;
+        extend_mux = 1;
         end
       4'b0010: begin
         MemToReg = 2'b00;
@@ -365,7 +380,7 @@ module decoder(
         end else begin
         ABswitch_cnt =0;
         end
-        if(addiu == 1 || lw == 1 || sw == 1 || slti == 1 || sltiu == 1 || lui == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || sb == 1 || sh == 1 || lwl == 1 || lwr == 1 || beq == 1 || bgez == 1 || bgtz == 1 || blez == 1 || bltz == 1 || bne == 1 || bgezal == 1 || bltzal == 1) begin
+        if(addiu == 1 || lw == 1 || sw == 1 || slti == 1 || sltiu == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || sb == 1 || sh == 1 || lwl == 1 || lwr == 1 || beq == 1 || bgez == 1 || bgtz == 1 || blez == 1 || bltz == 1 || bne == 1 || bgezal == 1 || bltzal == 1) begin
         extendcont = 2'b10;
         end else if(lui == 1) begin
         extendcont = 2'b11;
@@ -377,10 +392,14 @@ module decoder(
         end else begin
         altpcWrite = 0;
         end
-        altpcmux = 1;
+        altpcmux = 0;
         resetmux = 0;
         hilowrite = 0;
+        if (mfhi ==1) begin
+        hilosel =1;
+        end else begin
         hilosel = 0;
+        end
         lr_en = 0;
         if (lwr == 1) begin
         lrmux = 1;
@@ -420,6 +439,12 @@ module decoder(
         end else begin
         link_in = 0;
         end
+        if (divdone == 1 && (divu == 1 || div ==1)) begin
+        divrst = 1;
+        end else begin
+        divrst =0;
+        end
+        extend_mux = 1;
         end
       4'b0011: begin
         if(slt ==1 || slti ==1 || sltiu == 1 || sltu == 1) begin
@@ -452,13 +477,13 @@ module decoder(
         MemRead = 1;
         end
         PcWrite = 0;
-        if( addiu == 1 || andi == 1 || ori == 1 || xori == 1 || addu == 1 || andINT== 1 || subu == 1 || orINT== 1 || xorINT== 1 || sll == 1 || sllv == 1 || sra == 1 || srav == 1 || srl == 1 || srlv == 1 || slti == 1 || sltiu == 1 || slt == 1  || sltu == 1 || mfhi == 1 || mflo == 1) begin
+        if( lui ==1 || addiu == 1 || andi == 1 || ori == 1 || xori == 1 || addu == 1 || andINT== 1 || subu == 1 || orINT== 1 || xorINT== 1 || sll == 1 || sllv == 1 || sra == 1 || srav == 1 || srl == 1 || srlv == 1 || slti == 1 || sltiu == 1 || slt == 1  || sltu == 1 || mfhi == 1 || mflo == 1) begin
         RegWrite = 1;
         end else begin
         RegWrite = 0;
         end
         ABswitch_cnt =0;
-        if(addiu == 1 || lw == 1 || sw == 1 || slti == 1 || sltiu == 1 || lui == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || sb == 1 || sh == 1 || lwl == 1 || lwr == 1 || beq == 1 || bgez == 1 || bgtz == 1 || blez == 1 || bltz == 1 || bne == 1 || bgezal == 1 || bltzal == 1) begin
+        if(addiu == 1 || lw == 1 || sw == 1 || slti == 1 || sltiu == 1 ||  lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || sb == 1 || sh == 1 || lwl == 1 || lwr == 1 || beq == 1 || bgez == 1 || bgtz == 1 || blez == 1 || bltz == 1 || bne == 1 || bgezal == 1 || bltzal == 1) begin
         extendcont = 2'b10;
         end else if(lui == 1) begin
         extendcont = 2'b11;
@@ -477,7 +502,7 @@ module decoder(
         end else begin
         hilowrite = 0;
         end
-        if( div == 1 || divu == 1 || mthi == 1) begin
+        if( div == 1 || divu == 1 || mthi == 1 || mfhi ==1) begin
         hilosel = 1;
         end else begin
         hilosel = 0;
@@ -509,6 +534,8 @@ module decoder(
         end
         link_en = 0;
         link_in = 0;
+        divrst = 0;
+        extend_mux = 1;
         end
       4'b0100: begin
         if(div == 1 || divu == 1 || mult == 1 || multu == 1) begin
@@ -550,7 +577,7 @@ module decoder(
         end else begin
         hilowrite = 0;
         end
-        if (mult == 1 || multu == 1) begin
+        if (mult == 1 || multu == 1 || mfhi ==1) begin
         hilosel = 1;
         end else begin
         hilosel = 0;
@@ -583,6 +610,8 @@ module decoder(
         aluop = 4'b0000;
         link_en = 0;
         link_in = 0;
+        divrst = 0;
+        extend_mux = 1;
         end
       4'b0101: begin
         MemToReg = 2'b00;
@@ -620,6 +649,8 @@ module decoder(
         aluop = 4'b0000;
         link_en = 0;
         link_in = 0;
+        divrst = 0;
+        extend_mux = 1;
         end
       4'b1111: begin
         MemToReg = 2'b00;
@@ -657,6 +688,8 @@ module decoder(
         aluop = 4'b0000;
         link_en = 0;
         link_in = 0;
+        divrst = 0;
+        extend_mux = 1;
         end
       4'b1110: begin
         MemToReg = 2'b00;
@@ -694,6 +727,8 @@ module decoder(
         aluop = 4'b0000;
         link_en = 0;
         link_in = 0;
+        divrst = 0;
+        extend_mux = 1;
         end
       4'b1001: begin
         MemToReg = 2'b11;
@@ -743,6 +778,8 @@ module decoder(
         end
         link_en = 1;
         link_in = 0;
+        divrst =0;
+        extend_mux = 1;
         end
       endcase
       end
