@@ -58,7 +58,7 @@ void mips_mem_init(istream& src, vector<unsigned char>& mem)
   }
 mem.resize(2048, 0);
 
-  /*mem[0] = 0x0;
+  mem[0] = 0x0;
   mem[1] = 0x0;
   mem[2] = 0x0;
   mem[3] = 0x0;
@@ -73,5 +73,5 @@ mem.resize(2048, 0);
   mem[12] = 0x11;
   mem[13] = 0x22;
   mem[14] = 0x33;
-  mem[15] = 0x44;*/
+  mem[15] = 0x44;
 }
