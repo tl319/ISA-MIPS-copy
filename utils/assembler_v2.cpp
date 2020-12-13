@@ -59,6 +59,9 @@ int main(int argc, char** argv)
         }else if(head[0] == '#') {
             // If there is a hash ("#") in the beginning of a line, the line is a comment
             continue;
+        }else if(lines[i]=="") {
+            // If there is a blank line in the assembly text file, ignore it.
+            continue;
         }else{
             cerr<<"Couldn't parse '"<<head<<"'\n";
             exit(1);
@@ -119,8 +122,12 @@ int main(int argc, char** argv)
                     othcode = rs + rt + rd + sa + fn;
                 } else if (operands.size()==1) {
                     operands[0].erase(operands[0].begin());
-                    rs = stoi(operands[0]) << 21;
-                    othcode = rs + fn;
+                    if (opname == "mfhi" || opname == "mflo") {
+                        rd = stoi(operands[0]) << 11;
+                    } else {
+                        rs = stoi(operands[0]) << 21;
+                    }
+                    othcode = rd + rs + fn;
                 } else {
                     cerr << "ERR: Invalid arguments for r-type instruction '" << opname << "'." << endl;
                 }
@@ -132,7 +139,7 @@ int main(int argc, char** argv)
 
                     uint32_t rs = 0;
                     uint32_t rt = 0;
-                    uint32_t imm;
+                    uint16_t imm;
                     if (opname == "beq" || opname == "bne") {
                         rs = stoi(operands[0]) << 21;
                         rt = stoi(operands[1]) << 16;

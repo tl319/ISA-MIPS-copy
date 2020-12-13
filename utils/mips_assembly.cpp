@@ -28,6 +28,8 @@ bool mips_is_instruction(const string &s)
     if (s == "lw") return true;
     if (s == "lwl") return true;
     if (s == "lwr") return true;
+    if (s == "mfhi") return true;
+    if (s == "mflo") return true;
     if (s == "mthi") return true;
     if (s == "mtlo") return true;
     if (s == "mult") return true;
@@ -118,6 +120,8 @@ char mips_instruction_type(const string &s)
     if (s == "srlv") return 'r';
     if (s == "div") return 'r';
     if (s == "divu") return 'r';
+    if (s == "mfhi") return 'r';
+    if (s == "mflo") return 'r';
     if (s == "mthi") return 'r';
     if (s == "mtlo") return 'r';
     if (s == "mult") return 'r';
@@ -156,6 +160,8 @@ uint16_t mips_instr_to_opcode(const string &s)
     if (s == "lw") return 35;
     if (s == "lwl") return 38;
     if (s == "lwr") return 39;
+    if (s == "mfhi") return 0;
+    if (s == "mflo") return 0;
     if (s == "mthi") return 0;
     if (s == "mtlo") return 0;
     if (s == "mult") return 0;
@@ -190,6 +196,8 @@ uint16_t mips_r_instr_to_fncode(const string &s)
     if (s == "divu") return 27;
     if (s == "jalr") return 9;
     if (s == "jr") return 8;
+    if (s == "mfhi") return 16;
+    if (s == "mflo") return 18;
     if (s == "mthi") return 17;
     if (s == "mtlo") return 19;
     if (s == "mult") return 24;

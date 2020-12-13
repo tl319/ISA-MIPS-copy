@@ -25,7 +25,7 @@ void ram_write_out(const vector<unsigned char>& mem)
   for (unsigned int i = 0 ; i < 1024; i++)
   {
       if(mem[i] != 0 )
-          cout<<to_hex8(i)<<":"<<to_hex1(mem[i])<<endl;
+          cout<<to_hex8(i)<<": "<<to_hex1(mem[i])<<endl;
   }
 
   for (unsigned int i = 1024 ; i < 2048; i++)

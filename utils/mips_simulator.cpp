@@ -10,7 +10,7 @@ using namespace std;
 
 unsigned int simp_address(uint32_t address)
 {
-  return (address<0xBCF00000) ? address : address - 0xBFC00000 + 0x00000400;
+  return (address<0xBFC00000) ? address : address - 0xBFC00000 + 0x00000400;
 }
 
 
@@ -32,13 +32,13 @@ int32_t mips_simulate(vector<unsigned char>& mem)
     bool prev_was_jump = false;
     bool is_jump = false;
     uint32_t PC_delay_slot = 0;
-    uint PC_simple, PC_delay_simple;
+    unsigned int PC_simple, PC_delay_simple;
     bool running = true;
 //int i = 0;
 
     while(true)
     { //getting rid of the bits we don't need
-
+//i++;
     if(PC == 0 )/*&& !prev_was_jump ))|| (PC_delay_slot ==0 && prev_was_jump*/
     {
       //running = false;
