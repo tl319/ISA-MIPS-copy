@@ -51,4 +51,8 @@ void mips_mem_init(istream& src, vector<unsigned char>& mem)
       line_number++;
   }
   mem.resize(pow(2,32), 0); //again memory size??
+  mem[0] = 0x0;
+  mem[1]=0xBFC00004;
+  mem[2] =0xFFFFFFFF;
+  mem[3] = 0x44332211;
 }
