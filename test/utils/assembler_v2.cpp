@@ -122,8 +122,12 @@ int main(int argc, char** argv)
                     othcode = rs + rt + rd + sa + fn;
                 } else if (operands.size()==1) {
                     operands[0].erase(operands[0].begin());
-                    rs = stoi(operands[0]) << 21;
-                    othcode = rs + fn;
+                    if (opname == "mfhi" || opname == "mflo") {
+                        rd = stoi(operands[0]) << 11;
+                    } else {
+                        rs = stoi(operands[0]) << 21;
+                    }
+                    othcode = rd + rs + fn;
                 } else {
                     cerr << "ERR: Invalid arguments for r-type instruction '" << opname << "'." << endl;
                 }
