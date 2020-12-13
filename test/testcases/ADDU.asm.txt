@@ -1,8 +1,9 @@
 #test ADDU, assuming ADDIU, LW, SW, JR to be reliable
+#v0 should end up containing decimal 150
 #load value to registers 1, 2 and add in reg 3 
-addiu $1,$1,74
+addiu $7,$7,74
 addiu $2,$2,26
-addu $3,$1,$2
+addu $3,$7,$2
 #load value to regs 4, 5 and add in reg 6 
 addiu $4,$4,23
 addiu $5,$5,27
