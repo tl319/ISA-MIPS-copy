@@ -49,8 +49,8 @@ int32_t mips_simulate(vector<unsigned char>& mem)
       assert(PC_simple<2048);
       PC_delay_simple = simp_address(PC_delay_slot);
       assert(PC_delay_simple<2048);
-      if(!prev_was_jump)   instr = mem[PC_simple+3]+ (mem[PC_simple+2]<<8) + (mem[PC_simple+1]<<16) + (mem[PC_simple]<<24);
-      else instr =  mem[PC_delay_simple+3]+ (mem[PC_delay_simple+2]<<8) + (mem[PC_delay_simple+1]<<16) + (mem[PC_delay_simple]<<24);
+      if(!prev_was_jump)   instr = mem[PC_simple]+ (mem[PC_simple+1]<<8) + (mem[PC_simple+2]<<16) + (mem[PC_simple+3]<<24);
+      else instr =  mem[PC_delay_simple]+ (mem[PC_delay_simple+1]<<8) + (mem[PC_delay_simple+2]<<16) + (mem[PC_delay_simple+3]<<24);
 //cerr<<to_hex8(PC)<< " "<<instr<<endl;
       opcode = instr  >> 26; //mask the lowest 26 bits
       //cerr<<opcode <<endl;
