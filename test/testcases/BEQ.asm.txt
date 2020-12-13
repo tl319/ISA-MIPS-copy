@@ -1,4 +1,4 @@
-#test ADDU, assuming ADDIU, LW, SW, JR to be reliable
+#test BEQ assuming ADDIU, LW, SW, JR to be reliable
 addiu $3,$0,5
 addiu $4,$0,10
 addiu $5,$0,10
