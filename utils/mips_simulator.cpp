@@ -170,7 +170,7 @@ registers[0] = 0;
             is_jump = true;
             PC_delay_slot = PC + 4;
             PC = registers[rs_index];
-            return registers[2];
+            //return registers[2];
           }
         break;
         //I TYPE INSTR
