@@ -1,11 +1,16 @@
 #test ADDU, assuming ADDIU, LW, SW, JR to be reliable
-addiu $4,$0,50
-addiu $5,$0,51
-beq $4,$5,4
-#sets v0 to 33 if the branch is not taken
-addiu $2,$0,33
-addiu $4,$4,1
-beq $4,$5,1
-#adds 17 to vo is the branch is not taken
+addiu $3,$0,5
+addiu $4,$0,10
+addiu $5,$0,10
+#^initialised $3,$4,$5
+beq $3,$4,5
+addiu $0,$0,0
+addiu $2,$0,5
+#^shouldn't branch, v0 should be set to 5
+beq $4,$5,3
+addiu $0,$0,0
+addiu $2,$0,6
+#^should branch, v0 should remain 5
+addiu $2,$2,4
+addiu $2,$2,7
 jr $0
-#if BEQ is functional, only the second branch is taken and v0 contains 33
