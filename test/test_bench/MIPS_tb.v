@@ -21,7 +21,7 @@ module mips_tb;
     
     mips_memory #(RAM_INIT_FILE) ramInst(clk, active, address, write, read, byte_en, writedata, readdata);
 
-    mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata );
+    mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata);
 
     //Generate clock
     initial begin
@@ -36,7 +36,8 @@ module mips_tb;
             #10;
             clk = !clk;
             i=i+1;
-            $display("%d cycle",i);
+            // $display("%d cycle",i);
+            
             //$display("state: %h", state);
             //$display("MemToReg: %b", MemToReg);
             //$display("final_data: %h", final_data);
@@ -45,20 +46,20 @@ module mips_tb;
             //$display("RegWrite : %h", RegWrite );
             //$display("Dst: %d", Dst);
 
-            $display("address: %h",address);
+          //   $display("address: %h",address);
 
-            $display("readdata: %h", readdata);
-            $display("write: %b", write);
-          //  $display("ALUSrcA: %b", ALUSrcA);
-            //$display("regaout %h", regaout);
-            //$display("SrcAOut: %h", SrcAOut);
-            //$display("ALUSrcB: %b", ALUSrcB);
-          //  $display("regbout: %h", regbout);
-          //  $display("SrcBOut: %h", SrcBOut);
-            $display("writedata: %h", writedata);
-          //  $display("aluresult: %h", aluresult);
-          //  $display("aluout: %h", aluout);
-            // $display("active: %b",active);
+          //   $display("readdata: %h", readdata);
+          //   $display("write: %b", write);
+          // //  $display("ALUSrcA: %b", ALUSrcA);
+          //   //$display("regaout %h", regaout);
+          //   //$display("SrcAOut: %h", SrcAOut);
+          //   //$display("ALUSrcB: %b", ALUSrcB);
+          // //  $display("regbout: %h", regbout);
+          // //  $display("SrcBOut: %h", SrcBOut);
+          //   $display("writedata: %h", writedata);
+          // //  $display("aluresult: %h", aluresult);
+          // //  $display("aluout: %h", aluout);
+          //   // $display("active: %b",active);
         end
 
         $fatal(2, "Simulation did not finish within %d cycles.", TIMEOUT_CYCLES);
@@ -79,11 +80,14 @@ module mips_tb;
 
         while (active) begin
             @(posedge clk);
-            $display( "v0 : %h",register_v0);
+            // $display( "v0 : %h",register_v0);
         end
-        $display( "v0 : %h",register_v0);
+        // $display( "v0 : %h",register_v0);
          //$dumpfile("cpu_all_waves.vcd");
          //$dumpvars(0,mips_tb);
+        if(!active)begin
+          $display( "v0: %h",register_v0);
+        end
         $display("active: %b",active);
         //$dumpfile("cpu_toplvl_waves.vcd");
         //$dumpvars(0,cpuInst);

@@ -1,6 +1,13 @@
 #test ADDU, assuming ADDIU, LW, SW, JR to be reliable
-#load value to registers 1, 2 and add 
-addiu $1 $1 74
-addiu $2 $2 26
-addu $3 $1 $2
-
+#load value to registers 1, 2 and add in reg 3 
+addiu $1,$1,74
+addiu $2,$2,26
+addu $3,$1,$2
+#load value to regs 4, 5 and add in reg 6 
+addiu $4,$4,23
+addiu $5,$5,27
+addu $6,$4,$5
+#sum values in regs 3, 6 in reg 2 (v0)
+addu $2,$3,$6
+#halt by jumping to add0
+jr $0
