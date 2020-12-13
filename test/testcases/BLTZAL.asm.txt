@@ -1,0 +1,14 @@
+# If $2 == 1 by the end of the program, test passes, else if $2 == -1, test fails.
+addiu $3,$0,1
+addiu $4,$0,2
+subu $5,$3,$4
+addiu $2,$5,0
+bgezal $3,3
+bgezal $5,3
+addiu $2,$0,0
+bne $3,$4,2
+jr $31
+bgezal $0,2
+jr $0
+addiu $2,$5,0
+jr $0

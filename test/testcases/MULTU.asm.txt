@@ -1,0 +1,31 @@
+addiu $3,$0,1684
+addiu $4,$0,25
+multu $3,$4
+mflo $5
+mfhi $6
+sw $5,20($0)
+sw $6,24($0)
+
+addiu $3,$0,1684
+addiu $4,$0,-34
+multu $3,$4
+mflo $5
+mfhi $6
+sw $5,28($0)
+sw $6,32($0)
+
+addiu $3,$0,0
+addiu $4,$0,25
+multu $3,$4
+mflo $5
+mfhi $6
+sw $5,36($0)
+sw $6,40($0)
+
+addiu $3,$0,72
+addiu $4,$0,0
+multu $3,$4
+mflo $5
+mfhi $6
+sw $5,44($0)
+sw $6,48($0)

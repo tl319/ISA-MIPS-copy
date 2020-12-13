@@ -1,0 +1,10 @@
+addiu $2,$0,-1
+bltz $2,2
+jr $0
+addiu $2,$0,1
+addiu $2,$2,1
+bltz $2 2
+addiu $2,$0,0
+bltz $2 2
+addiu $2,$0,10
+jr $0

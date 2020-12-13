@@ -1,0 +1,11 @@
+# If by the end of the program $2=-1, it indicates and error, else $2=0 and instruction is functional.
+addiu $3,$0,8
+addiu $4,$0,8
+addiu $5,$0,9
+bne $3,$4,3
+addiu $2,$0,-1
+jr $0
+bne $3,$5,2
+jr $0
+addiu $2 $0 -1
+jr $0

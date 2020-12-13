@@ -1,0 +1,8 @@
+addiu $3,$0,0
+addiu $4,$0,2
+addiu $5,$0,1
+subu $5,$5,$4
+sltu $2,$3,$4
+sltu $2,$3,$5
+sltu $2,$3,$0
+jr $0

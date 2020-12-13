@@ -1,0 +1,7 @@
+# If by the end of the program $2=1, the test passes, else $2=-1 and the test fails.
+addiu $2,$0,-1
+jal 3
+jr $0
+jr $0
+addiu $2,$0,1
+jr $31
