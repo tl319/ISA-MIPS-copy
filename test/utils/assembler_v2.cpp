@@ -59,6 +59,9 @@ int main(int argc, char** argv)
         }else if(head[0] == '#') {
             // If there is a hash ("#") in the beginning of a line, the line is a comment
             continue;
+        }else if(lines[i]=="") {
+            // If there is a blank line in the assembly text file, ignore it.
+            continue;
         }else{
             cerr<<"Couldn't parse '"<<head<<"'\n";
             exit(1);

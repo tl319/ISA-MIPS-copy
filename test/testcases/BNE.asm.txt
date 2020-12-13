@@ -7,5 +7,5 @@ addiu $2,$0,-1
 jr $0
 bne $3,$5,2
 jr $0
-addiu $2 $0 -1
+addiu $2,$0,-1
 jr $0
