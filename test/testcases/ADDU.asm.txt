@@ -1,0 +1,6 @@
+#test ADDU, assuming ADDIU, LW, SW, JR to be reliable
+#load value to registers 1, 2 and add 
+addiu $1 $1 74
+addiu $2 $2 26
+addu $3 $1 $2
+
