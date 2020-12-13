@@ -4,8 +4,8 @@ module ALU(
     input logic [3:0] ctrl,
     output logic [31:0] out,
     output logic [1:0] comp,
-    output logic [63:0] total
-    //input logic clk
+    output logic [63:0] total, stotal,
+    input logic clk
 );
     //signals and module for division
     logic S;
@@ -13,11 +13,28 @@ module ALU(
     //div divcirc(.a(a), .b(b), .signdiv(S), .q(divq), .r(divr));
 
     //hi and lo for multiplication
-    logic [31:0] hi, lo;
+    logic [31:0] hi, lo, shi, slo;
+    logic [4:0] constto;
+    logic [31:0] amag, bmag;
+
+    initial begin
+        constto <= 5'b11111;
+    end
 
     always_comb begin
+        //computing both MULT and MULTU instead of using an if reduces the critical path at the expense of circuit compactness,
+        //though it is likely that the time gain is less than the area increase.
+
+        //unsigned product, total is just for testing
         {hi, lo} = a*b;
         total = a*b;
+
+        //signed product, stotal is just for testing
+        amag = a[constto] ? (~a + 1) : a;
+        bmag = b[constto] ? (~b + 1) : b;
+        {shi, slo} = (a[constto] ^ b[constto]) ? ( ~(amag * bmag) + 1 ) : (amag*bmag);
+        stotal = (a[constto] ^ b[constto]) ? ( ~(amag * bmag) + 1 ) : (amag*bmag);
+        
     end
 
     always_comb begin
@@ -41,8 +58,9 @@ module ALU(
             4'b0101: out = a<<b;  //SLL 
             4'b0110: out = a>>b;  //SRL
             4'b0111: out = a>>>b; //SRA 
-            4'b1001: out = 0;         //MULT TOP
-            4'b1000: out = 0; //MULT BOT
+
+            4'b1001: out = shi;         //MULT TOP
+            4'b1000: out = slo; //MULT BOT
             4'b1011: begin
                 out = hi;       //MULTU TOP
             end

@@ -10,13 +10,13 @@ module ALU_mult_tb;
         .a(a), .b(b),
         .ctrl(ctrl),
         .out(result),
-        //.clk(clk),
+        .clk(clk),
         .total(total)
     );
 
     initial begin
         clk = 0;
-        repeat(9) begin
+        repeat(18) begin
             #1
             clk = !clk;
             #1
@@ -31,34 +31,51 @@ module ALU_mult_tb;
         a <= 5;
         b <= 4;
         ctrl <= 4'b1010;
-        $display(result);
         @(posedge clk);
         ctrl <= 4'b1011;
-        $display(result);
         @(posedge clk);
         a <= 4;
         b <= 3;
         ctrl <= 4'b1010;
-        $display(result);
         @(posedge clk);
         ctrl <= 4'b1011;
-        $display(result);
         @(posedge clk);
         a <= 2111222333;
         b <= 2;
         ctrl <= 4'b1010;
-        $display(result);
         @(posedge clk);
         ctrl <= 4'b1011;
-        $display(result);
         @(posedge clk);
         a <= 2111222333;
         b <= 2111222333;
         ctrl <= 4'b1010;
-        $display(result);
         @(posedge clk);
         ctrl <= 4'b1011;
-        $display(result);
+        @(posedge clk);
+
+        a <= 5;
+        b <= 4;
+        ctrl <= 4'b1000;
+        @(posedge clk);
+        ctrl <= 4'b1001;
+        @(posedge clk);
+        a <= -4;
+        b <= -3;
+        ctrl <= 4'b1000;
+        @(posedge clk);
+        ctrl <= 4'b1001;
+        @(posedge clk);
+        a <= -2113;
+        b <= 2;
+        ctrl <= 4'b1000;
+        @(posedge clk);
+        ctrl <= 4'b1001;
+        @(posedge clk);
+        a <= 32'hFFFFFFFF;
+        b <= 2111222333;
+        ctrl <= 4'b1000;
+        @(posedge clk);
+        ctrl <= 4'b1001;
         @(posedge clk);
     end
 endmodule
