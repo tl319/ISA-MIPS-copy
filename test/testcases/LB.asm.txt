@@ -1,0 +1,6 @@
+#test LB, assuming ADDIU, LW, SW, JR to be reliable
+addiu $2,$0,256
+addiu $4,$0,4
+sw $2,0($4)
+lb $2,0($4)
+jr $0
