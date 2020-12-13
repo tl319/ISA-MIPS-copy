@@ -4,7 +4,7 @@ module ALU(
     input logic [3:0] ctrl,
     output logic [31:0] out,
     output logic [1:0] comp,
-    output logic [63:0] total, stotal,
+    //output logic [63:0] total, stotal,
     input logic clk
 );
     //signals and module for division
@@ -12,28 +12,29 @@ module ALU(
     logic [31:0] divq, divr;
     //div divcirc(.a(a), .b(b), .signdiv(S), .q(divq), .r(divr));
 
-    //hi and lo for multiplication
+    //hi, lo and internal values for multiplication
     logic [31:0] hi, lo, shi, slo;
     logic [4:0] constto;
-    logic [31:0] amag, bmag;
+    logic [31:0] amag, bmag; //magnitude of a and b
 
+    //used a constant decimal 31 as Icarus doesn't support constant indexing
     initial begin
         constto <= 5'b11111;
     end
 
     always_comb begin
-        //computing both MULT and MULTU instead of using an if reduces the critical path at the expense of circuit compactness,
-        //though it is likely that the time gain is less than the area increase.
+        //always computing both MULT and MULTU instead of using an if reduces the critical path at the expense of circuit compactness,
+        //though it is likely that the time gain is far less significant than the area increase.
 
         //unsigned product, total is just for testing
         {hi, lo} = a*b;
-        total = a*b;
+        //total = a*b;
 
         //signed product, stotal is just for testing
         amag = a[constto] ? (~a + 1) : a;
         bmag = b[constto] ? (~b + 1) : b;
         {shi, slo} = (a[constto] ^ b[constto]) ? ( ~(amag * bmag) + 1 ) : (amag*bmag);
-        stotal = (a[constto] ^ b[constto]) ? ( ~(amag * bmag) + 1 ) : (amag*bmag);
+        //stotal = (a[constto] ^ b[constto]) ? ( ~(amag * bmag) + 1 ) : (amag*bmag);
         
     end
 

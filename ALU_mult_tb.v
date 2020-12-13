@@ -3,15 +3,15 @@ module ALU_mult_tb;
     logic [31:0] a, b;
     logic [3:0] ctrl;
     logic [31:0] result;
-    logic [63:0] total;
+    //logic [63:0] total;
     logic [1:0] comp;
 
     ALU ALU_DUT(
         .a(a), .b(b),
         .ctrl(ctrl),
         .out(result),
-        .clk(clk),
-        .total(total)
+        .clk(clk)
+        //.total(total)
     );
 
     initial begin
