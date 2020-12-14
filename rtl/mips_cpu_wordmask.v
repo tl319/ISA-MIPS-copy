@@ -1,12 +1,12 @@
 module wordmask(
-    input logic [31:0] data,
+    input logic signed [31:0] data,
     input logic [2:0] msk_cnt,
     input logic [1:0] msk_cnt2,
-    output logic [31:0] masked_data
+    output logic signed [31:0] masked_data
 );
-    logic [31:0] temp1;
-    logic [31:0] temp2;
-    logic [31:0] temp3;
+    logic signed [31:0] temp1;
+    logic signed [31:0] temp2;
+    logic signed [31:0] temp3;
       always_comb begin
       case(msk_cnt)
       3'b000: masked_data = data;
