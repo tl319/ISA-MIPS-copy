@@ -101,6 +101,7 @@ module mips_cpu_bus(
     logic extend_mux;
     logic [15:0] extend_in;
     logic byte_store_en;
+    logic [31:0] bool_out;
 
 assign lrmuxLSB = alu2out;
 // assign writedata = regbout;
@@ -241,7 +242,9 @@ assign lrmuxLSB = alu2out;
         .divrst (divrst),
         .divdone (divdone),
         .extend_mux (extend_mux),
-        .byte_store_en (byte_store_en)
+        .byte_store_en (byte_store_en),
+        .cond (cond),
+        .bool_cnt (bool_cnt)
       );
 
       state_machine state_machine_a(
@@ -265,10 +268,17 @@ assign lrmuxLSB = alu2out;
       .out (Dst)
       );
 
+      MUX_2 Bool_mux(
+      .a (constant_0),
+      .b (constant_1),
+      .select (bool_cnt),
+      .out (bool_out)
+      );
+
       MUX_4 MemToReg_mux(
       .a (aluout),
       .b (final_data),
-      .c (constant_1),
+      .c (bool_out),
       .d (aluresult),
       .select (MemToReg),
       .out (WriteRegData)

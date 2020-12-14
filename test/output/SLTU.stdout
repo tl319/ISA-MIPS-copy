@@ -105,6 +105,6 @@ FINAL MEMORY : bfc00019: 10
 FINAL MEMORY : bfc0001a: 60
 FINAL MEMORY : bfc0001c: 08
 ----------
-v0: 00000001
+v0: 00000000
 active: 0
 TB : finished; running=0

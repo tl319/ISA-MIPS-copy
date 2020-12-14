@@ -1,10 +1,10 @@
 
 module ALU(
-    input logic [31:0] a, b,
+    input logic signed [31:0] a, b,
     input logic [3:0] ctrl,
     input logic clk,
     input logic divrst,
-    output logic [31:0] out,
+    output logic signed [31:0] out,
     output logic [1:0] comp,
     output logic divdone
 );
