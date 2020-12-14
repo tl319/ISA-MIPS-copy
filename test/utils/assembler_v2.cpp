@@ -173,13 +173,13 @@ int main(int argc, char** argv)
                             rs = stoi(operands[0]) << 21;
 
                             if (opname == "bgez") {
-                                rt = 1;
+                                rt = 1 << 16;
                             }
                             if (opname == "bgezal") {
-                                rt = 17;
+                                rt = 17 << 16;
                             }
                             if (opname == "bltzal") {
-                                rt = 16;
+                                rt = 16 << 16;
                             }
                         }
 
