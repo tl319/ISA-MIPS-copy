@@ -82,6 +82,9 @@ int32_t mips_simulate(vector<unsigned char>& mem)
 
 registers[0] = 0;
 
+          uint vaddr;
+          int32_t data;
+          int32_t reg_rt;
 
       switch(opcode)
       {
@@ -348,14 +351,61 @@ registers[0] = 0;
 
 
         case 34://100010 LWL //do i have to shift the address left by 2 bits??
-
-          registers[rt_index] = (registers[rt_index]<<16)>>16;
-          registers[rt_index] += (mem[simp_address(registers[rs_index]+immediate+1)]<<24)+ (mem[simp_address(registers[rs_index]+immediate)]<<16);
+          vaddr = (registers[rs_index]+immediate)%4;
+          reg_rt = registers[rt_index];
+          data = (mem[simp_address(registers[rs_index] + immediate+3-vaddr)]<<24) + (mem[simp_address(registers[rs_index]+immediate +2-vaddr)]<<16) + (mem[simp_address(registers[rs_index]+immediate+1-vaddr)]<<8) + mem[simp_address(registers[rs_index]+immediate-vaddr)];
+          if(vaddr == 0)
+          {
+          registers[rt_index] = ((uint32_t)registers[rt_index]<<8)>>8;
+          registers[rt_index] += ((data<<24) & 0xFF000000);
+          //registers[rt_index] =data;
+          }
+          else if(vaddr == 1)
+          {
+          registers[rt_index] = ((uint32_t)registers[rt_index]<<16)>>16;
+          registers[rt_index] += ((data<<16) & 0xFFFF0000);
+          //registers[rt_index] =data;
+          }
+          else if(vaddr ==2)
+          {
+          registers[rt_index] = ((uint32_t)registers[rt_index]<<24)>>24;
+          registers[rt_index] += ((data<<8) & 0xFFFFFF00);
+          //registers[rt_index] =data;
+          }
+          else /*if(vaddr ==3)*/
+          {
+          registers[rt_index] = data;
+          //registers[rt_index] += mem & 0x00000000;
+          }
           break;
         case 38://100110 LWR
+          vaddr = (registers[rs_index]+immediate)%4;
+          //reg_rt = registers[rt_index];
+          data = (mem[simp_address(registers[rs_index] + immediate+3-vaddr)]<<24) + (mem[simp_address(registers[rs_index]+immediate +2-vaddr)]<<16) + (mem[simp_address(registers[rs_index]+immediate+1-vaddr)]<<8) + mem[simp_address(registers[rs_index]+immediate-vaddr)];
+          if(vaddr == 3)
+          {
+            registers[rt_index] = ((uint32_t)registers[rt_index]>>8)<<8;
+            registers[rt_index] += ((data>>24) & 0x000000FF);
+        //registers[rt_index] =data;
+          }
+          else if(vaddr == 2)
+          {
+            registers[rt_index] = ((uint32_t)registers[rt_index]>>16)<<16;
+            registers[rt_index] += ((data>>16) & 0x0000FFFF);
+        //registers[rt_index] =data;
+        }
+        else if(vaddr ==1)
+        {
+        registers[rt_index] = ((uint32_t)registers[rt_index]>>24)<<24;
+        registers[rt_index] += ((data>>8) & 0x00FFFFFF);
+        //registers[rt_index] =data;
+        }
+        else /*if(vaddr ==3)*/
+        {
+        registers[rt_index] = data;
+        //registers[rt_index] += mem & 0x00000000;
+        }
 
-          registers[rt_index] = (registers[rt_index]>>16)<<16;
-          registers[rt_index] += (mem[simp_address(registers[rs_index]+immediate+1)]<<8)+ mem[simp_address(registers[rs_index]+immediate)];
           break;
         default:
          cout<<"Invalid instruction";
