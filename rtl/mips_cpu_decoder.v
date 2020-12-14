@@ -39,6 +39,7 @@ module decoder(
     output logic divrst,
     output logic extend_mux,
     output logic byte_store_en,
+    output logic half_store_en,
     input logic [1:0] cond,
     output logic bool_cnt
 
@@ -180,6 +181,7 @@ module decoder(
         divrst = 0;
         extend_mux = 0;
         byte_store_en = 0;
+        half_store_en =0;
         bool_cnt =0;
         end
       4'b0001: begin
@@ -344,6 +346,7 @@ module decoder(
         divrst = 0;
         extend_mux = 1;
         byte_store_en = 0;
+        half_store_en =0;
         bool_cnt =0;
         end
       4'b0010: begin
@@ -453,6 +456,7 @@ module decoder(
         end
         extend_mux = 1;
         byte_store_en = 0;
+        half_store_en =0;
         if ((slti == 1 && cond == 2'b01) || (sltiu == 1 && cond == 2'b01) || (slt == 1 && cond == 2'b01)  || (sltu == 1 && cond == 2'b01) ) begin
         bool_cnt = 1;
         end else begin
@@ -554,6 +558,11 @@ module decoder(
         end else begin
         byte_store_en = 0;
         end
+        if (sh ==1) begin
+        half_store_en = 1;
+        end else begin
+        half_store_en =0;
+        end
         if ((slti == 1 && cond == 2'b01) || (sltiu == 1 && cond == 2'b01) || (slt == 1 && cond == 2'b01)  || (sltu == 1 && cond == 2'b01) ) begin
         bool_cnt = bool_cnt;
         end else begin
@@ -636,6 +645,7 @@ module decoder(
         divrst = 0;
         extend_mux = 1;
         byte_store_en = 0;
+        half_store_en = 0;
         bool_cnt = 0;
         end
       4'b0101: begin
@@ -677,6 +687,7 @@ module decoder(
         divrst = 0;
         extend_mux = 1;
         byte_store_en = 0;
+        half_store_en = 0;
         bool_cnt = 0;
         end
       4'b1111: begin
@@ -718,6 +729,7 @@ module decoder(
         divrst = 0;
         extend_mux = 1;
         byte_store_en = 0;
+        half_store_en = 0;
         bool_cnt = 0;
         end
       4'b1110: begin
@@ -759,6 +771,7 @@ module decoder(
         divrst = 0;
         extend_mux = 1;
         byte_store_en = 0;
+        half_store_en = 0;
         bool_cnt = 0;
         end
       4'b1001: begin
@@ -915,6 +928,7 @@ module decoder(
         divrst =0;
         extend_mux = 1;
         byte_store_en = 0;
+        half_store_en = 0;
         bool_cnt = 0;
         end
       endcase
