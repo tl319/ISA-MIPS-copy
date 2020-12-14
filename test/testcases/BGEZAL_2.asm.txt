@@ -17,6 +17,6 @@ addiu $0,$0,0
 addiu $2,$0,8
 #^should branch, v0 should remain 7
 addiu $2,$2,4
-addu $2,$2,$31
+sw $31,0($0)
 jr $0
 #If BGEZAL properly takes only the second and third branch, v0 = 3749707853 (overflow)
