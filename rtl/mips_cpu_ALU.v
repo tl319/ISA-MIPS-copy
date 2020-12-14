@@ -1,10 +1,8 @@
-
 module ALU(
-    input logic signed [31:0] a, b,
+    input logic [31:0] a, b,
     input logic [3:0] ctrl,
-    input logic clk,
-    input logic divrst,
-    output logic signed [31:0] out,
+    input logic clk, divrst,
+    output logic [31:0] out,
     output logic [1:0] comp,
     output logic divdone
 );
@@ -12,9 +10,31 @@ module ALU(
     logic S;
     logic [31:0] divq, divr;
 
-    //carry for multiplication
-    logic C;
-    logic [32:0] multbot;
+    //hi, lo and internal values for multiplication
+    logic [31:0] hi, lo, shi, slo;
+    logic [4:0] constto;
+    logic [31:0] amag, bmag; //magnitude of a and b
+
+    //used a constant decimal 31 as Icarus doesn't support constant indexing
+    initial begin
+        constto <= 5'b11111;
+    end
+
+    always_comb begin
+        //always computing both MULT and MULTU instead of using an if reduces the critical path at the expense of circuit compactness,
+        //though it is likely that the time gain is far less significant than the area increase.
+
+        //unsigned product, total is just for testing
+        {hi, lo} = a*b;
+        //total = a*b;
+
+        //signed product, stotal is just for testing
+        amag = a[constto] ? (~a + 1) : a;
+        bmag = b[constto] ? (~b + 1) : b;
+        {shi, slo} = (a[constto] ^ b[constto]) ? ( ~(amag * bmag) + 1 ) : (amag*bmag);
+        //stotal = (a[constto] ^ b[constto]) ? ( ~(amag * bmag) + 1 ) : (amag*bmag);
+
+    end
 
     div division(
         .a(a), .b(b),
@@ -44,18 +64,11 @@ module ALU(
             4'b0101: out = a<<b;  //SLL
             4'b0110: out = a>>b;  //SRL
             4'b0111: out = a>>>b; //SRA
-            // 4'b1001: out = { { {16{a[31]}}, a[31:16]} * { {16{b[31]}}, b[31:16]} + { {15{1'b0}} , C } }; //MULT TOP
-            // 4'b1000: begin //MULT BOT
-            //    out = { {16{a[15]}}, a[15:0]} * { {16{b[15]}}, b[15:0]};
-            //    C = multbot[32];
-            //    out = multbot;
-            // end
-            // 4'b1011: out = { {16'h0000, a[31:16]} * {16'h0000, b[31:16]} + { {15{1'b0}}, C } };        //MULTU TOP
-            // 4'b1010: begin //MULTU BOT
-            //     multbot = {16'h0000, a[15:0]} * {16'h0000, b[15:0]};
-            //     C = multbot[32];
-            //     out = multbot;
-            // end
+
+            4'b1001: out = shi;         //MULT TOP
+            4'b1000: out = slo; //MULT BOT
+            4'b1011: out = hi;       //MULTU TOP
+            4'b1010: out = lo; //MULTU BOT
 
             4'b1100: begin //DIV
                 S = 1;
