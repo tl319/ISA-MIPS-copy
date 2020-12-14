@@ -39,7 +39,7 @@ int32_t mips_simulate(vector<unsigned char>& mem)
     while(true)
     { //getting rid of the bits we don't need
 //i++;
-    if(PC == 0 )/*&& !prev_was_jump ))|| (PC_delay_slot ==0 && prev_was_jump*/
+    if((PC == 0 && !prev_was_jump )|| (PC_delay_slot ==0 && prev_was_jump))
     {
       //running = false;
       return registers[2];
@@ -162,6 +162,7 @@ registers[0] = 0;
             PC_delay_slot = PC + 4;
             registers[31] = PC+8;
             PC = registers[rs_index];
+            if(PC!=0) PC-=4;
 
           }
           else if(funct == 8) //001000 JR
@@ -170,6 +171,7 @@ registers[0] = 0;
             is_jump = true;
             PC_delay_slot = PC + 4;
             PC = registers[rs_index];
+            if(PC!=0) PC-=4;
             //return registers[2];
           }
         break;
@@ -361,7 +363,7 @@ registers[0] = 0;
 
 
       }
-    if(!is_jump)
+    if(!is_jump && PC!=0)
         PC+=4;
       prev_was_jump = is_jump;
       assert(registers[0] == 0);
