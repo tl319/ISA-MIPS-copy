@@ -212,7 +212,7 @@ registers[0] = 0;
           break;
         case 1:
 
-          if(registers[rt_index]==1) //BGEZ
+          if(rt_index==1) //BGEZ
           {
             if(registers[rs_index]>=0) //delay slot!!!!!
             {
@@ -222,7 +222,7 @@ registers[0] = 0;
               PC+=immediate*4;
             }
           }
-          else if(registers[rt_index] == 33/*100001*/) //BGEZAL
+          else if(rt_index == 33/*100001*/) //BGEZAL
           {
 
             if(registers[rs_index]>=0) //delay slot!
@@ -234,7 +234,7 @@ registers[0] = 0;
               PC+=immediate*4;
             }
           }
-          else if(registers[rt_index] == 0) //BLTZ
+          else if(rt_index == 0) //BLTZ
           {
             if(registers[rs_index]<0)
             {
@@ -244,7 +244,7 @@ registers[0] = 0;
               PC+=immediate*4; //delay slot
             }
           }
-          else if(registers[rt_index] == 32/*100000*/) //BLTZAL
+          else if(rt_index == 32/*100000*/) //BLTZAL
           {
             if(registers[rs_index]<0)
             {
@@ -259,7 +259,7 @@ registers[0] = 0;
         break;
         case 7: //000111, BGTZ
 
-          assert(registers[rt_index]==0);
+          assert(rt_index==0);
           if(registers[rs_index]>0)
           {
             assert(!prev_was_jump);
@@ -270,7 +270,7 @@ registers[0] = 0;
         break;
         case 6: //000110, BLEZ
 
-          assert(registers[rt_index]==0);
+          assert(rt_index==0);
           if(registers[rs_index]<=0)
           {
             assert(!prev_was_jump);
@@ -355,7 +355,6 @@ registers[0] = 0;
           registers[rt_index] += (mem[simp_address(registers[rs_index]+immediate+1)]<<8)+ mem[simp_address(registers[rs_index]+immediate)];
           break;
         default:
-
          cout<<"Invalid instruction";
          assert(0);
          break;
