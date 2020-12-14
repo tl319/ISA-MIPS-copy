@@ -19,4 +19,4 @@ addiu $2,$0,8
 addiu $2,$2,4
 addiu $2,$2,3
 jr $0
-#If BLEZ properly takes only the second branch, v0 = 10
+#If BLEZ properly takes only the second and third branch, v0 = 10
