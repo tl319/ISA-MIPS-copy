@@ -1,5 +1,9 @@
 $date
+<<<<<<< HEAD
 	Mon Dec 14 22:34:03 2020
+=======
+	Mon Dec 14 22:10:39 2020
+>>>>>>> 4b51bd6cd2e5818ecf7846c8a821d1caa23d96b3
 $end
 $version
 	Icarus Verilog

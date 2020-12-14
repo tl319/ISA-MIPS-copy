@@ -1,0 +1,95 @@
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for LWL_2 testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+12,21c12,18
+< 00000017: 11
+< 0000001a: 11
+< 0000001b: 22
+< 0000001d: 11
+< 0000001e: 22
+< 0000001f: 33
+< 00000020: 11
+< 00000021: 22
+< 00000022: 33
+< 00000023: 44
+---
+> 00000016: 11
+> 00000017: 22
+> 0000001A: 22
+> 0000001B: 33
+> 0000001E: 33
+> 0000001F: 44
+> 00000022: 44
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for LWL_2 testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+14,24c14,20
+< 00000016: ff
+< 00000017: 11
+< 0000001a: 11
+< 0000001b: 22
+< 0000001d: 11
+< 0000001e: 22
+< 0000001f: 33
+< 00000020: 11
+< 00000021: 22
+< 00000022: 33
+< 00000023: 44
+---
+> 00000016: 10
+> 00000017: 22
+> 0000001A: 22
+> 0000001B: 33
+> 0000001E: 33
+> 0000001F: 44
+> 00000022: 44
