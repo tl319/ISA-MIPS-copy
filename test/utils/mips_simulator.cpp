@@ -164,7 +164,7 @@ registers[0] = 0;
             PC_delay_slot = PC + 4;
             registers[31] = PC+8;
             PC = registers[rs_index];
-            if(PC!=0) PC-=4;
+            //if(PC!=0) PC-=4;
 
           }
           else if(funct == 8) //001000 JR
@@ -316,17 +316,16 @@ registers[0] = 0;
 
           //MEM ACCESS
         case 32://100000 //LB
-          registers[rt_index] = mem[simp_address(registers[rs_index]+immediate)];
+          registers[rt_index] = (int8_t)mem[simp_address(registers[rs_index]+immediate)];
           break;
         case 36: //100100 LBU
           registers[rt_index] = (unsigned char)mem[simp_address(registers[rs_index]+immediate)];
           break;
         case 33: //100001 LH //what if the position is weird?
-
-          registers[rt_index] = (mem[simp_address(registers[rs_index]+immediate+1)]<<8) + mem[simp_address(registers[rs_index]+immediate)];
+          registers[rt_index] = (int32_t)((int16_t)((mem[simp_address(registers[rs_index]+immediate+1)]<<8)) + (int16_t)mem[simp_address(registers[rs_index]+immediate)]);
           break;
         case 37: //100101 LHU
-          registers[rt_index] = ((unsigned char)mem[simp_address(registers[rs_index]+immediate+1)]<<8) + (unsigned char)mem[simp_address(registers[rs_index]+immediate)];
+          registers[rt_index] = ((uint16_t)mem[simp_address(registers[rs_index]+immediate+1)]<<8) + (unsigned char)mem[simp_address(registers[rs_index]+immediate)];
           break;
         case 35: //bin:100011, LW what if addressing is incorrect???
           registers[rt_index] = (mem[simp_address(registers[rs_index] + immediate+3)]<<24) + (mem[simp_address(registers[rs_index]+immediate +2)]<<16) + (mem[simp_address(registers[rs_index]+immediate+1)]<<8) + mem[simp_address(registers[rs_index]+immediate)];
