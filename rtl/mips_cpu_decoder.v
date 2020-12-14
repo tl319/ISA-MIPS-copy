@@ -847,7 +847,7 @@ module decoder(
       end else begin
       nop =1;
       end
-        MemToReg = 2'b11;
+        MemToReg = 2'b00;
         RegDst = 2'b10;
         IorD = 2'b00;
         PCSrc = 2'b11;
