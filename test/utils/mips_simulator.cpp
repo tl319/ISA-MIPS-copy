@@ -160,7 +160,7 @@ registers[0] = 0;
             assert(!prev_was_jump);
             is_jump = true;
             PC_delay_slot = PC + 4;
-            registers[31] = PC+4;
+            registers[31] = PC+8;
             PC = registers[rs_index];
 
           }
@@ -222,14 +222,14 @@ registers[0] = 0;
               PC+=immediate*4;
             }
           }
-          else if(rt_index == 33/*100001*/) //BGEZAL
+          else if(rt_index == 17/*10001*/) //BGEZAL
           {
 
             if(registers[rs_index]>=0) //delay slot!
             {
               assert(!prev_was_jump);
               is_jump = true;
-              registers[31]=PC;
+              registers[31]=PC + 8;
               PC_delay_slot = PC + 4;
               PC+=immediate*4;
             }
@@ -244,13 +244,13 @@ registers[0] = 0;
               PC+=immediate*4; //delay slot
             }
           }
-          else if(rt_index == 32/*100000*/) //BLTZAL
+          else if(rt_index == 16/*10000*/) //BLTZAL
           {
             if(registers[rs_index]<0)
             {
               assert(!prev_was_jump);
               is_jump = true;
-              registers[31]=PC;
+              registers[31]=PC+8;
               PC_delay_slot = PC + 4;
               PC+=immediate*4;
             }
@@ -304,7 +304,7 @@ registers[0] = 0;
           assert(!prev_was_jump);
           is_jump = true;
           PC_delay_slot = PC + 4;
-          registers[31]=PC+4;
+          registers[31]=PC+8;
           uint32_t pc_upper = (PC>>28)<<28;
           PC=pc_upper + (jump_address<<2)-4;
           }
