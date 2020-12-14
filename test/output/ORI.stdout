@@ -1,558 +1,126 @@
 RAM : INIT : Loading RAM contents from binary/ORI.hex.txt
-WARNING: ./../memory_block.v:34: $readmemh(binary/ORI.hex.txt): Not enough words in the file for the requested range [1024:2047].
+WARNING: ./test_bench/memory_block.v:33: $readmemh(data_binary/initial_data.hex.txt): Not enough words in the file for the requested range [4:1023].
+WARNING: ./test_bench/memory_block.v:34: $readmemh(binary/ORI.hex.txt): Not enough words in the file for the requested range [1024:2047].
 RAM : INIT : DISPLAYING INITIALSIED RAM
-0bfc00000: 24
-0bfc00001: 42
-0bfc00004: 34
-0bfc00005: 42
-0bfc00008: ac
-0bfc0000b: 01
-0bfc0000c: 34
-0bfc0000d: 42
-0bfc0000e: ff
-0bfc0000f: ff
-0bfc00010: ac
-0bfc00011: 02
-0bfc00013: 02
-0bfc00014: 34
-0bfc00015: 42
-0bfc00016: ff
-0bfc00017: ff
-0bfc00018: ac
-0bfc00019: 02
-0bfc0001b: 03
-0bfc0001c: 34
-0bfc0001d: 42
-0bfc00020: ac
-0bfc00021: 02
-0bfc00023: 04
-0bfc00027: 08
+RAM : INIT : INITIAL DATA : 00000004: 04
+RAM : INIT : INITIAL DATA : 00000006: c0
+RAM : INIT : INITIAL DATA : 00000007: bf
+RAM : INIT : INITIAL DATA : 00000008: ff
+RAM : INIT : INITIAL DATA : 00000009: ff
+RAM : INIT : INITIAL DATA : 0000000a: ff
+RAM : INIT : INITIAL DATA : 0000000b: ff
+RAM : INIT : INITIAL DATA : 0000000c: 11
+RAM : INIT : INITIAL DATA : 0000000d: 22
+RAM : INIT : INITIAL DATA : 0000000e: 33
+RAM : INIT : INITIAL DATA : 0000000f: 44
+RAM : INIT : INITIAL DATA : bfc00002: 42
+RAM : INIT : INITIAL DATA : bfc00003: 24
+RAM : INIT : INITIAL DATA : bfc00006: 42
+RAM : INIT : INITIAL DATA : bfc00007: 34
+RAM : INIT : INITIAL DATA : bfc00008: 01
+RAM : INIT : INITIAL DATA : bfc0000b: ac
+RAM : INIT : INITIAL DATA : bfc0000c: ff
+RAM : INIT : INITIAL DATA : bfc0000d: ff
+RAM : INIT : INITIAL DATA : bfc0000e: 42
+RAM : INIT : INITIAL DATA : bfc0000f: 34
+RAM : INIT : INITIAL DATA : bfc00010: 02
+RAM : INIT : INITIAL DATA : bfc00012: 02
+RAM : INIT : INITIAL DATA : bfc00013: ac
+RAM : INIT : INITIAL DATA : bfc00014: ff
+RAM : INIT : INITIAL DATA : bfc00015: ff
+RAM : INIT : INITIAL DATA : bfc00016: 42
+RAM : INIT : INITIAL DATA : bfc00017: 34
+RAM : INIT : INITIAL DATA : bfc00018: 03
+RAM : INIT : INITIAL DATA : bfc0001a: 02
+RAM : INIT : INITIAL DATA : bfc0001b: ac
+RAM : INIT : INITIAL DATA : bfc0001e: 42
+RAM : INIT : INITIAL DATA : bfc0001f: 34
+RAM : INIT : INITIAL DATA : bfc00020: 04
+RAM : INIT : INITIAL DATA : bfc00022: 02
+RAM : INIT : INITIAL DATA : bfc00023: ac
+RAM : INIT : INITIAL DATA : bfc00024: 08
 CPU reset
 VCD info: dumpfile cpu_toplvl_waves.vcd opened for output.
-          1 cycle
-address: xxxxxxxx
-readdata: xxxxxxxx
-write: x
-writedata: xxxxxxxx
 CPU reset
-          2 cycle
-address: bfc00000
-readdata: xxxxxxxx
-write: 0
-writedata: 00000000
-inside ram address 00000400
-          3 cycle
-address: bfc00000
-readdata: 24420000
-write: 0
-writedata: 00000000
-inside ram address 00000400
-v0 : 00000000
-          4 cycle
-address: bfc00000
-readdata: 24420000
-write: 0
-writedata: 00000000
-v0 : 00000000
-inside ram address 00000400
-          5 cycle
-address: bfc00004
-readdata: 24420000
-write: 0
-writedata: 00000000
-inside ram address 00000404
-v0 : 00000000
-          6 cycle
-address: bfc00004
-readdata: 34420000
-write: 0
-writedata: 00000000
-v0 : 00000000
-inside ram address 00000404
-          7 cycle
-address: 00000000
-readdata: 34420000
-write: 0
-writedata: 00000000
-inside ram address 00000000
-v0 : 00000000
-          8 cycle
-address: bfc00004
-readdata: 00000000
-write: 0
-writedata: 00000000
-v0 : 00000000
-inside ram address 00000404
-          9 cycle
-address: bfc00004
-readdata: 34420000
-write: 0
-writedata: 00000000
-inside ram address 00000404
-v0 : 00000000
-         10 cycle
-address: bfc00008
-readdata: 34420000
-write: 0
-writedata: 00000000
-v0 : 00000000
-inside ram address 00000408
-         11 cycle
-address: bfc00008
-readdata: ac000001
-write: 0
-writedata: 00000000
-inside ram address 00000408
-v0 : 00000000
-         12 cycle
-address: 00000000
-readdata: ac000001
-write: 0
-writedata: 00000000
-v0 : 00000000
-inside ram address 00000000
-         13 cycle
-address: bfc00008
-readdata: 00000000
-write: 0
-writedata: 00000000
-inside ram address 00000408
-v0 : 00000000
-         14 cycle
-address: bfc00008
-readdata: ac000001
-write: 0
-writedata: 00000000
-v0 : 00000000
-inside ram address 00000408
-         15 cycle
-address: bfc0000c
-readdata: ac000001
-write: 0
-writedata: 00000000
-inside ram address 0000040c
-v0 : 00000000
-         16 cycle
-address: bfc0000c
-readdata: 3442ffff
-write: 0
-writedata: 00000000
-v0 : 00000000
-inside ram address 0000040c
-         17 cycle
-address: 00000001
-readdata: 3442ffff
-write: 1
-writedata: 00000000
-v0 : 00000000
-         18 cycle
-address: bfc0000c
-readdata: 3442ffff
-write: 0
-writedata: 00000000
-v0 : 00000000
-inside ram address 0000040c
-         19 cycle
-address: bfc0000c
-readdata: 3442ffff
-write: 0
-writedata: 00000000
-inside ram address 0000040c
-v0 : 00000000
-         20 cycle
-address: bfc00010
-readdata: 3442ffff
-write: 0
-writedata: 00000000
-v0 : 00000000
-inside ram address 00000410
-         21 cycle
-address: bfc00010
-readdata: ac020002
-write: 0
-writedata: 00000000
-inside ram address 00000410
-v0 : 00000000
-         22 cycle
-address: 0003fffc
-readdata: ac020002
-write: 0
-writedata: 00000000
-v0 : 00000000
-inside ram address 0003fffc
-         23 cycle
-address: bfc00010
-readdata: xxxxxxxx
-write: 0
-writedata: 0000ffff
-inside ram address 00000410
-v0 : 0000ffff
-         24 cycle
-address: bfc00010
-readdata: ac020002
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 00000410
-         25 cycle
-address: bfc00014
-readdata: ac020002
-write: 0
-writedata: 0000ffff
-inside ram address 00000414
-v0 : 0000ffff
-         26 cycle
-address: bfc00014
-readdata: 3442ffff
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 00000414
-         27 cycle
-address: 00000002
-readdata: 3442ffff
-write: 1
-writedata: 0000ffff
-v0 : 0000ffff
-         28 cycle
-address: bfc00014
-readdata: 3442ffff
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 00000414
-         29 cycle
-address: bfc00014
-readdata: 3442ffff
-write: 0
-writedata: 0000ffff
-inside ram address 00000414
-v0 : 0000ffff
-         30 cycle
-address: bfc00018
-readdata: 3442ffff
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 00000418
-         31 cycle
-address: bfc00018
-readdata: ac020003
-write: 0
-writedata: 0000ffff
-inside ram address 00000418
-v0 : 0000ffff
-         32 cycle
-address: 0003fffc
-readdata: ac020003
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 0003fffc
-         33 cycle
-address: bfc00018
-readdata: xxxxxxxx
-write: 0
-writedata: 0000ffff
-inside ram address 00000418
-v0 : 0000ffff
-         34 cycle
-address: bfc00018
-readdata: ac020003
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 00000418
-         35 cycle
-address: bfc0001c
-readdata: ac020003
-write: 0
-writedata: 0000ffff
-inside ram address 0000041c
-v0 : 0000ffff
-         36 cycle
-address: bfc0001c
-readdata: 34420000
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 0000041c
-         37 cycle
-address: 00000003
-readdata: 34420000
-write: 1
-writedata: 0000ffff
-v0 : 0000ffff
-         38 cycle
-address: bfc0001c
-readdata: 34420000
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 0000041c
-         39 cycle
-address: bfc0001c
-readdata: 34420000
-write: 0
-writedata: 0000ffff
-inside ram address 0000041c
-v0 : 0000ffff
-         40 cycle
-address: bfc00020
-readdata: 34420000
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 00000420
-         41 cycle
-address: bfc00020
-readdata: ac020004
-write: 0
-writedata: 0000ffff
-inside ram address 00000420
-v0 : 0000ffff
-         42 cycle
-address: 0003fffc
-readdata: ac020004
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 0003fffc
-         43 cycle
-address: bfc00020
-readdata: xxxxxxxx
-write: 0
-writedata: 0000ffff
-inside ram address 00000420
-v0 : 0000ffff
-         44 cycle
-address: bfc00020
-readdata: ac020004
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 00000420
-         45 cycle
-address: bfc00024
-readdata: ac020004
-write: 0
-writedata: 0000ffff
-inside ram address 00000424
-v0 : 0000ffff
-00000005: ff
-00000006: ff
-0bcf00000: 24
-0bcf00001: 42
-0bcf00004: 34
-0bcf00005: 42
-0bcf00008: ac
-0bcf0000b: 01
-0bcf0000c: 34
-0bcf0000d: 42
-0bcf0000e: ff
-0bcf0000f: ff
-0bcf00010: ac
-0bcf00011: 02
-0bcf00013: 02
-0bcf00014: 34
-0bcf00015: 42
-0bcf00016: ff
-0bcf00017: ff
-0bcf00018: ac
-0bcf00019: 02
-0bcf0001b: 03
-0bcf0001c: 34
-0bcf0001d: 42
-0bcf00020: ac
-0bcf00021: 02
-0bcf00023: 04
-0bcf00027: 08
-         46 cycle
-address: bfc00024
-readdata: 00000008
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 00000424
-00000005: ff
-00000006: ff
-0bcf00000: 24
-0bcf00001: 42
-0bcf00004: 34
-0bcf00005: 42
-0bcf00008: ac
-0bcf0000b: 01
-0bcf0000c: 34
-0bcf0000d: 42
-0bcf0000e: ff
-0bcf0000f: ff
-0bcf00010: ac
-0bcf00011: 02
-0bcf00013: 02
-0bcf00014: 34
-0bcf00015: 42
-0bcf00016: ff
-0bcf00017: ff
-0bcf00018: ac
-0bcf00019: 02
-0bcf0001b: 03
-0bcf0001c: 34
-0bcf0001d: 42
-0bcf00020: ac
-0bcf00021: 02
-0bcf00023: 04
-0bcf00027: 08
-         47 cycle
-address: 00000004
-readdata: 00000008
-write: 1
-writedata: 0000ffff
-v0 : 0000ffff
-         48 cycle
-address: bfc00024
-readdata: 00000008
-write: 0
-writedata: 0000ffff
-v0 : 0000ffff
-inside ram address 00000424
-00000006: ff
-00000007: ff
-0bcf00000: 24
-0bcf00001: 42
-0bcf00004: 34
-0bcf00005: 42
-0bcf00008: ac
-0bcf0000b: 01
-0bcf0000c: 34
-0bcf0000d: 42
-0bcf0000e: ff
-0bcf0000f: ff
-0bcf00010: ac
-0bcf00011: 02
-0bcf00013: 02
-0bcf00014: 34
-0bcf00015: 42
-0bcf00016: ff
-0bcf00017: ff
-0bcf00018: ac
-0bcf00019: 02
-0bcf0001b: 03
-0bcf0001c: 34
-0bcf0001d: 42
-0bcf00020: ac
-0bcf00021: 02
-0bcf00023: 04
-0bcf00027: 08
-         49 cycle
-address: bfc00024
-readdata: 00000008
-write: 0
-writedata: 0000ffff
-inside ram address 00000424
-v0 : 0000ffff
-00000006: ff
-00000007: ff
-0bcf00000: 24
-0bcf00001: 42
-0bcf00004: 34
-0bcf00005: 42
-0bcf00008: ac
-0bcf0000b: 01
-0bcf0000c: 34
-0bcf0000d: 42
-0bcf0000e: ff
-0bcf0000f: ff
-0bcf00010: ac
-0bcf00011: 02
-0bcf00013: 02
-0bcf00014: 34
-0bcf00015: 42
-0bcf00016: ff
-0bcf00017: ff
-0bcf00018: ac
-0bcf00019: 02
-0bcf0001b: 03
-0bcf0001c: 34
-0bcf0001d: 42
-0bcf00020: ac
-0bcf00021: 02
-0bcf00023: 04
-0bcf00027: 08
-         50 cycle
-address: bfc00028
-readdata: 00000008
-write: 0
-writedata: 00000000
-v0 : 0000ffff
-inside ram address 00000428
-         51 cycle
-address: bfc00028
-readdata: 00000000
-write: 0
-writedata: 00000000
-inside ram address 00000428
-v0 : 0000ffff
-         52 cycle
-address: 00000000
-readdata: 00000000
-write: 0
-writedata: 00000000
-v0 : 0000ffff
-inside ram address 00000000
-         53 cycle
-address: bfc00028
-readdata: 00000000
-write: 0
-writedata: 00000000
-inside ram address 00000428
-v0 : 0000ffff
-         54 cycle
-address: bfc00028
-readdata: 00000000
-write: 0
-writedata: 00000000
-v0 : 0000ffff
-inside ram address 00000428
-         55 cycle
-address: bfc0002c
-readdata: 00000000
-write: 0
-writedata: 00000000
-inside ram address 0000042c
-v0 : 0000ffff
-         56 cycle
-address: 00000000
-readdata: 00000000
-write: 0
-writedata: 00000000
-v0 : 0000ffff
-inside ram address 00000000
-         57 cycle
-address: 00000000
-readdata: 00000000
-write: 0
-writedata: 00000000
-inside ram address 00000000
-v0 : 0000ffff
-         58 cycle
-address: 00000000
-readdata: 00000000
-write: 0
-writedata: 00000000
-v0 : 0000ffff
-inside ram address 00000000
-         59 cycle
-address: 00000000
-readdata: 00000000
-write: 0
-writedata: 00000000
-v0 : 0000ffff
-         60 cycle
-address: 00000000
-readdata: 00000000
-write: 0
-writedata: 00000000
-v0 : 0000ffff
-v0 : 0000ffff
+----------
+FINAL MEMORY : 00000004: 04
+FINAL MEMORY : 00000006: c0
+FINAL MEMORY : 00000007: bf
+FINAL MEMORY : 00000008: ff
+FINAL MEMORY : 00000009: ff
+FINAL MEMORY : 0000000a: ff
+FINAL MEMORY : 0000000b: ff
+FINAL MEMORY : 0000000c: 11
+FINAL MEMORY : 0000000d: 22
+FINAL MEMORY : 0000000e: 33
+FINAL MEMORY : 0000000f: 44
+FINAL MEMORY : bfc00002: 42
+FINAL MEMORY : bfc00003: 24
+FINAL MEMORY : bfc00006: 42
+FINAL MEMORY : bfc00007: 34
+FINAL MEMORY : bfc00008: 01
+FINAL MEMORY : bfc0000b: ac
+FINAL MEMORY : bfc0000c: ff
+FINAL MEMORY : bfc0000d: ff
+FINAL MEMORY : bfc0000e: 42
+FINAL MEMORY : bfc0000f: 34
+FINAL MEMORY : bfc00010: 02
+FINAL MEMORY : bfc00012: 02
+FINAL MEMORY : bfc00013: ac
+FINAL MEMORY : bfc00014: ff
+FINAL MEMORY : bfc00015: ff
+FINAL MEMORY : bfc00016: 42
+FINAL MEMORY : bfc00017: 34
+FINAL MEMORY : bfc00018: 03
+FINAL MEMORY : bfc0001a: 02
+FINAL MEMORY : bfc0001b: ac
+FINAL MEMORY : bfc0001e: 42
+FINAL MEMORY : bfc0001f: 34
+FINAL MEMORY : bfc00020: 04
+FINAL MEMORY : bfc00022: 02
+FINAL MEMORY : bfc00023: ac
+FINAL MEMORY : bfc00024: 08
+----------
+----------
+FINAL MEMORY : 00000002: ff
+FINAL MEMORY : 00000003: ff
+FINAL MEMORY : 00000004: ff
+FINAL MEMORY : 00000005: ff
+FINAL MEMORY : 00000008: ff
+FINAL MEMORY : 00000009: ff
+FINAL MEMORY : 0000000a: ff
+FINAL MEMORY : 0000000b: ff
+FINAL MEMORY : 0000000c: 11
+FINAL MEMORY : 0000000d: 22
+FINAL MEMORY : 0000000e: 33
+FINAL MEMORY : 0000000f: 44
+FINAL MEMORY : bfc00002: 42
+FINAL MEMORY : bfc00003: 24
+FINAL MEMORY : bfc00006: 42
+FINAL MEMORY : bfc00007: 34
+FINAL MEMORY : bfc00008: 01
+FINAL MEMORY : bfc0000b: ac
+FINAL MEMORY : bfc0000c: ff
+FINAL MEMORY : bfc0000d: ff
+FINAL MEMORY : bfc0000e: 42
+FINAL MEMORY : bfc0000f: 34
+FINAL MEMORY : bfc00010: 02
+FINAL MEMORY : bfc00012: 02
+FINAL MEMORY : bfc00013: ac
+FINAL MEMORY : bfc00014: ff
+FINAL MEMORY : bfc00015: ff
+FINAL MEMORY : bfc00016: 42
+FINAL MEMORY : bfc00017: 34
+FINAL MEMORY : bfc00018: 03
+FINAL MEMORY : bfc0001a: 02
+FINAL MEMORY : bfc0001b: ac
+FINAL MEMORY : bfc0001e: 42
+FINAL MEMORY : bfc0001f: 34
+FINAL MEMORY : bfc00020: 04
+FINAL MEMORY : bfc00022: 02
+FINAL MEMORY : bfc00023: ac
+FINAL MEMORY : bfc00024: 08
+----------
+v0: 0000ffff
 active: 0
 TB : finished; running=0

@@ -3,14 +3,26 @@
 #include <cmath>
 #include <cassert>
 
+#include "mips2.hpp"
 #include "mips.hpp"
 
 using namespace std;
 
-int32_t mips_simulate(vector<unsigned char> mem)
+unsigned int simp_address(uint32_t address)
+{
+  return (address<0xBFC00000) ? address : address - 0xBFC00000 + 0x00000400;
+}
+
+
+int32_t mips_simulate(vector<unsigned char>& mem)
 {
     vector<int32_t> registers;
-    int32_t HI, LO;
+    for(int i = 0; i<32; i++)
+    {
+      registers.push_back(0);
+    }
+    int32_t HI = 0;
+    int32_t LO = 0;
     uint opcode;
     uint rd_index, rs_index, rt_index, shamt, funct;
     uint32_t jump_address;
@@ -19,30 +31,40 @@ int32_t mips_simulate(vector<unsigned char> mem)
     uint32_t instr;
     bool prev_was_jump = false;
     bool is_jump = false;
-    uint32_t PC_delay_slot;
-
+    uint32_t PC_delay_slot = 0;
+    unsigned int PC_simple, PC_delay_simple;
     bool running = true;
+//int i = 0;
 
-    while(running)
+    while(true)
     { //getting rid of the bits we don't need
-      assert(PC<pow(2,30));
-      if(!prev_was_jump)   instr = mem[PC];
-      else instr = mem[PC_delay_slot];
-
+//i++;
+    if(PC == 0 )/*&& !prev_was_jump ))|| (PC_delay_slot ==0 && prev_was_jump*/
+    {
+      //running = false;
+      return registers[2];
+    }
+      assert(PC<pow(2,32)); //pow(2,11)????
+      PC_simple = simp_address(PC); //cerr<<endl<<PC_simple;
+      assert(PC_simple<2048);
+      PC_delay_simple = simp_address(PC_delay_slot);
+      assert(PC_delay_simple<2048);
+      if(!prev_was_jump)   instr = mem[PC_simple]+ (mem[PC_simple+1]<<8) + (mem[PC_simple+2]<<16) + (mem[PC_simple+3]<<24);
+      else instr =  mem[PC_delay_simple]+ (mem[PC_delay_simple+1]<<8) + (mem[PC_delay_simple+2]<<16) + (mem[PC_delay_simple+3]<<24);
+//cerr<<to_hex8(PC)<< " "<<instr<<endl;
       opcode = instr  >> 26; //mask the lowest 26 bits
-      assert(opcode < 32);
+      //cerr<<opcode <<endl;
+      //assert(opcode < 32);
 
-      rs_index = (instr << 6) >> 27;
-      //assert(rs_index<32);
-      int32_t& rs = registers[rs_index];
+        rs_index= (instr << 6) >> 27;
+        rt_index = (instr << 11) >> 27;
+        rd_index= (instr << 16) >> 27;
 
-      rt_index = (instr << 11) >> 27;
-      //assert(rt_index<32);
+
+      /*int32_t& rs = registers[rs_index];
       int32_t& rt = registers[rt_index];
+      int32_t& rd = registers[rd_index];*/
 
-      rd_index = (instr << 16) >> 27;
-      //assert(rd_index<32);
-      int32_t& rd = registers[rd_index];
 
       shamt = (instr << 21) >> 27;
       //assert(shamt<32);
@@ -58,81 +80,78 @@ int32_t mips_simulate(vector<unsigned char> mem)
 
       is_jump = false;
 
-      if(instr == 0)
-      {
-        running = false;
-        return;
-      }
+registers[0] = 0;
 
 
       switch(opcode)
       {
         case 0: //R type instructions
-        {
+
          //ALU
           if(funct == 32) //bin 100000, add
-            rd = rs+ rt;
+            registers[rd_index] = registers[rs_index]+ registers[rt_index];
           else if(funct == 33) //100001, addu
-            rd = (uint32_t)rs + (uint32_t)rt;
+            registers[rd_index] = (uint32_t)registers[rs_index] + (uint32_t)registers[rt_index];
           else if(funct == 36) //100100, and
-            rd = rs & rt;
+            registers[rd_index] = registers[rs_index] & registers[rt_index];
           else if (funct == 37) //100101, or
-            rd = rs | rt;
+            registers[rd_index] = registers[rs_index] | registers[rt_index];
           else if(funct == 39) //100111, nor
-            rd = ~(rs | rt);
+            registers[rd_index] = ~(registers[rs_index] | registers[rt_index]);
           else if(funct == 42) //101010,  SLT set on less than
-            rd = (rs<rt);
+            registers[rd_index] = (registers[rs_index]<registers[rt_index]);
           else if(funct == 43) //101011, SLTU set on less than unsigned
-            rd = ((uint32_t)rs<(uint32_t)rt);
+            registers[rd_index] = ((uint32_t)registers[rs_index]<(uint32_t)registers[rt_index]);
           else if(funct == 34) //100010, sub
-            rd = rs-rt;
+            registers[rd_index] = registers[rs_index]-registers[rt_index];
           else if(funct == 35) //100011, subu
-            rd = (uint32_t)rs - (uint32_t)rt;
+            registers[rd_index] = (uint32_t)registers[rs_index] - (uint32_t)registers[rt_index];
           else if(funct == 38) //100110 XOR
-            rd = rs ^ rt;
+            registers[rd_index] = registers[rs_index] ^ registers[rt_index];
 
           //SHIFTS
           else if(funct == 0) //SLL by shamt
-            rd = rt << shamt;
+            registers[rd_index] = registers[rt_index] << shamt;
           else if(funct == 4) //000100,  SLLV
-            rd = rt << (uint32_t)rs;
+            registers[rd_index] = registers[rt_index] << (uint32_t)registers[rs_index];
           else if(funct == 3) //000011, SRA
-            rd = (uint32_t)rt >> shamt;
+            registers[rd_index] = (uint32_t)registers[rt_index] >> shamt;
           else if (funct == 7) //000111, SRAV
-            rd = (uint32_t)rt>>(uint32_t)rs;
+            registers[rd_index] = (uint32_t)registers[rt_index]>>(uint32_t)registers[rs_index];
           else if(funct == 2) //000010, SRL
-            rd = rt >> shamt;
+            registers[rd_index] = registers[rt_index] >> shamt;
           else if(funct == 6) //000110, SRLV
-            rd = rt>>(uint32_t)rs;
+            registers[rd_index] = registers[rt_index]>>(uint32_t)registers[rs_index];
 
           //MULTIPLY
-          else if(funct == 26) //011010 DIV
+          else if(funct == 26 && registers[rt_index]!=0) //011010 DIV
           {
-            HI = rs % rt;
-            LO = rs/rt;
+
+            HI = registers[rs_index] % registers[rt_index];
+            LO = registers[rs_index]/registers[rt_index];
           }
-          else if(funct == 27) //011011 DIVU
+          else if(funct == 27 && registers[rt_index]!=0) //011011 DIVU
           {
-             HI = (uint32_t)rs % (uint32_t)rt;
-             LO = (uint32_t)rs / (uint32_t)rt;
+             HI = (uint32_t)registers[rs_index] % (uint32_t)registers[rt_index];
+             LO = (uint32_t)registers[rs_index] / (uint32_t)registers[rt_index];
           }
           else if(funct == 16) //010000 MFHI
-            rd = HI;
+            registers[rd_index] = HI;
           else if(funct == 18) //010010 MFLO
-            rd = LO;
+            registers[rd_index] = LO;
           else if(funct == 17) // 010001 MTHI
-            HI = rs;
+            HI = registers[rs_index];
           else if(funct == 19 ) //010011 MTLO
-            LO = rs;
+            LO = registers[rs_index];
           else if(funct == 24) //011000 MULT
           {
-            HI = rs*rt;
-            LO = rs*rt;
+            HI = registers[rs_index]*registers[rt_index];
+            LO = registers[rs_index]*registers[rt_index];
           }
           else if(funct ==25) //011001 MULTU
           {
-            HI = (uint32_t)rs*(uint32_t)rt;
-            LO = (uint32_t)rs*(uint32_t)rt;
+            HI = (uint32_t)registers[rs_index]*(uint32_t)registers[rt_index];
+            LO = (uint32_t)registers[rs_index]*(uint32_t)registers[rt_index];
           }
 
           //BRANCH
@@ -142,7 +161,7 @@ int32_t mips_simulate(vector<unsigned char> mem)
             is_jump = true;
             PC_delay_slot = PC + 4;
             registers[31] = PC+4;
-            PC = rs;
+            PC = registers[rs_index];
 
           }
           else if(funct == 8) //001000 JR
@@ -150,43 +169,52 @@ int32_t mips_simulate(vector<unsigned char> mem)
             assert(!prev_was_jump);
             is_jump = true;
             PC_delay_slot = PC + 4;
-            PC = rs;
+            PC = registers[rs_index];
+            //return registers[2];
           }
-        }
+        break;
         //I TYPE INSTR
 
         case 8://001000 ADDI
-          rt = rs + immediate;
-
+          registers[rt_index] = registers[rs_index] + immediate;
+          break;
         case 9://001001 ADDIU
-          rt = (uint32_t)rs + immediate;
+          registers[rt_index] = (uint32_t)registers[rs_index] + immediate;
+          break;
         case 12: //001100 ANDI
-          rt = rs & immediate;
+          registers[rt_index] = (uint32_t)registers[rs_index] & (uint16_t)immediate;
+          break;
         case 15: //001111 LUI
-          rt = immediate << 16;
+          registers[rt_index] = immediate << 16;
+          break;
         case 13: //001101 ORI
-          rt = rs | immediate;
+          registers[rt_index] = (uint32_t)registers[rs_index] | (uint16_t)immediate;
+          break;
         case 10: //001010 SLTI
-          rt = rs<immediate;
+          registers[rt_index] = registers[rs_index]<immediate;
+          break;
         case 11: //001011 SLTIU
-          rt = (uint32_t)rs < (uint32_t)immediate;
+          registers[rt_index] = (uint32_t)registers[rs_index] < (uint32_t)immediate;
+          break;
         case 14://001110 XORI
-          rt = rs ^ immediate;
+          registers[rt_index] = (uint32_t)registers[rs_index] ^ (uint16_t)immediate;
+          break;
 
           //BRANCHES
         case 4: //000100 BEQ
-          if(rs==rt) //delay slot!!!!!
+          if(registers[rs_index]==registers[rt_index]) //delay slot!!!!!
           {
             assert(!prev_was_jump);
             is_jump = true;
             PC_delay_slot = PC + 4;
             PC+=immediate*4;
           }
+          break;
         case 1:
-        {
-          if(rt==1) //BGEZ
+
+          if(registers[rt_index]==1) //BGEZ
           {
-            if(rs>=0) //delay slot!!!!!
+            if(registers[rs_index]>=0) //delay slot!!!!!
             {
               assert(!prev_was_jump);
               is_jump = true;
@@ -194,10 +222,10 @@ int32_t mips_simulate(vector<unsigned char> mem)
               PC+=immediate*4;
             }
           }
-          else if(rt == 33/*100001*/) //BGEZAL
+          else if(registers[rt_index] == 33/*100001*/) //BGEZAL
           {
 
-            if(rs>=0) //delay slot!
+            if(registers[rs_index]>=0) //delay slot!
             {
               assert(!prev_was_jump);
               is_jump = true;
@@ -206,9 +234,9 @@ int32_t mips_simulate(vector<unsigned char> mem)
               PC+=immediate*4;
             }
           }
-          else if(rt == 0) //BLTZ
+          else if(registers[rt_index] == 0) //BLTZ
           {
-            if(rs<0)
+            if(registers[rs_index]<0)
             {
               assert(!prev_was_jump);
               is_jump = true;
@@ -216,9 +244,9 @@ int32_t mips_simulate(vector<unsigned char> mem)
               PC+=immediate*4; //delay slot
             }
           }
-          else if(rt == 32/*100000*/) //BLTZAL
+          else if(registers[rt_index] == 32/*100000*/) //BLTZAL
           {
-            if(rs<0)
+            if(registers[rs_index]<0)
             {
               assert(!prev_was_jump);
               is_jump = true;
@@ -228,111 +256,119 @@ int32_t mips_simulate(vector<unsigned char> mem)
             }
           }
 
-        }
+        break;
         case 7: //000111, BGTZ
-        {
-          assert(rt==0);
-          if(rs>0)
+
+          assert(registers[rt_index]==0);
+          if(registers[rs_index]>0)
           {
             assert(!prev_was_jump);
             is_jump = true;
             PC_delay_slot = PC + 4;
             PC+=immediate*4;
           }
-        }
+        break;
         case 6: //000110, BLEZ
-        {
-          assert(rt==0);
-          if(rs<=0)
+
+          assert(registers[rt_index]==0);
+          if(registers[rs_index]<=0)
           {
             assert(!prev_was_jump);
             is_jump = true;
             PC_delay_slot = PC + 4;
             PC+=immediate*4;
           }
-        }
+        break;
         case 5: //000101, BNE
-        {
-          if(rs!=rt)
+
+          if(registers[rs_index]!=registers[rt_index])
           {
             assert(!prev_was_jump);
             is_jump = true;
             PC_delay_slot = PC + 4;
             PC+=immediate*4;
           }
-        }
+        break;
         case 2: //000010 J
-        {
+          {
           assert(!prev_was_jump);
           is_jump = true;
           PC_delay_slot = PC + 4;
           uint32_t pc_upper = (PC>>26)<<26;
           PC=pc_upper*pow(2,16) + (jump_address<<2); //?????????
-        }
+          }
+        break;
 
         case 3: //000011 JAL
-        {
+          {
           assert(!prev_was_jump);
           is_jump = true;
           PC_delay_slot = PC + 4;
           registers[31]=PC+4;
           uint32_t pc_upper = (PC>>26)<<26;
           PC=pc_upper*pow(2,16) + (jump_address<<2);
-        }
+          }
+          break;
 
           //MEM ACCESS
         case 32://100000 //LB
-          rt = mem[rs+immediate];
+          registers[rt_index] = mem[simp_address(registers[rs_index]+immediate)];
+          break;
         case 36: //100100 LBU
-          rt = (unsigned char)mem[rs+immediate];
+          registers[rt_index] = (unsigned char)mem[simp_address(registers[rs_index]+immediate)];
+          break;
         case 33: //100001 LH //what if the position is weird?
-        {
-          rt = pow(2,16)*mem[rs+immediate] + mem[rs+immediate+2];
-        }
-        case 37: //100101 LHU
-          rt = pow(2,16)*(unsigned char)mem[rs+immediate] + (unsigned char)mem[rs+immediate+2];
-        case 35: //bin:100011, LW what if addressing is incorrect???
-          rt = pow(2,24)*mem[rs + immediate] + pow(2,16)*mem[rs+immediate +1] + pow(2,8)*mem[rs+immediate+2] + mem[rs+immediate+3];
-        case 43: //vin:101011, SW what if addressing not correst? so doesn't start at 4*k address
-        {
-          mem[rs + immediate] = rt>>24; //msB
-          mem[rs + immediate+1] = (rt<<8)>>24;
-          mem[rs + immediate+2] = (rt<<16)>>24;
-          mem[rs + immediate+3] = (rt<<24)>>24; //lsB
-        }
-        case 40: //101000 SB
-          mem[rs + immediate] = rt; //which byte to store??? lowest??
-        case 41://101001 SH
-        {
-          mem[rs+immediate] = rt; //which half word to store??? lowest???
-          mem[rs+immediate+1] = rt>>8;
-        }
 
-        case 34://100010 LWL
-        {
-          rt = (rt<<16)>>16;
-          rt += mem[rs+immediate]*pow(2,24)+ mem[rs+immediate+1]*pow(2,16);
-        }
+          registers[rt_index] = (mem[simp_address(registers[rs_index]+immediate+1)]<<8) + mem[simp_address(registers[rs_index]+immediate)];
+          break;
+        case 37: //100101 LHU
+          registers[rt_index] = ((unsigned char)mem[simp_address(registers[rs_index]+immediate+1)]<<8) + (unsigned char)mem[simp_address(registers[rs_index]+immediate)];
+          break;
+        case 35: //bin:100011, LW what if addressing is incorrect???
+          registers[rt_index] = (mem[simp_address(registers[rs_index] + immediate+3)]<<24) + (mem[simp_address(registers[rs_index]+immediate +2)]<<16) + (mem[simp_address(registers[rs_index]+immediate+1)]<<8) + mem[simp_address(registers[rs_index]+immediate)];
+          break;
+        case 43: //vin:101011, SW what if addressing not correst? so doesn't start at 4*k address
+
+          mem[simp_address(registers[rs_index] + immediate +3)] = registers[rt_index]>>24; //msB
+          mem[simp_address(registers[rs_index] + immediate+2)] = (registers[rt_index]<<8)>>24;
+          mem[simp_address(registers[rs_index] + immediate+1)] = (registers[rt_index]<<16)>>24;
+          mem[simp_address(registers[rs_index] + immediate)] = (registers[rt_index]<<24)>>24; //lsB
+          break;
+        case 40: //101000 SB
+          mem[simp_address(registers[rs_index] + immediate)] = registers[rt_index]; //which byte to store??? lowest??
+          break;
+        case 41://101001 SH
+
+          mem[simp_address(registers[rs_index]+immediate)] = registers[rt_index]; //which half word to store??? lowest???
+          mem[simp_address(registers[rs_index]+immediate+1)] = registers[rt_index]>>8;
+          break;
+
+
+        case 34://100010 LWL //do i have to shift the address left by 2 bits??
+
+          registers[rt_index] = (registers[rt_index]<<16)>>16;
+          registers[rt_index] += (mem[simp_address(registers[rs_index]+immediate+1)]<<24)+ (mem[simp_address(registers[rs_index]+immediate)]<<16);
+          break;
         case 38://100110 LWR
-        {
-          rt = (rt>>16)<<16;
-          rt += mem[rs+immediate]*pow(2,8)+ mem[rs+immediate+1];
-        }
+
+          registers[rt_index] = (registers[rt_index]>>16)<<16;
+          registers[rt_index] += (mem[simp_address(registers[rs_index]+immediate+1)]<<8)+ mem[simp_address(registers[rs_index]+immediate)];
+          break;
         default:
-        {
+
          cout<<"Invalid instruction";
          assert(0);
-        }
+         break;
 
 
       }
-      if(!is_jump && !prev_was_jump)
+    if(!prev_was_jump)
         PC+=4;
       prev_was_jump = is_jump;
       assert(registers[0] == 0);
 
-      return registers[2];
-    }
 
+    }
+  return registers[2];
 
 }

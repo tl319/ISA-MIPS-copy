@@ -1,0 +1,23 @@
+#This is the regular LB test case
+#test LB, assuming ADDIU, LW, SW, JR to be reliable
+addiu $2,$0,256
+addiu $4,$0,4
+sw $2,0($4)
+lb $5,0($4)
+#^if LB functions, v0 will go from 256 to 0 as 255 is the largest 8-bit value
+addiu $2,$0,256
+sw $2,0($4)
+lb $6,1($4)
+#^same as above, but with different offsets: should load 1
+addiu $2,$0,256
+sw $2,2($4)
+lb $7,2($4)
+#^same as above, but with two identical offsets
+addiu $2,$0,256
+sw $2,0($4)
+lb $8,0($5)
+#^load from the address ahead of that saved to instead of using offsets -- not sure that this is supposed to work
+addu $5,$6,$5
+addu $7,$8,$7
+addu $2,$5,$7
+jr $0
