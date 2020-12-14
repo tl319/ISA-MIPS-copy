@@ -53,3 +53,78 @@ Comparing results...
 < v0: 00002200
 ---
 > v0: 00001100
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for SBALT testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+13,15c13,15
+< 0000001d: 22
+< 00000022: 33
+< 00000027: 44
+---
+> 0000001D: 11
+> 00000022: 11
+> 00000027: 11
+45c45
+< v0: 00002200
+---
+> v0: 00001100
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for SBALT testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+13,15c13,15
+< 0000001d: 22
+< 00000022: 33
+< 00000027: 44
+---
+> 0000001D: 11
+> 00000022: 11
+> 00000027: 11
+45c45
+< v0: 00002200
+---
+> v0: 00001100
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for SBALT testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...

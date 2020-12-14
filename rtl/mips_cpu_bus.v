@@ -100,9 +100,10 @@ module mips_cpu_bus(
     logic divdone;
     logic extend_mux;
     logic [15:0] extend_in;
+    logic byte_store_en;
 
 assign lrmuxLSB = alu2out;
-assign writedata = regbout;
+// assign writedata = regbout;
   //    single_reg testreg(
   //    .clk (clk),
   //    .rst (reset),
@@ -154,6 +155,12 @@ assign writedata = regbout;
     .wr_en (pc_write),
     .p (final_pc_data),
     .q (pc_out)
+    );
+
+    byte_storer byte_store(
+    .in (bout),
+    .byte_store_en (byte_store_en),
+    .out(writedata)
     );
 
     MUX_4 IorD_mux(
@@ -233,7 +240,8 @@ assign writedata = regbout;
         .link_in (link_in),
         .divrst (divrst),
         .divdone (divdone),
-        .extend_mux (extend_mux)
+        .extend_mux (extend_mux),
+        .byte_store_en (byte_store_en)
       );
 
       state_machine state_machine_a(

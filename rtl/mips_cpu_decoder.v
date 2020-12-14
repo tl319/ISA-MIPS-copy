@@ -37,7 +37,8 @@ module decoder(
     output logic link_in,
     input logic divdone,
     output logic divrst,
-    output logic extend_mux
+    output logic extend_mux,
+    output logic byte_store_en
 
 );
     logic beq;
@@ -176,6 +177,7 @@ module decoder(
         link_in = 0;
         divrst = 0;
         extend_mux = 0;
+        byte_store_en = 0;
         end
       4'b0001: begin
         if(mem_opcode == 6'b000100) begin
@@ -338,6 +340,7 @@ module decoder(
         link_in = 0;
         divrst = 0;
         extend_mux = 1;
+        byte_store_en = 0;
         end
       4'b0010: begin
         MemToReg = 2'b00;
@@ -445,6 +448,7 @@ module decoder(
         divrst =0;
         end
         extend_mux = 1;
+        byte_store_en = 0;
         end
       4'b0011: begin
         if(slt ==1 || slti ==1 || sltiu == 1 || sltu == 1) begin
@@ -536,6 +540,11 @@ module decoder(
         link_in = 0;
         divrst = 0;
         extend_mux = 1;
+        if (sb ==1) begin
+        byte_store_en = 1;
+        end else begin
+        byte_store_en = 0;
+        end
         end
       4'b0100: begin
         if(div == 1 || divu == 1 || mult == 1 || multu == 1) begin
@@ -612,6 +621,7 @@ module decoder(
         link_in = 0;
         divrst = 0;
         extend_mux = 1;
+        byte_store_en = 0;
         end
       4'b0101: begin
         MemToReg = 2'b00;
@@ -651,6 +661,7 @@ module decoder(
         link_in = 0;
         divrst = 0;
         extend_mux = 1;
+        byte_store_en = 0;
         end
       4'b1111: begin
         MemToReg = 2'b00;
@@ -690,6 +701,7 @@ module decoder(
         link_in = 0;
         divrst = 0;
         extend_mux = 1;
+        byte_store_en = 0;
         end
       4'b1110: begin
         MemToReg = 2'b00;
@@ -729,6 +741,7 @@ module decoder(
         link_in = 0;
         divrst = 0;
         extend_mux = 1;
+        byte_store_en = 0;
         end
       4'b1001: begin
       if(mem_opcode == 6'b000100) begin
@@ -883,6 +896,7 @@ module decoder(
         link_in = 0;
         divrst =0;
         extend_mux = 1;
+        byte_store_en = 0;
         end
       endcase
       end
