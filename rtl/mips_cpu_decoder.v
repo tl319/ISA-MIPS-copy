@@ -731,6 +731,109 @@ module decoder(
         extend_mux = 1;
         end
       4'b1001: begin
+      if(mem_opcode == 6'b000100) begin
+      beq = 1;
+      end else if(mem_opcode == 6'b000001 && mem_info == 5'b00001) begin
+      bgez = 1;
+      end else if(mem_opcode == 6'b000111 && mem_info == 5'b00000) begin
+      bgtz = 1;
+      end else if(mem_opcode == 6'b000110 && mem_info == 5'b00000) begin
+      blez = 1;
+      end else if(mem_opcode == 6'b000001 && mem_info == 5'b00000) begin
+      bltz = 1;
+      end else if(mem_opcode == 6'b000101) begin
+      bne = 1;
+      end else if(mem_opcode == 6'b000001 && mem_info == 5'b10001) begin
+      bgezal = 1;
+      end else if(mem_opcode == 6'b000001 && mem_info == 5'b10000) begin
+      bltzal = 1;
+      end else if(mem_opcode == 6'b001010) begin
+      slti = 1;
+      end else if(mem_opcode == 6'b001011) begin
+      sltiu =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b101010) begin
+      slt = 1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b101011) begin
+      sltu = 1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b100011) begin
+      subu = 1;
+      end else if(mem_opcode == 6'b100011) begin
+      lw = 1;
+      end else if(mem_opcode == 6'b101011) begin
+      sw =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b100001) begin
+      addu =1;
+      end else if(mem_opcode == 6'b001001) begin
+      addiu =1;
+      end else if(mem_opcode == 6'b001111) begin
+      lui =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b010001) begin
+      mthi =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b010011) begin
+      mtlo =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b010000) begin
+      mfhi =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b010010) begin
+      mflo =1;
+      end else if(mem_opcode == 6'b100000) begin
+      lb =1;
+      end else if(mem_opcode == 6'b100100) begin
+      lbu =1;
+      end else if(mem_opcode == 6'b100001) begin
+      lh =1;
+      end else if(mem_opcode == 6'b100101) begin
+      lhu =1;
+      end else if(mem_opcode == 6'b101000) begin
+      sb =1;
+      end else if(mem_opcode == 6'b101001) begin
+      sh =1;
+      end else if(mem_opcode == 6'b100010) begin
+      lwl =1;
+      end else if(mem_opcode == 6'b100110) begin
+      lwr =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b001000) begin
+      jr =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b001001) begin
+      jalr =1;
+      end else if(mem_opcode == 6'b001100) begin
+      andi =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b100100) begin
+      andINT=1;
+      end else if(mem_opcode == 6'b001101) begin
+      ori =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b100101) begin
+      orINT=1;
+      end else if(mem_opcode == 6'b001110) begin
+      xori =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b100110) begin
+      xorINT=1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b000000) begin
+      sll =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b000100) begin
+      sllv =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b000011) begin
+      sra =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b000111) begin
+      srav =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b000010) begin
+      srl =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b000110) begin
+      srlv =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b011010) begin
+      div =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b011011) begin
+      divu =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b011000) begin
+      mult =1;
+      end else if(mem_opcode == 6'b000000 && mem_function == 6'b011001) begin
+      multu =1;
+      end else if(mem_opcode == 6'b000010) begin
+      j =1;
+      end else if(mem_opcode == 6'b000011) begin
+      jal =1;
+      end else begin
+      nop =1;
+      end
         MemToReg = 2'b11;
         RegDst = 2'b10;
         IorD = 2'b00;

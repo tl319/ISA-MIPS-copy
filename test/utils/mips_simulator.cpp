@@ -294,8 +294,8 @@ registers[0] = 0;
           assert(!prev_was_jump);
           is_jump = true;
           PC_delay_slot = PC + 4;
-          uint32_t pc_upper = (PC>>26)<<26;
-          PC=pc_upper*pow(2,16) + (jump_address<<2); //?????????
+          uint32_t pc_upper = (PC>>28)<<28;
+          PC=pc_upper+ (jump_address<<2)-4; //?????????
           }
         break;
 
@@ -305,8 +305,8 @@ registers[0] = 0;
           is_jump = true;
           PC_delay_slot = PC + 4;
           registers[31]=PC+4;
-          uint32_t pc_upper = (PC>>26)<<26;
-          PC=pc_upper*pow(2,16) + (jump_address<<2);
+          uint32_t pc_upper = (PC>>28)<<28;
+          PC=pc_upper + (jump_address<<2)-4;
           }
           break;
 
@@ -362,7 +362,7 @@ registers[0] = 0;
 
 
       }
-    if(!prev_was_jump)
+    if(!is_jump)
         PC+=4;
       prev_was_jump = is_jump;
       assert(registers[0] == 0);

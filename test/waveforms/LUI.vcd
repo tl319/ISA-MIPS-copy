@@ -1,5 +1,5 @@
 $date
-	Sun Dec 13 21:33:13 2020
+	Mon Dec 14 10:02:12 2020
 $end
 $version
 	Icarus Verilog
@@ -532,12 +532,14 @@ b0 T
 1d
 b0 `
 b0 \
+b101 V
 0Y
+1j
 04
 b1 i
-b0 h
+b100 h
 b1 5
-b0 b
+b1 b
 b0 c
 b10 +
 b0 6
@@ -549,8 +551,11 @@ b10111111110000000000000000010000 U
 0d
 b0 \
 0>
+b0 V
+0j
+1a
+b0 h
 b10 f
-b1 b
 b0 ^
 b0 G
 b0 X
@@ -564,6 +569,7 @@ b0 U
 0!
 #35000
 1Y
+0a
 b11 h
 b0 i
 b10 5
