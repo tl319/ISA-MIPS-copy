@@ -8,7 +8,7 @@ module wordmask(
     logic [31:0] temp2;
     logic [31:0] temp3;
       always_comb begin
-      case(msk_cnt) 
+      case(msk_cnt)
       3'b000: masked_data = data;
       3'b001: begin
               case(msk_cnt2)
@@ -74,7 +74,7 @@ module wordmask(
                      end
               2'b01: begin
                      temp1 = data<<16;
-                     masked_data = data>>24;
+                     masked_data = temp1>>24;
                      end
               2'b10: begin
                      temp1 = data<<8;

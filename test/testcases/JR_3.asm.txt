@@ -1,0 +1,10 @@
+lui $3,49088
+addiu $2,$3,24
+jr $2
+addiu $0,$0,0
+addiu $2,$0,4
+addiu $2,$0,5
+addiu $2,$0,6
+jr $0
+addiu $2,$0,10
+jr $0
