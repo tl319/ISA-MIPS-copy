@@ -25,22 +25,22 @@ module brancher(
       else if(opcode == 6'b000100 && cond == 2'b00) begin
       JumpIN = 1;
       end
-      else if(opcode == 6'b000001 && info == 5'b00001 && cond == (2'b00 || 2'b10)) begin
+      else if(opcode == 6'b000001 && info == 5'b00001 && (cond == 2'b00 || cond == 2'b10)) begin
       JumpIN = 1;
       end
       else if(opcode == 6'b000111 && info == 5'b00000 && cond == 2'b10) begin
       JumpIN = 1;
       end
-      else if(opcode == 6'b000110 && info == 5'b00000 && cond == (2'b00 || 2'b01)) begin
+      else if(opcode == 6'b000110 && info == 5'b00000 && (cond == 2'b00 || cond == 2'b01)) begin
       JumpIN = 1;
       end
       else if(opcode == 6'b000001 && info == 5'b00000 && cond == 2'b01) begin
       JumpIN = 1 ;
       end
-      else if(opcode == 6'b000101 && cond == (2'b01 || 2'b10)) begin
+      else if(opcode == 6'b000101 && (cond == 2'b01 || cond == 2'b10)) begin
       JumpIN = 1;
       end
-      else if(opcode == 6'b000001 && info == 5'b10001 && cond == (2'b00 || 2'b10)) begin
+      else if(opcode == 6'b000001 && info == 5'b10001 && (cond == 2'b00 || cond == 2'b10)) begin
       JumpIN = 1;
       end
       else if(opcode == 6'b000001 && info == 5'b10000 && cond == 2'b01) begin

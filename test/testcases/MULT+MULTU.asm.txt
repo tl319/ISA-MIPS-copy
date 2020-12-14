@@ -1,0 +1,13 @@
+addiu $3,$0,1684
+addiu $4,$0,-34
+mult $3,$4
+mflo $5
+mfhi $6
+multu $3,$4
+mflo $7
+mfhi $8
+sw $5,20($0)
+sw $6,24($0)
+sw $7,28($0)
+sw $8,32($0)
+jr $0

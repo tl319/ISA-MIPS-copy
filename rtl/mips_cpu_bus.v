@@ -100,9 +100,13 @@ module mips_cpu_bus(
     logic divdone;
     logic extend_mux;
     logic [15:0] extend_in;
+    logic byte_store_en;
+    logic half_store_en;
+    logic [31:0] bool_out;
+    logic [31:0] bytehalf;
 
 assign lrmuxLSB = alu2out;
-assign writedata = regbout;
+// assign writedata = regbout;
   //    single_reg testreg(
   //    .clk (clk),
   //    .rst (reset),
@@ -156,10 +160,22 @@ assign writedata = regbout;
     .q (pc_out)
     );
 
+    byte_storer byte_store(
+    .in (bout),
+    .byte_store_en (byte_store_en),
+    .out(bytehalf)
+    );
+
+    half_storer half_store(
+    .in (bytehalf),
+    .half_store_en (half_store_en),
+    .out (writedata)
+    );
+
     MUX_4 IorD_mux(
     .a (pc_out),
     .b (aluout),
-    .c (aluout<<2),
+    .c ({aluout[31:2],2'b00}),
     .d (pc_out),
     .select (IorD_cnt),
     .out (address)
@@ -233,7 +249,11 @@ assign writedata = regbout;
         .link_in (link_in),
         .divrst (divrst),
         .divdone (divdone),
-        .extend_mux (extend_mux)
+        .extend_mux (extend_mux),
+        .byte_store_en (byte_store_en),
+        .cond (cond),
+        .bool_cnt (bool_cnt),
+        .half_store_en (half_store_en)
       );
 
       state_machine state_machine_a(
@@ -257,10 +277,17 @@ assign writedata = regbout;
       .out (Dst)
       );
 
+      MUX_2 Bool_mux(
+      .a (constant_0),
+      .b (constant_1),
+      .select (bool_cnt),
+      .out (bool_out)
+      );
+
       MUX_4 MemToReg_mux(
       .a (aluout),
       .b (final_data),
-      .c (constant_1),
+      .c (bool_out),
       .d (aluresult),
       .select (MemToReg),
       .out (WriteRegData)
@@ -330,7 +357,7 @@ assign writedata = regbout;
       .c (signimm),
       .d (shiftimm),
       .e ({constant_0[26:0],irout[10:6]}),
-      .f ({constant_0[26:0],bout[4:0]}),
+      .f ({constant_0[26:0],aout[4:0]}),
       .g (constant_0),
       .h (constant_0),
       .select (ALUSrcB),

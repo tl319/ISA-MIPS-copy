@@ -1,0 +1,22 @@
+#test BGEZAL assuming ADDIU, LW, SW, JR to be reliable + ADDU
+addiu $3,$0,-4
+addiu $4,$0,0
+addiu $5,$0,10
+#^initialised $3,$4,$5
+bgezal $3,9
+addiu $0,$0,0
+addiu $2,$0,5
+#^shouldn't branch, v0 should be set to 5
+bgezal $4,2
+addiu $0,$0,0
+addiu $2,$0,6
+#^should branch, v0 should remain 5
+addu $2,$2,$31
+bgezal $5,3
+addiu $0,$0,0
+addiu $2,$0,8
+#^should branch, v0 should remain 7
+addiu $2,$2,4
+sw $31,0($0)
+jr $0
+#If BGEZAL properly takes only the second and third branch, v0 = 3749707853 (overflow)

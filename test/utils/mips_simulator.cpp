@@ -39,7 +39,7 @@ int32_t mips_simulate(vector<unsigned char>& mem)
     while(true)
     { //getting rid of the bits we don't need
 //i++;
-    if(PC == 0 )/*&& !prev_was_jump ))|| (PC_delay_slot ==0 && prev_was_jump*/
+    if((PC == 0 && !prev_was_jump )|| (PC_delay_slot ==0 && prev_was_jump))
     {
       //running = false;
       return registers[2];
@@ -111,17 +111,17 @@ registers[0] = 0;
 
           //SHIFTS
           else if(funct == 0) //SLL by shamt
-            registers[rd_index] = registers[rt_index] << shamt;
+            registers[rd_index] = registers[rt_index] <<(uint32_t) shamt;
           else if(funct == 4) //000100,  SLLV
             registers[rd_index] = registers[rt_index] << (uint32_t)registers[rs_index];
           else if(funct == 3) //000011, SRA
-            registers[rd_index] = (uint32_t)registers[rt_index] >> shamt;
+            registers[rd_index] = registers[rt_index] >> (uint32_t)shamt;
           else if (funct == 7) //000111, SRAV
-            registers[rd_index] = (uint32_t)registers[rt_index]>>(uint32_t)registers[rs_index];
-          else if(funct == 2) //000010, SRL
-            registers[rd_index] = registers[rt_index] >> shamt;
-          else if(funct == 6) //000110, SRLV
             registers[rd_index] = registers[rt_index]>>(uint32_t)registers[rs_index];
+          else if(funct == 2) //000010, SRL
+            registers[rd_index] = (uint32_t)registers[rt_index] >> (uint32_t)shamt;
+          else if(funct == 6) //000110, SRLV
+            registers[rd_index] = (uint32_t) registers[rt_index]>>(uint32_t)registers[rs_index];
 
           //MULTIPLY
           else if(funct == 26 && registers[rt_index]!=0) //011010 DIV
@@ -145,13 +145,15 @@ registers[0] = 0;
             LO = registers[rs_index];
           else if(funct == 24) //011000 MULT
           {
-            HI = registers[rs_index]*registers[rt_index];
-            LO = registers[rs_index]*registers[rt_index];
+            int64_t result = registers[rs_index]*registers[rt_index];
+            HI = result>>32;
+            LO = result;
           }
           else if(funct ==25) //011001 MULTU
           {
-            HI = (uint32_t)registers[rs_index]*(uint32_t)registers[rt_index];
-            LO = (uint32_t)registers[rs_index]*(uint32_t)registers[rt_index];
+            uint64_t result = (uint64_t)((uint32_t)registers[rs_index])*(uint64_t)((uint32_t)registers[rt_index]);
+            HI = result>>32;
+            LO = result;
           }
 
           //BRANCH
@@ -160,8 +162,9 @@ registers[0] = 0;
             assert(!prev_was_jump);
             is_jump = true;
             PC_delay_slot = PC + 4;
-            registers[31] = PC+4;
+            registers[31] = PC+8;
             PC = registers[rs_index];
+            //if(PC!=0) PC-=4;
 
           }
           else if(funct == 8) //001000 JR
@@ -170,6 +173,7 @@ registers[0] = 0;
             is_jump = true;
             PC_delay_slot = PC + 4;
             PC = registers[rs_index];
+            if(PC!=0) PC-=4;
             //return registers[2];
           }
         break;
@@ -212,7 +216,7 @@ registers[0] = 0;
           break;
         case 1:
 
-          if(registers[rt_index]==1) //BGEZ
+          if(rt_index==1) //BGEZ
           {
             if(registers[rs_index]>=0) //delay slot!!!!!
             {
@@ -222,19 +226,19 @@ registers[0] = 0;
               PC+=immediate*4;
             }
           }
-          else if(registers[rt_index] == 33/*100001*/) //BGEZAL
+          else if(rt_index == 17/*10001*/) //BGEZAL
           {
 
             if(registers[rs_index]>=0) //delay slot!
             {
               assert(!prev_was_jump);
               is_jump = true;
-              registers[31]=PC;
+              registers[31]=PC + 8;
               PC_delay_slot = PC + 4;
               PC+=immediate*4;
             }
           }
-          else if(registers[rt_index] == 0) //BLTZ
+          else if(rt_index == 0) //BLTZ
           {
             if(registers[rs_index]<0)
             {
@@ -244,13 +248,13 @@ registers[0] = 0;
               PC+=immediate*4; //delay slot
             }
           }
-          else if(registers[rt_index] == 32/*100000*/) //BLTZAL
+          else if(rt_index == 16/*10000*/) //BLTZAL
           {
             if(registers[rs_index]<0)
             {
               assert(!prev_was_jump);
               is_jump = true;
-              registers[31]=PC;
+              registers[31]=PC+8;
               PC_delay_slot = PC + 4;
               PC+=immediate*4;
             }
@@ -259,7 +263,7 @@ registers[0] = 0;
         break;
         case 7: //000111, BGTZ
 
-          assert(registers[rt_index]==0);
+          assert(rt_index==0);
           if(registers[rs_index]>0)
           {
             assert(!prev_was_jump);
@@ -270,7 +274,7 @@ registers[0] = 0;
         break;
         case 6: //000110, BLEZ
 
-          assert(registers[rt_index]==0);
+          assert(rt_index==0);
           if(registers[rs_index]<=0)
           {
             assert(!prev_was_jump);
@@ -294,8 +298,8 @@ registers[0] = 0;
           assert(!prev_was_jump);
           is_jump = true;
           PC_delay_slot = PC + 4;
-          uint32_t pc_upper = (PC>>26)<<26;
-          PC=pc_upper*pow(2,16) + (jump_address<<2); //?????????
+          uint32_t pc_upper = (PC>>28)<<28;
+          PC=pc_upper+ (jump_address<<2)-4; //?????????
           }
         break;
 
@@ -304,25 +308,24 @@ registers[0] = 0;
           assert(!prev_was_jump);
           is_jump = true;
           PC_delay_slot = PC + 4;
-          registers[31]=PC+4;
-          uint32_t pc_upper = (PC>>26)<<26;
-          PC=pc_upper*pow(2,16) + (jump_address<<2);
+          registers[31]=PC+8;
+          uint32_t pc_upper = (PC>>28)<<28;
+          PC=pc_upper + (jump_address<<2)-4;
           }
           break;
 
           //MEM ACCESS
         case 32://100000 //LB
-          registers[rt_index] = mem[simp_address(registers[rs_index]+immediate)];
+          registers[rt_index] = (int8_t)mem[simp_address(registers[rs_index]+immediate)];
           break;
         case 36: //100100 LBU
           registers[rt_index] = (unsigned char)mem[simp_address(registers[rs_index]+immediate)];
           break;
         case 33: //100001 LH //what if the position is weird?
-
-          registers[rt_index] = (mem[simp_address(registers[rs_index]+immediate+1)]<<8) + mem[simp_address(registers[rs_index]+immediate)];
+          registers[rt_index] = (int32_t)((int16_t)((mem[simp_address(registers[rs_index]+immediate+1)]<<8)) + (int16_t)mem[simp_address(registers[rs_index]+immediate)]);
           break;
         case 37: //100101 LHU
-          registers[rt_index] = ((unsigned char)mem[simp_address(registers[rs_index]+immediate+1)]<<8) + (unsigned char)mem[simp_address(registers[rs_index]+immediate)];
+          registers[rt_index] = ((uint16_t)mem[simp_address(registers[rs_index]+immediate+1)]<<8) + (unsigned char)mem[simp_address(registers[rs_index]+immediate)];
           break;
         case 35: //bin:100011, LW what if addressing is incorrect???
           registers[rt_index] = (mem[simp_address(registers[rs_index] + immediate+3)]<<24) + (mem[simp_address(registers[rs_index]+immediate +2)]<<16) + (mem[simp_address(registers[rs_index]+immediate+1)]<<8) + mem[simp_address(registers[rs_index]+immediate)];
@@ -355,14 +358,13 @@ registers[0] = 0;
           registers[rt_index] += (mem[simp_address(registers[rs_index]+immediate+1)]<<8)+ mem[simp_address(registers[rs_index]+immediate)];
           break;
         default:
-
          cout<<"Invalid instruction";
          assert(0);
          break;
 
 
       }
-    if(!prev_was_jump)
+    if(!is_jump && PC!=0)
         PC+=4;
       prev_was_jump = is_jump;
       assert(registers[0] == 0);
