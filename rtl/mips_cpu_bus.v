@@ -159,7 +159,7 @@ assign writedata = regbout;
     MUX_4 IorD_mux(
     .a (pc_out),
     .b (aluout),
-    .c (aluout<<2),
+    .c ({aluout[31:2],2'b00}),
     .d (pc_out),
     .select (IorD_cnt),
     .out (address)

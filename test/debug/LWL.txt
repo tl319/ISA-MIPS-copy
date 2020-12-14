@@ -1,0 +1,76 @@
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for LWL testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+11a12,15
+> 00000018: 11
+> 00000019: 22
+> 0000001A: FF
+> 0000001B: FF
+39c43
+< v0: 00000000
+---
+> v0: 0000F432
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for LWL testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+11a12,15
+> 00000018: 11
+> 00000019: 22
+> 0000001A: FF
+> 0000001B: FF
+39c43
+< v0: 00000000
+---
+> v0: 0000F432
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for LWL testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+16,17d15
+< 0000001c: ff
+< 0000001d: ff
+45c43
+< v0: fffff432
+---
+> v0: 0000F432

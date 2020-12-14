@@ -352,7 +352,7 @@ module decoder(
         end
         IorD = 2'b00;
         PCSrc = 2'b01;
-        if(addiu == 1 || andi == 1 || ori == 1 || xori == 1 || lw == 1 || sw == 1 || slti == 1 || sltiu == 1 || lui == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || sb ==1 || sh == 1 || lwl == 1 || lwr ==1) begin
+        if(addiu == 1 || andi == 1 || ori == 1 || xori == 1 || lw == 1 || sw == 1 || slti == 1 || sltiu == 1 || lui == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || sb ==1 || sh == 1 || lwl == 1 || lwr == 1) begin
         ALUSrcB = 3'b010;
         end else if( sll == 1 || sra == 1 || srl == 1) begin
         ALUSrcB = 3'b100;
