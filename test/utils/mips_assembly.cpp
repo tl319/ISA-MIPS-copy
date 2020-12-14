@@ -158,8 +158,8 @@ uint16_t mips_instr_to_opcode(const string &s)
     if (s == "lhu") return 37;
     if (s == "lui") return 15;
     if (s == "lw") return 35;
-    if (s == "lwl") return 38;
-    if (s == "lwr") return 39;
+    if (s == "lwl") return 34;
+    if (s == "lwr") return 38;
     if (s == "mfhi") return 0;
     if (s == "mflo") return 0;
     if (s == "mthi") return 0;
