@@ -111,17 +111,17 @@ registers[0] = 0;
 
           //SHIFTS
           else if(funct == 0) //SLL by shamt
-            registers[rd_index] = registers[rt_index] << shamt;
+            registers[rd_index] = registers[rt_index] <<(uint32_t) shamt;
           else if(funct == 4) //000100,  SLLV
             registers[rd_index] = registers[rt_index] << (uint32_t)registers[rs_index];
           else if(funct == 3) //000011, SRA
-            registers[rd_index] = (uint32_t)registers[rt_index] >> shamt;
+            registers[rd_index] = registers[rt_index] >> (uint32_t)shamt;
           else if (funct == 7) //000111, SRAV
-            registers[rd_index] = (uint32_t)registers[rt_index]>>(uint32_t)registers[rs_index];
-          else if(funct == 2) //000010, SRL
-            registers[rd_index] = registers[rt_index] >> shamt;
-          else if(funct == 6) //000110, SRLV
             registers[rd_index] = registers[rt_index]>>(uint32_t)registers[rs_index];
+          else if(funct == 2) //000010, SRL
+            registers[rd_index] = (uint32_t)registers[rt_index] >> (uint32_t)shamt;
+          else if(funct == 6) //000110, SRLV
+            registers[rd_index] = (uint32_t) registers[rt_index]>>(uint32_t)registers[rs_index];
 
           //MULTIPLY
           else if(funct == 26 && registers[rt_index]!=0) //011010 DIV
