@@ -1,11 +1,15 @@
 module ALU(
-    input logic signed [31:0] a, b,
+    input logic [31:0] a, b,
     input logic [3:0] ctrl,
     input logic clk, divrst,
     output logic signed [31:0] out,
     output logic [1:0] comp,
     output logic divdone
 );
+    logic signed [31:0] sraa;
+    logic signed [31:0] srab;
+    assign sraa = a;
+    assign srab = b;
     //signals and module for division
     logic S;
     logic [31:0] divq, divr;
@@ -63,7 +67,7 @@ module ALU(
             4'b0100: out = a ^ b;   //XOR bitwise
             4'b0101: out = a<<b;  //SLL
             4'b0110: out = a>>b;  //SRL
-            4'b0111: out = a>>>b; //SRA
+            4'b0111: out = sraa>>>srab; //SRA
 
             4'b1001: out = shi;         //MULT TOP
             4'b1000: out = slo; //MULT BOT
