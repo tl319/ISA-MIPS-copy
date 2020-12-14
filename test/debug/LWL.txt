@@ -305,3 +305,26 @@ Comparing results...
 < v0: 32ff0000
 ---
 > v0: F4320000
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for LWL testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+11a12
+> 0000001C: FF
+40c41
+< v0: 32ff0000
+---
+> v0: F4320000
