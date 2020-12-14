@@ -14,5 +14,5 @@ addiu $2,$0,6
 addiu $2,$2,4
 addiu $2,$2,7
 jr $0
-#If BEQ properly takes only the second branch, v0 = 12
+#If BNE properly takes only the second branch, v0 = 12
 #If the first is taken the second is skipped and v0 = 4, if neither is taken v0 = 17
