@@ -38,4 +38,4 @@ bfc0001d: 10
 bfc0001e: 83
 bfc0001f: 01
 bfc00020: 08
-v0: 0000ffff
+v0: 0fffffff

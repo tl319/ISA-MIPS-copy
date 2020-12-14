@@ -129,6 +129,6 @@ FINAL MEMORY : bfc0001e: 83
 FINAL MEMORY : bfc0001f: 01
 FINAL MEMORY : bfc00020: 08
 ----------
-v0: 0000ffff
+v0: 0fffffff
 active: 0
 TB : finished; running=0

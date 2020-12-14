@@ -90,6 +90,6 @@ FINAL MEMORY : bfc00011: 10
 FINAL MEMORY : bfc00012: a2
 FINAL MEMORY : bfc00014: 08
 ----------
-v0: 00002800
+v0: 00000014
 active: 0
 TB : finished; running=0

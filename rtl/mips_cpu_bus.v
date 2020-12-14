@@ -338,7 +338,7 @@ assign lrmuxLSB = alu2out;
       .c (signimm),
       .d (shiftimm),
       .e ({constant_0[26:0],irout[10:6]}),
-      .f ({constant_0[26:0],bout[4:0]}),
+      .f ({constant_0[26:0],aout[4:0]}),
       .g (constant_0),
       .h (constant_0),
       .select (ALUSrcB),
