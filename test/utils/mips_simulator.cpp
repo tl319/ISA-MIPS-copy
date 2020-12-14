@@ -145,13 +145,15 @@ registers[0] = 0;
             LO = registers[rs_index];
           else if(funct == 24) //011000 MULT
           {
-            HI = registers[rs_index]*registers[rt_index];
-            LO = registers[rs_index]*registers[rt_index];
+            int64_t result = registers[rs_index]*registers[rt_index];
+            HI = result>>32;
+            LO = result;
           }
           else if(funct ==25) //011001 MULTU
           {
-            HI = (uint32_t)registers[rs_index]*(uint32_t)registers[rt_index];
-            LO = (uint32_t)registers[rs_index]*(uint32_t)registers[rt_index];
+            uint64_t result = (uint64_t)((uint32_t)registers[rs_index])*(uint64_t)((uint32_t)registers[rt_index]);
+            HI = result>>32;
+            LO = result;
           }
 
           //BRANCH
