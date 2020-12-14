@@ -1,0 +1,29 @@
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for LWR_2 testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+14,15c14,15
+< 00000016: 33
+< 00000017: 44
+---
+> 00000016: FF
+> 00000017: FF
+18c18
+< 0000001a: 44
+---
+> 0000001A: FF
+25d24
+< 00000021: ff
