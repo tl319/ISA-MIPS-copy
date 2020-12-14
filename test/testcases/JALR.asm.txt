@@ -1,6 +1,6 @@
 lw $2,4($0)
-addiu $2,$2,24
-jr $2
+addiu $2,$2,20
+jalr $2
 addiu $0,$0,0
 jr $0
 addiu $2,$0,1
