@@ -1,10 +1,21 @@
+#test BEQ assuming ADDIU, LW, SW, JR to be reliable
+addiu $3,$0,-4
+addiu $4,$0,0
+addiu $5,$0,10
+#^initialised $3,$4,$5
+bgtz $3,8
+addiu $0,$0,0
 addiu $2,$0,5
-bgtz $2,2
+#^shouldn't branch, v0 should be set to 5
+bgtz $4,5
+addiu $0,$0,0
+addiu $2,$0,6
+#^shouldn't branch, v0 should be set to 6
+bgtz $5,3
+addiu $0,$0,0
+addiu $2,$0,7
+#^should branch, v0 should remain 6
+addiu $2,$2,4
+addiu $2,$2,3
 jr $0
-addiu $2,$0,-2
-bgtz $2,2
-addiu $2,$0,0
-bgtz $2,2
-jr $0
-addiu $2,$0,10
-jr $0
+#If BEQ properly takes only the second branch, v0 = 10

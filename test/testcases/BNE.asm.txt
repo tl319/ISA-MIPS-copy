@@ -16,4 +16,3 @@ addiu $2,$2,7
 jr $0
 #If BEQ properly takes only the second branch, v0 = 12
 #If the first is taken the second is skipped and v0 = 4, if neither is taken v0 = 17
-#Currently v0 is set to 5, and the PC then flies off to some higher value
