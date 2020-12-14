@@ -453,7 +453,11 @@ module decoder(
         end
         extend_mux = 1;
         byte_store_en = 0;
+        if ((slti == 1 && cond == 2'b01) || (sltiu == 1 && cond == 2'b01) || (slt == 1 && cond == 2'b01)  || (sltu == 1 && cond == 2'b01) ) begin
+        bool_cnt = 1;
+        end else begin
         bool_cnt =0;
+        end
         end
       4'b0011: begin
         if(slt ==1 || slti ==1 || sltiu == 1 || sltu == 1) begin
@@ -551,9 +555,9 @@ module decoder(
         byte_store_en = 0;
         end
         if ((slti == 1 && cond == 2'b01) || (sltiu == 1 && cond == 2'b01) || (slt == 1 && cond == 2'b01)  || (sltu == 1 && cond == 2'b01) ) begin
-        bool_cnt = 1;
+        bool_cnt = bool_cnt;
         end else begin
-        bool_cnt =0;
+        bool_cnt = bool_cnt;
         end
         end
       4'b0100: begin
