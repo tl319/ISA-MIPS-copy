@@ -1,7 +1,7 @@
 module div(
     input logic [31:0] a, b,
     input logic signdiv, clk, divrst,
-    output logic [31:0] q, r,
+    output logic [31:0] q, r, alb,
 	output logic divdone
 );
 
@@ -56,6 +56,8 @@ module div(
 
 	//properly assign operands, quotient and remainder for signed/unsigned division and the signs of each operand
 	always_comb begin
+		alb = shiftedb;
+
 		if(signdiv == 1) begin
 			if( a[constind] == 1 ) begin
 				ua = ~(a - 1);

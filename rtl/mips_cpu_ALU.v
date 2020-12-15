@@ -4,7 +4,8 @@ module ALU(
     input logic clk, divrst,
     output logic signed [31:0] out,
     output logic [1:0] comp,
-    output logic divdone
+    output logic divdone,
+    output logic [31:0] alb
 );
     logic signed [31:0] sraa;
     logic signed [31:0] srab;
@@ -44,7 +45,8 @@ module ALU(
         .a(a), .b(b),
         .clk(clk), .divrst(divrst), .signdiv(S),
         .q(divq), .r(divr),
-        .divdone(divdone)
+        .divdone(divdone),
+        .alb(alb)
     );
 
     always_comb begin

@@ -104,7 +104,9 @@ module mips_cpu_bus(
     logic half_store_en;
     logic [31:0] bool_out;
     logic [31:0] bytehalf;
+    //David div test
     logic divrst_en;
+    logic [31:0]alb;
 
 assign lrmuxLSB = alu2out;
 // assign writedata = regbout;
@@ -375,7 +377,8 @@ assign lrmuxLSB = alu2out;
       .divrst (divrst),
       .out (aluresult),
       .comp (cond),
-      .divdone (divdone)
+      .divdone (divdone),
+      .alb(alb)
       );
       single_reg alutstore(
       .clk (clk),
