@@ -165,7 +165,7 @@ registers[0] = 0;
             assert(!prev_was_jump);
             is_jump = true;
             PC_delay_slot = PC + 4;
-            registers[31] = PC+8;
+            registers[rd_index] = PC+8;
             PC = registers[rs_index];
             //if(PC!=0) PC-=4;
 
