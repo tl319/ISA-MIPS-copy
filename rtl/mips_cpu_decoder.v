@@ -41,7 +41,8 @@ module decoder(
     output logic byte_store_en,
     output logic half_store_en,
     input logic [1:0] cond,
-    output logic bool_cnt
+    output logic bool_cnt,
+    input logic divrst_en
 
 );
     logic beq;
@@ -95,10 +96,11 @@ module decoder(
     logic j;
     logic jal;
     logic nop;
+
     always_comb begin
         case(state)
-        4'b000: begin
- beq = 0;
+        4'b0000: begin
+        beq = 0;
         bgez = 0;
         bgtz = 0;
         blez = 0;
@@ -449,7 +451,7 @@ module decoder(
         end else begin
         link_in = 0;
         end
-        if (divdone == 1 && (divu == 1 || div ==1)) begin
+        if (divdone == 1 && (divu == 1 || div ==1) && divrst_en == 1) begin
         divrst = 1;
         end else begin
         divrst =0;

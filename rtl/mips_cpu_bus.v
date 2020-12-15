@@ -104,6 +104,7 @@ module mips_cpu_bus(
     logic half_store_en;
     logic [31:0] bool_out;
     logic [31:0] bytehalf;
+    logic divrst_en;
 
 assign lrmuxLSB = alu2out;
 // assign writedata = regbout;
@@ -253,7 +254,8 @@ assign lrmuxLSB = alu2out;
         .byte_store_en (byte_store_en),
         .cond (cond),
         .bool_cnt (bool_cnt),
-        .half_store_en (half_store_en)
+        .half_store_en (half_store_en),
+        .divrst_en(divrst_en)
       );
 
       state_machine state_machine_a(
@@ -265,7 +267,8 @@ assign lrmuxLSB = alu2out;
       .halt (halt),
       .state (state),
       .active (active),
-      .divdone (divdone)
+      .divdone (divdone),
+      .divrst_en(divrst_en)
       );
 
       MUX_4_5bit RegDst_mux(

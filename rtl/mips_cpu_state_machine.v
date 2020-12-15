@@ -7,7 +7,8 @@ module state_machine(
     input logic halt,
     output logic [3:0] state,
     output logic active,
-    input logic divdone
+    input logic divdone,
+    output logic divrst_en
 );
 
     always_ff @(posedge clk) begin
@@ -22,11 +23,17 @@ module state_machine(
               state <= 4'b1001;
               else
               state <= 4'b0001;
-      4'b0001:state <= 4'b0010;
-      4'b0010:if(divdone ==0)
+      4'b0001:begin
+                state <= 4'b0010;
+                divrst_en <= 1;  //set to 1 to allow divrst to be asserted in state 0010 of the same instruction
+                end
+      4'b0010:if(divdone ==0) begin
               state <= 4'b0010;
-              else
+              divrst_en <= 0; 
+        end else begin 
               state <= 4'b0011;
+              divrst_en <= 0;
+        end
       4'b0011:state <= 4'b0100;
       4'b0100:if(halt)
               state <= 4'b0101;

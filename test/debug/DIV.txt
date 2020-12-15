@@ -516,3 +516,401 @@ Assembling instructions...
 CPU being tested for DIV testcase...
 Compiling test-bench...
 Running test-bench...
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for DIV testcase...
+Compiling test-bench...
+Running test-bench...
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for DIV testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+12,26c12,18
+< 00000014: 08
+< 00000016: c0
+< 00000017: bf
+< 00000020: f1
+< 00000021: ff
+< 00000022: ff
+< 00000023: ff
+< 00000028: ff
+< 00000029: ff
+< 0000002a: ff
+< 0000002b: ff
+< 00000030: ff
+< 00000031: ff
+< 00000032: ff
+< 00000033: ff
+---
+> 00000014: 43
+> 00000018: 09
+> 0000001C: BA
+> 0000001D: FF
+> 0000001E: FF
+> 0000001F: FF
+> 00000020: 04
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for DIV testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+12,34c12,18
+< 00000014: 08
+< 00000016: c0
+< 00000017: bf
+< 0000001c: 08
+< 0000001e: c0
+< 0000001f: bf
+< 00000020: e1
+< 00000021: ff
+< 00000022: ff
+< 00000023: ff
+< 00000024: 08
+< 00000026: c0
+< 00000027: bf
+< 00000028: ff
+< 00000029: ff
+< 0000002a: 07
+< 0000002c: 08
+< 0000002e: c0
+< 0000002f: bf
+< 00000030: ff
+< 00000031: ff
+< 00000032: ff
+< 00000033: ff
+---
+> 00000014: 43
+> 00000018: 09
+> 0000001C: BA
+> 0000001D: FF
+> 0000001E: FF
+> 0000001F: FF
+> 00000020: 04
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for DIV testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+12,26c12,18
+< 00000014: 08
+< 00000016: c0
+< 00000017: bf
+< 00000020: f1
+< 00000021: ff
+< 00000022: ff
+< 00000023: ff
+< 00000028: ff
+< 00000029: ff
+< 0000002a: ff
+< 0000002b: ff
+< 00000030: ff
+< 00000031: ff
+< 00000032: ff
+< 00000033: ff
+---
+> 00000014: 43
+> 00000018: 09
+> 0000001C: BA
+> 0000001D: FF
+> 0000001E: FF
+> 0000001F: FF
+> 00000020: 04
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for DIV testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+12,34c12,18
+< 00000014: 08
+< 00000016: c0
+< 00000017: bf
+< 0000001c: 08
+< 0000001e: c0
+< 0000001f: bf
+< 00000020: e1
+< 00000021: ff
+< 00000022: ff
+< 00000023: ff
+< 00000024: 08
+< 00000026: c0
+< 00000027: bf
+< 00000028: ff
+< 00000029: ff
+< 0000002a: 07
+< 0000002c: 08
+< 0000002e: c0
+< 0000002f: bf
+< 00000030: ff
+< 00000031: ff
+< 00000032: ff
+< 00000033: ff
+---
+> 00000014: 43
+> 00000018: 09
+> 0000001C: BA
+> 0000001D: FF
+> 0000001E: FF
+> 0000001F: FF
+> 00000020: 04
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for DIV testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+12,34c12,18
+< 00000014: 08
+< 00000016: c0
+< 00000017: bf
+< 0000001c: 08
+< 0000001e: c0
+< 0000001f: bf
+< 00000020: e1
+< 00000021: ff
+< 00000022: ff
+< 00000023: ff
+< 00000024: 08
+< 00000026: c0
+< 00000027: bf
+< 00000028: ff
+< 00000029: ff
+< 0000002a: 07
+< 0000002c: 08
+< 0000002e: c0
+< 0000002f: bf
+< 00000030: ff
+< 00000031: ff
+< 00000032: ff
+< 00000033: ff
+---
+> 00000014: 43
+> 00000018: 09
+> 0000001C: BA
+> 0000001D: FF
+> 0000001E: FF
+> 0000001F: FF
+> 00000020: 04
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for DIV testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+12,26c12,18
+< 00000014: 08
+< 00000016: c0
+< 00000017: bf
+< 00000020: f1
+< 00000021: ff
+< 00000022: ff
+< 00000023: ff
+< 00000028: ff
+< 00000029: ff
+< 0000002a: ff
+< 0000002b: ff
+< 00000030: ff
+< 00000031: ff
+< 00000032: ff
+< 00000033: ff
+---
+> 00000014: 43
+> 00000018: 09
+> 0000001C: BA
+> 0000001D: FF
+> 0000001E: FF
+> 0000001F: FF
+> 00000020: 04
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for DIV testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+12,34c12,18
+< 00000014: 08
+< 00000016: c0
+< 00000017: bf
+< 0000001c: 08
+< 0000001e: c0
+< 0000001f: bf
+< 00000020: e1
+< 00000021: ff
+< 00000022: ff
+< 00000023: ff
+< 00000024: 08
+< 00000026: c0
+< 00000027: bf
+< 00000028: ff
+< 00000029: ff
+< 0000002a: 07
+< 0000002c: 08
+< 0000002e: c0
+< 0000002f: bf
+< 00000030: ff
+< 00000031: ff
+< 00000032: ff
+< 00000033: ff
+---
+> 00000014: 43
+> 00000018: 09
+> 0000001C: BA
+> 0000001D: FF
+> 0000001E: FF
+> 0000001F: FF
+> 00000020: 04
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for DIV testcase...
+Compiling test-bench...
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for DIV testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+12,37c12,18
+< 00000014: 08
+< 00000016: c0
+< 00000017: bf
+< 0000001c: 08
+< 0000001e: c0
+< 0000001f: bf
+< 00000020: 01
+< 00000021: fc
+< 00000022: ff
+< 00000023: ff
+< 00000024: f8
+< 00000025: ff
+< 00000026: 3f
+< 00000027: 40
+< 00000028: ff
+< 00000029: ff
+< 0000002a: ff
+< 0000002b: ff
+< 0000002c: f8
+< 0000002d: ff
+< 0000002e: 3f
+< 0000002f: 40
+< 00000030: ff
+< 00000031: ff
+< 00000032: ff
+< 00000033: ff
+---
+> 00000014: 43
+> 00000018: 09
+> 0000001C: BA
+> 0000001D: FF
+> 0000001E: FF
+> 0000001F: FF
+> 00000020: 04
