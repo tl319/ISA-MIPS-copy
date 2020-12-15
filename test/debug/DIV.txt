@@ -1122,3 +1122,69 @@ Comparing results...
 > 0000001E: FF
 > 0000001F: FF
 > 00000020: 04
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for DIV testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+12,18c12,18
+< 00000014: 09
+< 00000018: 43
+< 0000001c: 04
+< 00000020: ba
+< 00000021: ff
+< 00000022: ff
+< 00000023: ff
+---
+> 00000014: 43
+> 00000018: 09
+> 0000001C: BA
+> 0000001D: FF
+> 0000001E: FF
+> 0000001F: FF
+> 00000020: 04
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for DIV testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+12,18c12,18
+< 00000014: 09
+< 00000018: 43
+< 0000001c: 04
+< 00000020: ba
+< 00000021: ff
+< 00000022: ff
+< 00000023: ff
+---
+> 00000014: 43
+> 00000018: 09
+> 0000001C: BA
+> 0000001D: FF
+> 0000001E: FF
+> 0000001F: FF
+> 00000020: 04
