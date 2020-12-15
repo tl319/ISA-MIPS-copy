@@ -15,7 +15,7 @@ int main(int argc, char** argv)
     file.open(filename);
 
     if (!file.is_open()) {
-        cerr << "ERR: File cannot be read, filename:" << filename <<endl;
+        // cerr << "ERR: File cannot be read, filename:" << filename <<endl;
         exit(1);
     } else {
         // cerr << "Reading from file '" << filename << "'" << endl;

@@ -7,7 +7,6 @@ if [ $SPEC == "null" ]
 then
     # Use a wild-card to specifiy that every file with this pattern represents a testcase file
     TESTCASES="testcases/*.asm.txt"
-    TESTNAME="BASICs"
     # Loop over every file matching the TESTCASES pattern
     for i in ${TESTCASES} ; do
         # Extract just the testcase name from the filename. See `man basename` for what this command does.
@@ -16,5 +15,9 @@ then
         bash test_temp.sh "${TESTNAME}"
     done
 else
-    bash test_temp.sh "${SPEC}" 
+    TESTCASES=$(find -ipath "./testcases/${SPEC}*") 
+    for i in ${TESTCASES} ; do
+        TESTNAME=$(basename ${i} .asm.txt)
+        bash test_temp.sh "${TESTNAME}" 
+    done
 fi

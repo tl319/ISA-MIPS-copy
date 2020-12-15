@@ -4,6 +4,9 @@ set -eou pipefail
 
 CPU_SRC="./../rtl"
 TESTCASE="$1" #name of the testcase
+TMP=$(echo "$TESTCASE" | cut -d "_" -f 1)
+INSTRUCTION=$(echo "${TMP/+/,}")
+
 
 DEBUG_DIRECTORY="./debug"
 if [ -d "${DEBUG_DIRECTORY}" ]
@@ -99,7 +102,7 @@ fi
 
 
 >&2 echo "Assembling instructions..." >> ./debug/${TESTCASE}.txt
-./bin/assembler ./testcases/${TESTCASE}.asm.txt >| ./binary/${TESTCASE}.hex.txt 
+>&2 ./bin/assembler ./testcases/${TESTCASE}.asm.txt >| ./binary/${TESTCASE}.hex.txt 
 
 
 >&2 echo "CPU being tested for ${TESTCASE} testcase..." >> ./debug/${TESTCASE}.txt
@@ -133,10 +136,10 @@ if [[ "${HALT}" -ne 0 ]] ; then
 fi
 
 >&2 echo "Extracting memory output..." >> ./debug/${TESTCASE}.txt
-./bin/output_filter ./output/${TESTCASE}.stdout >| ./output/${TESTCASE}.out 
+>&2 ./bin/output_filter ./output/${TESTCASE}.stdout >| ./output/${TESTCASE}.out 
 # echo "after filter $?"
 >&2 echo "Simulating output..." >> ./debug/${TESTCASE}.txt
-./bin/simulator < ./binary/${TESTCASE}.hex.txt >| ./sim_output/${TESTCASE}.out 
+>&2 ./bin/simulator < ./binary/${TESTCASE}.hex.txt >| ./sim_output/${TESTCASE}.out 
 
 set +e
 >&2 echo "Comparing results..." >> ./debug/${TESTCASE}.txt
@@ -145,7 +148,7 @@ RESULT=$?
 set -e
 
 if [[ "${RESULT}" -eq 0 ]] ; then 
-   echo "${TESTCASE} ${TESTCASE} PASS"
+   echo "${TESTCASE} ${INSTRUCTION} PASS"
 else
-   echo "${TESTCASE} ${TESTCASE} FAIL"
+   echo "${TESTCASE} ${INSTRUCTION} FAIL"
 fi
