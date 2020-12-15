@@ -1,4 +1,4 @@
-addiu $3,$0,1684
+addiu $3,$0,1000
 addiu $4,$0,25
 divu $3,$4
 mflo $5
@@ -7,7 +7,7 @@ sw $5,20($0)
 sw $6,24($0)
 
 addiu $3,$0,1684
-addiu $4,$0,-24
+addiu $4,$0,24
 divu $3,$4
 mflo $5
 mfhi $6
@@ -29,3 +29,5 @@ mflo $5
 mfhi $6
 sw $5,44($0)
 sw $6,48($0)
+
+jr $0

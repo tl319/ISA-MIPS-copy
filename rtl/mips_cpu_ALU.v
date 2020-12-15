@@ -39,15 +39,18 @@ module ALU(
         {shi, slo} = (a[constto] ^ b[constto]) ? ( ~(amag * bmag) + 1 ) : (amag*bmag);
         //stotal = (a[constto] ^ b[constto]) ? ( ~(amag * bmag) + 1 ) : (amag*bmag);
 
+        divq = a/b;
+        divr = a%b;
+
     end
 
-    div division(
+    /*div division(
         .a(a), .b(b),
         .clk(clk), .divrst(divrst), .signdiv(S),
         .q(divq), .r(divr),
         .divdone(divdone),
         .alb(alb)
-    );
+    );*/
 
     always_comb begin
 
@@ -76,7 +79,7 @@ module ALU(
             4'b1011: out = hi;       //MULTU TOP
             4'b1010: out = lo; //MULTU BOT
 
-            4'b1100: begin //DIV
+            /*4'b1100: begin //DIV
                 S = 1;
                 out = divq;
             end
@@ -90,6 +93,19 @@ module ALU(
             end
             4'b1111: begin //MODU
                 //S = 0;
+                out = divr;
+            end*/
+
+            4'b1100: begin //DIV
+                out = divq;
+            end
+            4'b1101: begin //MOD
+                out = divr;
+            end
+            4'b1110: begin //DIVU
+                out = divq;
+            end
+            4'b1111: begin //MODU
                 out = divr;
             end
 
