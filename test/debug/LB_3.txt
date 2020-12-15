@@ -72,3 +72,114 @@ Comparing results...
 < v0: ffffffff
 ---
 > v0: 00000000
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for LB_3 testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+2,4d1
+< 00000001: ff
+< 00000002: ff
+< 00000003: ff
+6,8d2
+< 00000005: ff
+< 00000006: ff
+< 00000007: ff
+10,16d3
+< 00000009: ff
+< 0000000a: ff
+< 0000000b: ff
+< 0000000c: ff
+< 0000000d: ff
+< 0000000e: ff
+< 0000000f: ff
+41c28
+< v0: ffffffff
+---
+> v0: 00000000
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for LB_3 testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+2,4d1
+< 00000001: ff
+< 00000002: ff
+< 00000003: ff
+6,8d2
+< 00000005: ff
+< 00000006: ff
+< 00000007: ff
+10,16d3
+< 00000009: ff
+< 0000000a: ff
+< 0000000b: ff
+< 0000000c: ff
+< 0000000d: ff
+< 0000000e: ff
+< 0000000f: ff
+41c28
+< v0: ffffffff
+---
+> v0: 00000000
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for LB_3 testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+2,4d1
+< 00000001: ff
+< 00000002: ff
+< 00000003: ff
+6,8d2
+< 00000005: ff
+< 00000006: ff
+< 00000007: ff
+10,16d3
+< 00000009: ff
+< 0000000a: ff
+< 0000000b: ff
+< 0000000c: ff
+< 0000000d: ff
+< 0000000e: ff
+< 0000000f: ff
+41c28
+< v0: ffffffff
+---
+> v0: 00000000

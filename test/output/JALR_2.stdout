@@ -72,4 +72,4 @@ FINAL MEMORY : bfc0001b: ac
 FINAL MEMORY : bfc0001c: 08
 ----------
 FATAL: ./test_bench/MIPS_tb.v:65: Simulation did not finish within       10000 cycles.
-       Time: 20000000 Scope: mips_tb.$unm_blk_422
+       Time: 20000000 Scope: mips_tb.$unm_blk_428

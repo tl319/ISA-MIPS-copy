@@ -1,0 +1,73 @@
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for JALR_3 testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+0a1,3
+> 00000000: 10
+> 00000002: C0
+> 00000003: BF
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for JALR_3 testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+4,9d3
+< 00000008: 10
+< 0000000a: c0
+< 0000000b: bf
+< 0000000c: 24
+< 0000000e: c0
+< 0000000f: bf
+debug directory already created
+bin directory already created.
+binary directory already created
+output directory already created
+waveforms directory already created
+sim_output directory already created
+verilog_sim directory already created
+Assembler already created.
+simulator already created.
+output_filter already created.
+Assembling instructions...
+CPU being tested for JALR_3 testcase...
+Compiling test-bench...
+Running test-bench...
+Extracting memory output...
+Simulating output...
+Comparing results...
+4,9c4,6
+< 00000008: 10
+< 0000000a: c0
+< 0000000b: bf
+< 0000000c: 24
+< 0000000e: c0
+< 0000000f: bf
+---
+> 00000010: 24
+> 00000012: C0
+> 00000013: BF

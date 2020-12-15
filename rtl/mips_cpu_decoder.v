@@ -41,8 +41,9 @@ module decoder(
     output logic byte_store_en,
     output logic half_store_en,
     input logic [1:0] cond,
-    output logic bool_cnt
-
+    output logic bool_cnt,
+    output logic alt_link_reg_en,
+    output logic altlink
 );
     logic beq;
     logic bgez;
@@ -183,6 +184,8 @@ module decoder(
         byte_store_en = 0;
         half_store_en =0;
         bool_cnt =0;
+        alt_link_reg_en = 0;
+        altlink = 0;
         end
       4'b0001: begin
         if(mem_opcode == 6'b000100) begin
@@ -348,6 +351,8 @@ module decoder(
         byte_store_en = 0;
         half_store_en =0;
         bool_cnt =0;
+        alt_link_reg_en = 0;
+        altlink = 0;
         end
       4'b0010: begin
         MemToReg = 2'b00;
@@ -461,6 +466,8 @@ module decoder(
         bool_cnt = 1;
         end else begin
         bool_cnt =0;
+        alt_link_reg_en = 0;
+        altlink = 0;
         end
         end
       4'b0011: begin
@@ -568,6 +575,12 @@ module decoder(
         end else begin
         bool_cnt = bool_cnt;
         end
+        alt_link_reg_en = 1;
+        if (jalr == 1) begin
+        altlink = 1;
+        end else begin
+        altlink = 0;
+        end
         end
       4'b0100: begin
         if(div == 1 || divu == 1 || mult == 1 || multu == 1) begin
@@ -647,6 +660,8 @@ module decoder(
         byte_store_en = 0;
         half_store_en = 0;
         bool_cnt = 0;
+        alt_link_reg_en = 0;
+        altlink = 0;
         end
       4'b0101: begin
         MemToReg = 2'b00;
@@ -689,6 +704,8 @@ module decoder(
         byte_store_en = 0;
         half_store_en = 0;
         bool_cnt = 0;
+        alt_link_reg_en = 0;
+        altlink = 0;
         end
       4'b1111: begin
         MemToReg = 2'b00;
@@ -731,6 +748,8 @@ module decoder(
         byte_store_en = 0;
         half_store_en = 0;
         bool_cnt = 0;
+        alt_link_reg_en = 0;
+        altlink = 0;
         end
       4'b1110: begin
         MemToReg = 2'b00;
@@ -773,6 +792,8 @@ module decoder(
         byte_store_en = 0;
         half_store_en = 0;
         bool_cnt = 0;
+        alt_link_reg_en = 0;
+        altlink = 0;
         end
       4'b1001: begin
       if(mem_opcode == 6'b000100) begin
@@ -930,6 +951,8 @@ module decoder(
         byte_store_en = 0;
         half_store_en = 0;
         bool_cnt = 0;
+        alt_link_reg_en = 0;
+        altlink = 0;
         end
       endcase
       end
