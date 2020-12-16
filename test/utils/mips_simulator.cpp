@@ -44,11 +44,11 @@ int32_t mips_simulate(vector<unsigned char>& mem)
       //running = false;
       return registers[2];
     }
-      assert(PC<pow(2,32)); //pow(2,11)????
+       assert(PC<pow(2,32)); //pow(2,11)????
       PC_simple = simp_address(PC); //cerr<<endl<<PC_simple;
-      assert(PC_simple<2048);
+      if(!prev_was_jump) assert(PC_simple<2048);
       PC_delay_simple = simp_address(PC_delay_slot);
-      assert(PC_delay_simple<2048);
+      if(prev_was_jump)assert(PC_delay_simple<2048);
       if(!prev_was_jump)   instr = mem[PC_simple]+ (mem[PC_simple+1]<<8) + (mem[PC_simple+2]<<16) + (mem[PC_simple+3]<<24);
       else instr =  mem[PC_delay_simple]+ (mem[PC_delay_simple+1]<<8) + (mem[PC_delay_simple+2]<<16) + (mem[PC_delay_simple+3]<<24);
 //cerr<<to_hex8(PC)<< " "<<instr<<endl;
@@ -175,8 +175,8 @@ registers[0] = 0;
             assert(!prev_was_jump);
             is_jump = true;
             PC_delay_slot = PC + 4;
-            PC = registers[rs_index];
-            if(PC!=0) PC-=4;
+            PC = registers[rs_index]-4;
+            //if(PC!=0) PC-=4;
             //return registers[2];
           }
         break;
@@ -231,12 +231,11 @@ registers[0] = 0;
           }
           else if(rt_index == 17/*10001*/) //BGEZAL
           {
-
+            registers[31]=PC + 8;
             if(registers[rs_index]>=0) //delay slot!
             {
               assert(!prev_was_jump);
               is_jump = true;
-              registers[31]=PC + 8;
               PC_delay_slot = PC + 4;
               PC+=immediate*4;
             }
@@ -253,11 +252,12 @@ registers[0] = 0;
           }
           else if(rt_index == 16/*10000*/) //BLTZAL
           {
+            registers[31]=PC+8;
             if(registers[rs_index]<0)
             {
               assert(!prev_was_jump);
               is_jump = true;
-              registers[31]=PC+8;
+
               PC_delay_slot = PC + 4;
               PC+=immediate*4;
             }
@@ -309,9 +309,10 @@ registers[0] = 0;
         case 3: //000011 JAL
           {
           assert(!prev_was_jump);
+          registers[31]=PC+8;
           is_jump = true;
           PC_delay_slot = PC + 4;
-          registers[31]=PC+8;
+
           uint32_t pc_upper = (PC>>28)<<28;
           PC=pc_upper + (jump_address<<2)-4;
           }
@@ -414,7 +415,7 @@ registers[0] = 0;
 
 
       }
-    if(!is_jump && PC!=0)
+    if(!is_jump /*&& PC!=0*/)
         PC+=4;
       prev_was_jump = is_jump;
       assert(registers[0] == 0);
