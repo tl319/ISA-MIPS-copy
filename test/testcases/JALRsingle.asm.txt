@@ -1,0 +1,14 @@
+#test JALR (single argument version) assuming ADDIU, LW, SW, JR to be reliable
+#it is my understanding that the first instruction is at BFC0...04 rather than BFC0...00,
+#and that j arguments must include the entire address (divided by 4) bar the most significant hex digit, ie j 66060288 to jump to the reset bector
+addiu $3,$0,3068
+sll $3,$3,20
+addiu $3,$3,24
+#^set $3 to BFC00000 + 6*4, the adress of the instr. to jump to (addiu $2,$2,$31)
+jalr $3
+addiu $2,$0,0
+addiu $2,$2,3
+addiu $2,$2,1
+addu $2,$2,$31
+#the test program should see the jump skip the third instruction and give v0=BFC00015, the address of addiu $2,$0,0 + 1
+jr $0

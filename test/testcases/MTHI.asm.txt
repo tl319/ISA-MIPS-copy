@@ -1,0 +1,10 @@
+addiu $3,$0,391
+mthi $3
+mfhi $2
+sw $2,20($0)
+
+addiu $4,$0,-391
+mthi $4
+mfhi $1
+sw $1,24($0)
+jr $0

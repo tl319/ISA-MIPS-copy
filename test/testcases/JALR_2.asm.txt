@@ -1,0 +1,13 @@
+lw $2,1($0)
+jalr $2
+addiu $3,$3,255
+addiu $4,$4,1
+addiu $4,$4,1
+sw $3,3($0)
+sw $3,4($0)
+jr $0
+# Expected Memory Output:
+# 4-7: BFC00004
+# 8-11: 00000000
+# 12-15: 0d255 (checks jump delay slot)
+# 16-19: 1 (checks if pc jumped: result in 2 if didn't jump)
