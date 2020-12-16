@@ -24,6 +24,7 @@ module regfile2 (
 		 //write to
 		 if ( wren == 1) begin
 				registers [wr] <= wd;
+        registers [0] <= 0;
 		 end
 
 	end
