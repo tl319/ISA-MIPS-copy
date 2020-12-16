@@ -162,7 +162,7 @@ module decoder(
         PcWrite = 1;
         RegWrite = 0;
         ABswitch_cnt =0;
-        extendcont = 2'b00;
+        extendcont = 2'b10;
         altpcWrite = 0;
         altpcmux = 0;
         resetmux = 0;
