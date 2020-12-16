@@ -124,6 +124,9 @@ int main(int argc, char** argv)
                     operands[0].erase(operands[0].begin());
                     if (opname == "mfhi" || opname == "mflo") {
                         rd = stoi(operands[0]) << 11;
+                    } else if (opname == "jalr") {
+                        rd = 31 << 11;
+                        rs = stoi(operands[0]) << 21;
                     } else {
                         rs = stoi(operands[0]) << 21;
                     }
