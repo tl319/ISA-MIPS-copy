@@ -3,8 +3,7 @@ module ALU(
     input logic [3:0] ctrl,
     input logic clk, divrst,
     output logic signed [31:0] out,
-    output logic [1:0] comp,
-    output logic divdone
+    output logic [1:0] comp
 );
     logic signed [31:0] sraa;
     logic signed [31:0] srab;
@@ -12,40 +11,56 @@ module ALU(
     assign srab = b;
     //signals and module for division
     logic S;
-    logic [31:0] divq, divr;
+    logic [31:0] udivq, udivr, sdivq, sdivr;
 
     //hi, lo and internal values for multiplication
-    logic [31:0] hi, lo, shi, slo;
-    logic [4:0] constto;
+    logic [31:0] uhi, ulo, shi, slo;
     logic [31:0] amag, bmag; //magnitude of a and b
 
+    logic [4:0] constto;
     //used a constant decimal 31 as Icarus doesn't support constant indexing
     initial begin
         constto <= 5'b11111;
     end
 
     always_comb begin
+        //take magnitude of a and b for signed operations
+        amag = a[constto] ? (~a + 1) : a;
+        bmag = b[constto] ? (~b + 1) : b;
+
         //always computing both MULT and MULTU instead of using an if reduces the critical path at the expense of circuit compactness,
         //though it is likely that the time gain is far less significant than the area increase.
 
-        //unsigned product, total is just for testing
-        {hi, lo} = a*b;
-        //total = a*b;
+        //unsigned product
+        {uhi, ulo} = a*b;
 
-        //signed product, stotal is just for testing
-        amag = a[constto] ? (~a + 1) : a;
-        bmag = b[constto] ? (~b + 1) : b;
+        //signed product: negate if signs of a and b dissagree
         {shi, slo} = (a[constto] ^ b[constto]) ? ( ~(amag * bmag) + 1 ) : (amag*bmag);
-        //stotal = (a[constto] ^ b[constto]) ? ( ~(amag * bmag) + 1 ) : (amag*bmag);
+
+        //unsigned division, quotient and remainder
+        if(b != 0) begin
+        udivq = a/b;
+        udivr = a%b;
+
+        //signed division: negate quotient if signs of and b dissagree, remainder if a is negative
+        sdivq = (a[constto] ^ b[constto]) ? ( ~(amag/bmag) + 1 ) : (amag/bmag);
+        sdivr = a[constto] ? ( ~(amag%bmag) + 1 ) : (amag%bmag);
+        end else begin
+        udivq = 0;
+        sdivq = 0;
+        udivr = a;
+        sdivr = a;
+        end
 
     end
 
-    div division(
+    /*div division(
         .a(a), .b(b),
         .clk(clk), .divrst(divrst), .signdiv(S),
         .q(divq), .r(divr),
-        .divdone(divdone)
-    );
+        .divdone(divdone),
+        .alb(alb)
+    );*/
 
     always_comb begin
 
@@ -71,10 +86,10 @@ module ALU(
 
             4'b1001: out = shi;         //MULT TOP
             4'b1000: out = slo; //MULT BOT
-            4'b1011: out = hi;       //MULTU TOP
-            4'b1010: out = lo; //MULTU BOT
+            4'b1011: out = uhi;       //MULTU TOP
+            4'b1010: out = ulo; //MULTU BOT
 
-            4'b1100: begin //DIV
+            /*4'b1100: begin //DIV
                 S = 1;
                 out = divq;
             end
@@ -89,6 +104,19 @@ module ALU(
             4'b1111: begin //MODU
                 //S = 0;
                 out = divr;
+            end*/
+
+            4'b1100: begin //DIV
+                out = sdivq;
+            end
+            4'b1101: begin //MOD
+                out = sdivr;
+            end
+            4'b1110: begin //DIVU
+                out = udivq;
+            end
+            4'b1111: begin //MODU
+                out = udivr;
             end
 
             /*

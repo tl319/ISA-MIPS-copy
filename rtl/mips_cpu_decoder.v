@@ -526,7 +526,7 @@ module decoder(
         end else begin
         hilowrite = 0;
         end
-        if( div == 1 || divu == 1 || mthi == 1 || mfhi ==1) begin
+        if( mthi == 1 || mfhi ==1) begin
         hilosel = 1;
         end else begin
         hilosel = 0;
@@ -622,7 +622,7 @@ module decoder(
         end else begin
         hilowrite = 0;
         end
-        if (mult == 1 || multu == 1 || mfhi ==1) begin
+        if ( mult == 1 || multu == 1 || mfhi == 1 || div == 1 || divu == 1 ) begin
         hilosel = 1;
         end else begin
         hilosel = 0;

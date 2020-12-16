@@ -97,7 +97,6 @@ module mips_cpu_bus(
     logic [31:0] irout;
     logic [31:0] aout;
     logic divrst;
-    logic divdone;
     logic extend_mux;
     logic [15:0] extend_in;
     logic byte_store_en;
@@ -252,7 +251,6 @@ assign lrmuxLSB = alu2out;
         .link_en (link_en),
         .link_in (link_in),
         .divrst (divrst),
-        .divdone (divdone),
         .extend_mux (extend_mux),
         .byte_store_en (byte_store_en),
         .cond (cond),
@@ -270,8 +268,7 @@ assign lrmuxLSB = alu2out;
       .wait_request (waitrequest),
       .halt (halt),
       .state (state),
-      .active (active),
-      .divdone (divdone)
+      .active (active)
       );
 
       MUX_2_5bit Alt_Link_mux(
@@ -392,9 +389,9 @@ assign lrmuxLSB = alu2out;
       .clk (clk),
       .divrst (divrst),
       .out (aluresult),
-      .comp (cond),
-      .divdone (divdone)
+      .comp (cond)
       );
+      
       single_reg alutstore(
       .clk (clk),
       .rst (reset),
