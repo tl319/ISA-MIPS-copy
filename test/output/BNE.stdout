@@ -1,6 +1,6 @@
-RAM : INIT : Loading RAM contents from binary/BNE.hex.txt
-WARNING: ./test_bench/memory_block.v:33: $readmemh(data_binary/initial_data.hex.txt): Not enough words in the file for the requested range [4:1023].
-WARNING: ./test_bench/memory_block.v:34: $readmemh(binary/BNE.hex.txt): Not enough words in the file for the requested range [1024:2047].
+RAM : INIT : Loading RAM contents from ./test/binary/BNE.hex.txt
+WARNING: ./test/test_bench/memory_block.v:33: $readmemh(./test/data_binary/initial_data.hex.txt): Not enough words in the file for the requested range [4:1023].
+WARNING: ./test/test_bench/memory_block.v:34: $readmemh(./test/binary/BNE.hex.txt): Not enough words in the file for the requested range [1024:2047].
 RAM : INIT : DISPLAYING INITIALSIED RAM
 RAM : INIT : INITIAL DATA : 00000004: 04
 RAM : INIT : INITIAL DATA : 00000006: c0
