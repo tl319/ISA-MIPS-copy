@@ -10,7 +10,7 @@ module mips_memory (
 );
 
     parameter RAM_INIT_FILE = "";
-    parameter DATA_INIT_FILE = "data_binary/initial_data.hex.txt";
+    parameter DATA_INIT_FILE = "./test/data_binary/initial_data.hex.txt";
 
     reg[7:0] memory [4095:0];
 
