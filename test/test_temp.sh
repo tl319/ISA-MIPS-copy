@@ -15,8 +15,8 @@ if [ -d "${DEBUG_DIRECTORY}" ]
 then
 >&2 echo "debug directory already created" >> ${ROOT}debug/${TESTCASE}.txt
 else
->&2 echo "Creating debug directory..." 
-mkdir debug
+# >&2 echo "Creating debug directory..." 
+mkdir ${ROOT}debug
 fi 
 
 BIN_DIRECTORY="${ROOT}bin"
@@ -25,7 +25,7 @@ then
 >&2 echo "bin directory already created." >> ${ROOT}debug/${TESTCASE}.txt
 else
 >&2 echo "Creating bin directory..." >> ${ROOT}debug/${TESTCASE}.txt
-mkdir bin
+mkdir ${ROOT}bin
 fi 
 
 BINARY_DIRECTORY="${ROOT}binary"
@@ -34,7 +34,7 @@ then
 >&2 echo "binary directory already created" >> ${ROOT}debug/${TESTCASE}.txt
 else
 >&2 echo "Creating binary directory..." >> ${ROOT}debug/${TESTCASE}.txt
-mkdir binary
+mkdir ${ROOT}binary
 fi 
 
 
@@ -44,7 +44,7 @@ then
 >&2 echo "output directory already created" >> ${ROOT}debug/${TESTCASE}.txt
 else
 >&2 echo "Creating output directory..." >> ${ROOT}debug/${TESTCASE}.txt
-mkdir output
+mkdir ${ROOT}output
 fi 
 
 
@@ -54,7 +54,7 @@ then
 >&2 echo "waveforms directory already created" >> ${ROOT}debug/${TESTCASE}.txt
 else
 >&2 echo "Creating waveforms directory..." >> ${ROOT}debug/${TESTCASE}.txt
-mkdir waveforms
+mkdir ${ROOT}waveforms
 fi 
 
 SIMOUT_DIRECTORY="${ROOT}sim_output"
@@ -63,7 +63,7 @@ then
 >&2 echo "sim_output directory already created" >> ${ROOT}debug/${TESTCASE}.txt
 else
 >&2 echo "Creating sim_output directory..." >> ${ROOT}debug/${TESTCASE}.txt
-mkdir sim_output
+mkdir ${ROOT}sim_output
 fi 
 
 VERILOG_DIRECTORY="${ROOT}verilog_sim"
@@ -72,7 +72,7 @@ then
 >&2 echo "verilog_sim directory already created" >> ${ROOT}debug/${TESTCASE}.txt
 else
 >&2 echo "Creating veriog_sim directory..." >> ${ROOT}debug/${TESTCASE}.txt
-mkdir verilog_sim
+mkdir ${ROOT}verilog_sim
 fi 
 
 FILE="${ROOT}bin/assembler"
