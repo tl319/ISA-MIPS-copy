@@ -1,0 +1,8 @@
+#test ADDIU edge cases
+#size of immediate: should only load the first value due to size constraints
+addiu $2,$0,65536
+addiu $2,$2,32768
+#treatment of negative numbers: should add 2^32-32768 and cause overflow
+#actually, is this forbidden to program?
+addiu $2,$2,-32768
+jr $0
