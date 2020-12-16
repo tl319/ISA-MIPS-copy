@@ -5,7 +5,7 @@ CPU_SRC=${1:-null}
 SPEC=${2:-null}
 ROOT="./test/"
 if [ -d  "${CPU_SRC}" ]
-then 
+then
     if [ $SPEC == "null" ]
     then
         # Use a wild-card to specifiy that every file with this pattern represents a testcase file
@@ -16,12 +16,12 @@ then
             TESTNAME=$(basename ${i} .asm.txt)
             # Dispatch to the main test-case script
             bash ${ROOT}test_temp.sh "${CPU_SRC}" "${TESTNAME}"
-        done 
+        done
     else
-        TESTCASES=$(find -ipath "${ROOT}testcases/${SPEC}*") 
+        TESTCASES=$(find -ipath "${ROOT}testcases/${SPEC}_*.asm.txt") 
         for i in ${TESTCASES} ; do
             TESTNAME=$(basename ${i} .asm.txt)
-            bash ${ROOT}test_temp.sh "${CPU_SRC}" "${TESTNAME}" 
+            bash ${ROOT}test_temp.sh "${CPU_SRC}" "${TESTNAME}"
         done
     fi
 else
