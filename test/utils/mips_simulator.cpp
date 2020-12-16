@@ -166,7 +166,7 @@ registers[0] = 0;
             is_jump = true;
             PC_delay_slot = PC + 4;
             registers[rd_index] = PC+8;
-            PC = registers[rs_index];
+            PC = registers[rs_index]-4;
             //if(PC!=0) PC-=4;
 
           }
