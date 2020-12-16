@@ -585,23 +585,33 @@ module decoder(
       4'b0100: begin
         if(div == 1 || divu == 1 || mult == 1 || multu == 1) begin
         MemToReg = 2'b00;
+        end else if( bgezal == 1 || bltzal ==1 || jal == 1 || jalr == 1 ) begin
+        MemToReg = 2'b11;
         end else begin
         MemToReg = 2'b01;
         end
         if(lw == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || lwl == 1 || lwr ==1) begin
         RegDst = 2'b00;
+        end else if( bgezal == 1 || bltzal ==1 || jal == 1 || jalr == 1 ) begin
+        RegDst = 2'b10;
         end else begin
         RegDst = 2'b00;
         end
         IorD = 2'b00;
         PCSrc = 2'b10;
         ALUSrcA = 2'b00;
+        if( bgezal == 1 || bltzal ==1 || jal == 1 || jalr == 1 ) begin
+        ALUSrcB = 3'b001;
+        end else begin
         ALUSrcB = 3'b011;
+        end
         IrWrite = 0;
         MemWrite = 0;
         MemRead = 1;
         PcWrite = 0;
         if(lw == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || lwl == 1 || lwr ==1) begin
+        RegWrite = 1;
+        end else if( bgezal == 1 || bltzal ==1 || jal == 1 || jalr == 1 ) begin
         RegWrite = 1;
         end else begin
         RegWrite = 0;
