@@ -168,7 +168,7 @@ int main(int argc, char** argv)
                         operands[0].erase(operands[0].begin());
                         uint32_t rs = 0;
                         uint32_t rt = 0;
-                        uint32_t imm = stoi(operands[1]);
+                        uint16_t imm = stoi(operands[1]);
                         
                         if (opname == "lui") {
                             rt = stoi(operands[0]) << 16;
