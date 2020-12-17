@@ -15,9 +15,9 @@ if [ -d "${DEBUG_DIRECTORY}" ]
 then
 >&2 echo "debug directory already created" >> ${ROOT}debug/${TESTCASE}.txt
 else
-# >&2 echo "Creating debug directory..." 
+# >&2 echo "Creating debug directory..."
 mkdir ${ROOT}debug
-fi 
+fi
 
 BIN_DIRECTORY="${ROOT}bin"
 if [ -d "${BIN_DIRECTORY}" ]
@@ -26,7 +26,7 @@ then
 else
 >&2 echo "Creating bin directory..." >> ${ROOT}debug/${TESTCASE}.txt
 mkdir ${ROOT}bin
-fi 
+fi
 
 BINARY_DIRECTORY="${ROOT}binary"
 if [ -d "${BINARY_DIRECTORY}" ]
@@ -35,7 +35,7 @@ then
 else
 >&2 echo "Creating binary directory..." >> ${ROOT}debug/${TESTCASE}.txt
 mkdir ${ROOT}binary
-fi 
+fi
 
 
 OUTPUT_DIRECTORY="${ROOT}output"
@@ -45,7 +45,7 @@ then
 else
 >&2 echo "Creating output directory..." >> ${ROOT}debug/${TESTCASE}.txt
 mkdir ${ROOT}output
-fi 
+fi
 
 
 WAVEFORM_DIRECTORY="${ROOT}waveforms"
@@ -55,7 +55,7 @@ then
 else
 >&2 echo "Creating waveforms directory..." >> ${ROOT}debug/${TESTCASE}.txt
 mkdir ${ROOT}waveforms
-fi 
+fi
 
 SIMOUT_DIRECTORY="${ROOT}sim_output"
 if [ -d "${SIMOUT_DIRECTORY}" ]
@@ -64,7 +64,7 @@ then
 else
 >&2 echo "Creating sim_output directory..." >> ${ROOT}debug/${TESTCASE}.txt
 mkdir ${ROOT}sim_output
-fi 
+fi
 
 VERILOG_DIRECTORY="${ROOT}verilog_sim"
 if [ -d "${VERILOG_DIRECTORY}" ]
@@ -73,7 +73,7 @@ then
 else
 >&2 echo "Creating veriog_sim directory..." >> ${ROOT}debug/${TESTCASE}.txt
 mkdir ${ROOT}verilog_sim
-fi 
+fi
 
 FILE="${ROOT}bin/assembler"
 if [ -f "$FILE" ]
@@ -82,7 +82,7 @@ then
 else
 >&2 echo "Creating assembler..." >> ${ROOT}debug/${TESTCASE}.txt
 g++ ${ROOT}utils/assembler_v2.cpp ${ROOT}utils/mips_assembly.cpp -o ${ROOT}bin/assembler
-fi 
+fi
 
 FILE="${ROOT}bin/simulator"
 if [ -f "$FILE" ]
@@ -91,7 +91,7 @@ then
 else
 >&2 echo "Creating simulator..." >> ${ROOT}debug/${TESTCASE}.txt
 g++ ${ROOT}utils/mips_assembly.cpp ${ROOT}utils/simulator.cpp ${ROOT}utils/mips_disassembly.cpp ${ROOT}utils/mem_wr_out.cpp ${ROOT}utils/mips_simulator.cpp -o ${ROOT}bin/simulator
-fi 
+fi
 
 FILE="${ROOT}bin/output_filter"
 if [ -f "$FILE" ]
@@ -100,11 +100,11 @@ then
 else
 >&2 echo "Creating output_filter..." >> ${ROOT}debug/${TESTCASE}.txt
 g++ ${ROOT}utils/output_filter.cpp ${ROOT}utils/mips_filter.cpp -o ${ROOT}bin/output_filter
-fi 
+fi
 
 
 >&2 echo "Assembling instructions..." >> ${ROOT}debug/${TESTCASE}.txt
->&2 ${ROOT}bin/assembler ${ROOT}testcases/${TESTCASE}.asm.txt >| ${ROOT}binary/${TESTCASE}.hex.txt 
+>&2 ${ROOT}bin/assembler ${ROOT}testcases/${TESTCASE}.asm.txt >| ${ROOT}binary/${TESTCASE}.hex.txt
 
 
 >&2 echo "CPU being tested for ${TESTCASE} testcase..." >> ${ROOT}debug/${TESTCASE}.txt
@@ -117,14 +117,14 @@ iverilog -g 2012 \
    ${CPU_SRC}/*.v ${ROOT}test_bench/*.v\
    -s mips_tb \
    -Pmips_tb.RAM_INIT_FILE=\"${ROOT}binary/${TESTCASE}.hex.txt\" \
-   -o ${ROOT}verilog_sim/mips_tb_${TESTCASE} 
+   -o ${ROOT}verilog_sim/mips_tb_${TESTCASE}
 
 
 >&2 echo "Running test-bench..." >> ${ROOT}debug/${TESTCASE}.txt
 if [[ $? -eq 0 ]]
 then
    set +e
-   ${ROOT}verilog_sim/mips_tb_${TESTCASE} >| ${ROOT}output/${TESTCASE}.stdout 
+   ${ROOT}verilog_sim/mips_tb_${TESTCASE} >| ${ROOT}output/${TESTCASE}.stdout
    HALT=$?
    set -e
    mv ./cpu_toplvl_waves.vcd ${ROOT}waveforms/${TESTCASE}.vcd
@@ -133,15 +133,15 @@ else
 fi
 
 if [[ "${HALT}" -ne 0 ]] ; then
-   printf "%-${PADDING}s %-${PADDING}s FAIL #CPU does not halt\n" ${TESTCASE} ${INSTRUCTION}  
+   printf "%-${PADDING}s %-${PADDING}s Fail #CPU does not halt\n" ${TESTCASE} ${INSTRUCTION,,}
    exit
 fi
 
 >&2 echo "Extracting memory output..." >> ${ROOT}debug/${TESTCASE}.txt
->&2 ${ROOT}bin/output_filter ${ROOT}output/${TESTCASE}.stdout >| ${ROOT}output/${TESTCASE}.out 
+>&2 ${ROOT}bin/output_filter ${ROOT}output/${TESTCASE}.stdout >| ${ROOT}output/${TESTCASE}.out
 # echo "after filter $?"
 >&2 echo "Simulating output..." >> ${ROOT}debug/${TESTCASE}.txt
->&2 ${ROOT}bin/simulator < ${ROOT}binary/${TESTCASE}.hex.txt >| ${ROOT}sim_output/${TESTCASE}.out 
+>&2 ${ROOT}bin/simulator < ${ROOT}binary/${TESTCASE}.hex.txt >| ${ROOT}sim_output/${TESTCASE}.out
 
 set +e
 >&2 echo "Comparing results..." >> ${ROOT}debug/${TESTCASE}.txt
@@ -149,8 +149,8 @@ diff -iw ${ROOT}output/${TESTCASE}.out ${ROOT}sim_output/${TESTCASE}.out >> ${RO
 RESULT=$?
 set -e
 
-if [[ "${RESULT}" -eq 0 ]] ; then 
-   printf "%-${PADDING}s %-${PADDING}s PASS\n" ${TESTCASE} ${INSTRUCTION}  
+if [[ "${RESULT}" -eq 0 ]] ; then
+   printf "%-${PADDING}s %-${PADDING}s Pass\n" ${TESTCASE} ${INSTRUCTION,,}
 else
-   printf "%-${PADDING}s %-${PADDING}s FAIL\n" ${TESTCASE} ${INSTRUCTION}  
+   printf "%-${PADDING}s %-${PADDING}s Fail\n" ${TESTCASE} ${INSTRUCTION,,}
 fi
