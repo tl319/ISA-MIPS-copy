@@ -34,11 +34,12 @@ int32_t mips_simulate(vector<unsigned char>& mem)
     uint32_t PC_delay_slot = 0;
     unsigned int PC_simple, PC_delay_simple;
     bool running = true;
-//int i = 0;
+ long long int i = 0;
 
     while(true)
     { //getting rid of the bits we don't need
-//i++;
+    i++;
+    if(i>=1000000000) return 0xFF1FF1FF;
     if((PC == 0 && !prev_was_jump )|| (PC_delay_slot ==0 && prev_was_jump))
     {
       //running = false;
