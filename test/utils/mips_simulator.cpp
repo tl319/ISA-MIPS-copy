@@ -104,7 +104,7 @@ registers[0] = 0;
           else if(funct == 42) //101010,  SLT set on less than
             registers[rd_index] = (registers[rs_index]<registers[rt_index]);
           else if(funct == 43) //101011, SLTU set on less than unsigned
-            registers[rd_index] = ((uint32_t)registers[rs_index]<(uint32_t)registers[rt_index]);
+            registers[rd_index] = ((uint32_t)registers[rs_index])<((uint32_t)registers[rt_index]);
           else if(funct == 34) //100010, sub
             registers[rd_index] = registers[rs_index]-registers[rt_index];
           else if(funct == 35) //100011, subu
@@ -418,8 +418,8 @@ registers[0] = 0;
     if(!is_jump /*&& PC!=0*/)
         PC+=4;
       prev_was_jump = is_jump;
-      assert(registers[0] == 0);
-
+      //assert(registers[0] == 0);
+    registers[0] = 0;
 
     }
   return registers[2];
