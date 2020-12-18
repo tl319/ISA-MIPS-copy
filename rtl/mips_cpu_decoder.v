@@ -43,7 +43,8 @@ module decoder(
     input logic [1:0] cond,
     output logic bool_cnt,
     output logic alt_link_reg_en,
-    output logic altlink
+    output logic altlink,
+    input logic [1:0] condu
 );
     logic beq;
     logic bgez;
@@ -462,7 +463,7 @@ module decoder(
         extend_mux = 1;
         byte_store_en = 0;
         half_store_en =0;
-        if ((slti == 1 && cond == 2'b01) || (sltiu == 1 && cond == 2'b01) || (slt == 1 && cond == 2'b01)  || (sltu == 1 && cond == 2'b01) ) begin
+        if ((slti == 1 && cond == 2'b01) || (sltiu == 1 && condu == 2'b01) || (slt == 1 && cond == 2'b01)  || (sltu == 1 && condu == 2'b01) ) begin
         bool_cnt = 1;
         end else begin
         bool_cnt =0;
@@ -572,7 +573,7 @@ module decoder(
         end else begin
         half_store_en =0;
         end
-        if ((slti == 1 && cond == 2'b01) || (sltiu == 1 && cond == 2'b01) || (slt == 1 && cond == 2'b01)  || (sltu == 1 && cond == 2'b01) ) begin
+        if ((slti == 1 && cond == 2'b01) || (sltiu == 1 && condu == 2'b01) || (slt == 1 && cond == 2'b01)  || (sltu == 1 && condu == 2'b01) ) begin
         bool_cnt = bool_cnt;
         end else begin
         bool_cnt = bool_cnt;
