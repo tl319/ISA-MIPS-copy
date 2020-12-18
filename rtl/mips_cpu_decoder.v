@@ -307,7 +307,7 @@ module decoder(
         ALUSrcB = 3'b011;
         IrWrite = 0;
         MemWrite = 0;
-        MemRead = 1;
+        MemRead = 0;
         PcWrite = 0;
         RegWrite = 0;
         ABswitch_cnt =0;
@@ -387,7 +387,7 @@ module decoder(
         end
         IrWrite = 0;
         MemWrite = 0;
-        MemRead = 1;
+        MemRead = 0;
         PcWrite = 0;
         RegWrite = 0;
         if( sll == 1 || sllv == 1 || sra == 1 || srav == 1 || srl == 1 || srlv == 1) begin
@@ -497,8 +497,10 @@ module decoder(
         end
         if( sw == 1 || sb == 1 || sh == 1) begin
         MemRead = 0;
-        end else begin
+        end else if(lw == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || lwl == 1 || lwr ==1) begin
         MemRead = 1;
+        end else begin
+        MemRead = 0;
         end
         PcWrite = 0;
         if( lui ==1 || addiu == 1 || andi == 1 || ori == 1 || xori == 1 || addu == 1 || andINT== 1 || subu == 1 || orINT== 1 || xorINT== 1 || sll == 1 || sllv == 1 || sra == 1 || srav == 1 || srl == 1 || srlv == 1 || slti == 1  || sltiu == 1 || slt == 1  || sltu == 1|| mfhi == 1 || mflo == 1) begin
@@ -607,7 +609,11 @@ module decoder(
         end
         IrWrite = 0;
         MemWrite = 0;
+        if(lw == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || lwl == 1 || lwr ==1) begin
         MemRead = 1;
+        end else begin
+        MemRead = 1;
+        end
         PcWrite = 0;
         if(lw == 1 || lb == 1 || lbu == 1 || lh == 1 || lhu == 1 || lwl == 1 || lwr ==1) begin
         RegWrite = 1;
@@ -917,7 +923,7 @@ module decoder(
         ALUSrcB = 3'b001;
         IrWrite = 0;
         MemWrite = 0;
-        MemRead = 1;
+        MemRead = 0;
         PcWrite = 1;
         if(link == 1) begin
         RegWrite = 1;
