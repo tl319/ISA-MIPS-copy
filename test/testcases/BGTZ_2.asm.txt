@@ -1,0 +1,24 @@
+#test BGTZ assuming ADDIU, LW, SW, JR to be reliable
+addiu $3,$0,-4
+addiu $4,$0,0
+addiu $5,$0,10
+#^initialised $3,$4,$5
+bgtz $3,8
+addiu $10,$0,10
+addiu $2,$0,5
+#^shouldn't branch, v0 should be set to 5
+bgtz $4,5
+addiu $11,$0,11
+addiu $2,$0,6
+#^shouldn't branch, v0 should be set to 6
+bgtz $5,3
+addiu $12,$0,12
+addiu $2,$0,7
+#^should branch, v0 should remain 6
+addiu $2,$2,3
+addiu $2,$2,4
+sw $10,16($0)
+sw $11,20($0)
+sw $12,24($0)
+jr $0
+#If BGTZ properly takes only the third branch, v0 = 10
