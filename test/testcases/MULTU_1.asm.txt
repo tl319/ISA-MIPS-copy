@@ -29,4 +29,41 @@ mflo $5
 mfhi $6
 sw $5,44($0)
 sw $6,48($0)
+
+
+
+addiu $3,$0,-34
+addiu $4,$0,-1684
+multu $3,$4
+mflo $5
+mfhi $6
+sw $5,60($0)
+sw $6,64($0)
+
+
+addiu $3,$0,-1
+addiu $4,$0,-1
+multu $3,$4
+mflo $5
+mfhi $6
+sw $5,68($0)
+sw $6,72($0)
+
+addiu $3,$0,-35
+addiu $4,$0,0
+multu $3,$4
+mflo $5
+mfhi $6
+sw $5,76($0)
+sw $6,80($0)
+
+addiu $3,$0,0
+addiu $4,$0,-35
+multu $3,$4
+mflo $5
+mfhi $6
+sw $5,84($0)
+sw $6,88($0)
+
+
 jr $0

@@ -2,8 +2,9 @@
 addiu $3,$0,5
 addiu $4,$0,10
 addiu $5,$0,0
-bgez $5,4
+bgez $5,5
 addiu $0,$0,0
+sw $4,20($0)
 bgez $5,5
 addiu $2,$0,16
 addiu $0,$0,0

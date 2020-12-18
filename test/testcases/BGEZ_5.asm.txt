@@ -1,7 +1,7 @@
 #test BEQ assuming ADDIU, LW, SW, JR to be reliable
 addiu $3,$0,5
 addiu $4,$0,10
-addiu $5,$0,-1
+addiu $5,$0,10
 bgez $5,5
 addiu $0,$0,0
 sw $4,20($0)

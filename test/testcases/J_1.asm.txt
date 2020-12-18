@@ -1,7 +1,7 @@
 #test J assuming ADDIU, LW, SW, JR to be reliable
 #it is my understanding that the first instruction is at BFC0...04 rather than BFC0...00,
 #and that j arguments must include the entire address (divided by 4) bar the most significant hex digit, ie j 66060288 to jump to the reset bector
-j 66060290
+j 66060291
 addiu $2,$0,4
 addiu $2,$2,5
 addiu $2,$2,6

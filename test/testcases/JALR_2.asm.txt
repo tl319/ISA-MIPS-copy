@@ -4,8 +4,9 @@ jalr $2
 addiu $3,$3,255
 addiu $4,$4,1
 addiu $4,$4,1
-sw $3,3($0)
-sw $3,4($0)
+sw $3,20($0)
+sw $4,24($0)
+sw $31,28($0)
 jr $0
 # Expected Memory Output:
 # 4-7: BFC00004

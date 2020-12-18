@@ -1,0 +1,15 @@
+lw $3,8($0)
+lw $4,12($0)
+subu $2,$3,$4
+sw $2,24($0)
+subu $0,$4,$3
+sw $0,28($0)
+subu $2,$4,$4
+sw $2,32($0)
+addiu $5,$0,34567
+subu $2,$4,$5
+jr $0
+# store ffffff-44332211 at 24
+# 44332211-ffffffff at 28
+# store 0 at 32
+# v0

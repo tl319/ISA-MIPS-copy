@@ -1,5 +1,4 @@
 addiu $3,$0,-3
-lw $3,4($0)
 addiu $4,$0,4
 addiu $5,$0,5
 addiu $6,$3,7

@@ -3,6 +3,11 @@ mtlo $3
 mflo $2
 sw $2,20($0)
 
+addiu $5,$0,0
+mtlo $5
+mflo $10
+sw $10,28($0)
+
 addiu $4,$0,-391
 mtlo $4
 mflo $1

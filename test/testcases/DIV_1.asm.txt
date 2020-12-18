@@ -27,4 +27,29 @@ addiu $4,$0,0
 div $3,$4
 mflo $5
 mfhi $6
+
+addiu $3,$0,-1684
+addiu $4,$0,-25
+div $3,$4
+mflo $5
+mfhi $6
+sw $5,44($0)
+sw $6,48($0)
+
+addiu $3,$0,-1684
+addiu $4,$0,25
+div $3,$4
+mflo $5
+mfhi $6
+sw $5,52($0)
+sw $6,56($0)
+
+addiu $3,$0,0
+addiu $4,$0,-25
+div $3,$4
+mflo $5
+mfhi $6
+sw $5,60($0)
+sw $6,64($0)
+
 jr $0

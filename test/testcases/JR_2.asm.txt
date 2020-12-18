@@ -1,7 +1,8 @@
 lui $2,49088
-addiu $3,$2,20
+addiu $3,$2,24
 jr $3
 addiu $0,$0,0
 jr $0
+addiu $0,$0,0
 addiu $2,$0,10
 jr $0
