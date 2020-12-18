@@ -94,7 +94,6 @@ int main(int argc, char** argv)
                     if (opname == "sll" || opname == "srl" || opname == "sra") {
                         rd = stoi(operands[0]) << 11;
                         rt = stoi(operands[1]) << 16;
-                        assert(stoi(operands[2])>=0);
                         sa = stoi(operands[2]) << 6;
                     } else if (opname == "sllv" || opname == "srav" || opname == "srlv"){
                         operands[2].erase(operands[2].begin());
