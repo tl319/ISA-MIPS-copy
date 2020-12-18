@@ -104,6 +104,7 @@ module mips_cpu_bus(
     logic half_store_en;
     logic [31:0] bool_out;
     logic [31:0] bytehalf;
+    logic [1:0] compu;
 
 assign lrmuxLSB = alu2out;
 // assign writedata = regbout;
@@ -372,6 +373,7 @@ assign lrmuxLSB = alu2out;
       .divrst (divrst),
       .out (aluresult),
       .comp (cond),
+      .compu (compu),
       .divdone (divdone)
       );
       single_reg alutstore(

@@ -3,7 +3,7 @@ module ALU(
     input logic [3:0] ctrl,
     input logic clk, divrst,
     output logic signed [31:0] out,
-    output logic [1:0] comp,
+    output logic [1:0] comp, compu,
     output logic divdone
 );
     logic signed [31:0] sraa;
@@ -58,6 +58,16 @@ module ALU(
 			($signed(a) > $signed(b)) begin
 				comp = 2'b10;
 			end
+
+            if (a == b) begin
+                compu = 2'b00;
+            end else if
+            (a < b) begin
+                compu = 2'b01;
+            end else if
+            (a > b) begin
+                compu = 2'b10;
+            end
 
         case(ctrl)
             4'b0000: out = a + b;   //ADD
