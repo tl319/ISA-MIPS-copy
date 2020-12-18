@@ -94,6 +94,7 @@ int main(int argc, char** argv)
                     if (opname == "sll" || opname == "srl" || opname == "sra") {
                         rd = stoi(operands[0]) << 11;
                         rt = stoi(operands[1]) << 16;
+                        assert(stoi(operands[2])>=0);
                         sa = stoi(operands[2]) << 6;
                     } else if (opname == "sllv" || opname == "srav" || opname == "srlv"){
                         operands[2].erase(operands[2].begin());
@@ -161,14 +162,14 @@ int main(int argc, char** argv)
                         abs_addr.first.erase(abs_addr.first.begin());
                         uint32_t rt = stoi(operands[0]) << 16;
                         uint32_t rs = stoi(abs_addr.first) << 21;
-                        uint32_t imm = stoi(abs_addr.second);
+                        uint16_t imm = stoi(abs_addr.second);
 
                         othcode = rt + rs + imm;
                     } else {
                         operands[0].erase(operands[0].begin());
                         uint32_t rs = 0;
                         uint32_t rt = 0;
-                        uint32_t imm = stoi(operands[1]);
+                        uint16_t imm = stoi(operands[1]);
                         
                         if (opname == "lui") {
                             rt = stoi(operands[0]) << 16;
