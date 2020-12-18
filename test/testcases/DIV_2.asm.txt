@@ -1,0 +1,50 @@
+lw $3,4($0)
+addiu $4,$0,6
+lw $5,12($0)
+addiu $6,$0,7
+subu $7,$0,$6
+
+div $5,$0
+
+div $3,$4
+mfhi $2
+sw $2,24($0)
+mflo $2
+sw $2,28($0)
+
+div $4,$3
+mfhi $2
+sw $2,32($0)
+mflo $2
+sw $2,36($0)
+
+div $5,$4
+mfhi $2
+sw $2,40($0)
+mflo $2
+sw $2,44($0)
+
+div $4,$5
+mfhi $2
+sw $2,48($0)
+mflo $2
+sw $2,52($0)
+
+div $5,$7
+mfhi $2
+sw $2,56($0)
+mflo $2
+sw $2,60($0)
+
+div $7,$5
+mfhi $2
+sw $2,64($0)
+mflo $2
+sw $2,68($0)
+
+div $3,$7
+mfhi $2
+sw $2,72($0)
+mflo $2
+
+jr $0
