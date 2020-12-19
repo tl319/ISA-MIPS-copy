@@ -119,9 +119,10 @@ iverilog -g 2012 \
    -Pmips_tb.RAM_INIT_FILE=\"${ROOT}binary/${TESTCASE}.hex.txt\" \
    -o ${ROOT}verilog_sim/mips_tb_${TESTCASE}
 
+COMPILE_RES=$?
 
 >&2 echo "Running test-bench..." >> ${ROOT}debug/${TESTCASE}.txt
-if [[ $? -eq 0 ]]
+if [[ ${COMPILE_RES}  -eq 0 ]]
 then
    set +e
    ${ROOT}verilog_sim/mips_tb_${TESTCASE} >| ${ROOT}output/${TESTCASE}.stdout

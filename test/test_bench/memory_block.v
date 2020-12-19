@@ -5,6 +5,7 @@ module mips_memory (
     input logic wr_en,
     input logic read_en,
     input logic[3:0] byte_en,
+    input logic waitrequest,
     input logic[31:0] data_in,
     output logic[31:0] data_out
 );
@@ -48,7 +49,7 @@ module mips_memory (
 
     always @(posedge clk) begin
         // $display("%h",address);
-        if (wr_en) begin
+        if (wr_en & !(waitrequest)) begin
             if (byte_en[0]==1) begin
                 memory[simp_address] <= data_in[7:0];
             end
@@ -62,7 +63,7 @@ module mips_memory (
                 memory[simp_address+3] <= data_in[31:24];
             end
         end
-        if (read_en) begin
+        if (read_en & !(waitrequest)) begin
             // $display("inside ram address %h",simp_address);
             data_out <= {memory[simp_address+3], memory[simp_address+2], memory[simp_address+1], memory[simp_address]};
         end

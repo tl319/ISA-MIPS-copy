@@ -1,4 +1,4 @@
-module mips_tb;
+module mips_tb_w;
     timeunit 1ns / 10ps;
 
     parameter RAM_INIT_FILE = "";
@@ -33,8 +33,10 @@ module mips_tb;
         repeat (TIMEOUT_CYCLES) begin
             #10;
             clk = !clk;
+            
             #10;
             clk = !clk;
+            waitrequest = !waitrequest;
             i=i+1;
             // $display("%d cycle",i);
             
