@@ -117,7 +117,7 @@ fi
 iverilog -g 2012 \
    ${CPU_SRC}/*.v ${ROOT}test_bench/*.v\
    -s mips_tb_w \
-   -Pmips_tb_w.RAM_INIT_FILE=\"${ROOT}binary/${TESTCASE}.hex.txt\" \
+   -Pmips_tb_w.RAM_INIT_FILE=\"${ROOT}binary/${TESTCASE_w}.hex.txt\" \
    -o ${ROOT}verilog_sim/mips_tb_${TESTCASE_w}
 
 COMPILE_RES=$?
@@ -142,7 +142,7 @@ fi
 >&2 ${ROOT}bin/output_filter ${ROOT}output/${TESTCASE_w}.stdout >| ${ROOT}output/${TESTCASE_w}.out
 # echo "after filter $?"
 >&2 echo "Simulating output..." >> ${ROOT}debug/${TESTCASE_w}.txt
->&2 ${ROOT}bin/simulator < ${ROOT}binary/${TESTCASE}.hex.txt >| ${ROOT}sim_output/${TESTCASE_w}.out
+>&2 ${ROOT}bin/simulator < ${ROOT}binary/${TESTCASE_w}.hex.txt >| ${ROOT}sim_output/${TESTCASE_w}.out
 
 set +e
 >&2 echo "Comparing results..." >> ${ROOT}debug/${TESTCASE_w}.txt

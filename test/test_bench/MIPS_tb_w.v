@@ -30,6 +30,7 @@ module mips_tb_w;
         clk=0;
         waitrequest=0;
         $display("CPU reset");
+        
         repeat (TIMEOUT_CYCLES) begin
             #10;
             clk = !clk;
