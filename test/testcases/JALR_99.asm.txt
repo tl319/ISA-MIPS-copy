@@ -1,0 +1,18 @@
+#This test_case tests the ability of the CPU to execute general purpose programs: 
+#it creates a 0 to $3-1 linspace array in memory and applies a mathematic function to the values in the array, saving them to memory
+addiu $3,$0,10
+addiu $4,$0,1
+addiu $5,$0,20
+addu $7,$0,$5
+#^number, interval and first address of linspace values
+jal to linspace function
+
+#v linespace function
+addiu $6,$6,1
+sw $2,0($5)
+addu $2,$2,$4
+addu $5,$5,4
+branch back if $6 = $3
+>branch delay slot
+jump/branch to start of linespace function
+>branch delay slot
