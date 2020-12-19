@@ -15,17 +15,25 @@ then
             # Extract just the testcase name from the filename. See `man basename` for what this command does.
             TESTNAME=$(basename ${i} .asm.txt)
             # Dispatch to the main test-case script
-            # bash ${ROOT}test_temp.sh "${CPU_SRC}" "${TESTNAME}"
-             bash ${ROOT}test_temp_w.sh "${CPU_SRC}" "${TESTNAME}"
+            bash ${ROOT}test_temp.sh "${CPU_SRC}" "${TESTNAME}"
+        done
+        for i in ${TESTCASES} ; do
+            # Extract just the testcase name from the filename. See `man basename` for what this command does.
+            TESTNAME=$(basename ${i} .asm.txt)
+            # Dispatch to the main test-case script
+            bash ${ROOT}test_temp_w.sh "${CPU_SRC}" "${TESTNAME}"
         done
     else
-        TESTCASES=$(find -ipath "${ROOT}testcases/${SPEC}_*.asm.txt") 
+        TESTCASES=$(find -ipath "${ROOT}testcases/${SPEC}_*.asm.txt")
         for i in ${TESTCASES} ; do
             TESTNAME=$(basename ${i} .asm.txt)
-            # bash ${ROOT}test_temp.sh "${CPU_SRC}" "${TESTNAME}"
+            bash ${ROOT}test_temp.sh "${CPU_SRC}" "${TESTNAME}"
+        done
+        for i in ${TESTCASES} ; do
+            TESTNAME=$(basename ${i} .asm.txt)
             bash ${ROOT}test_temp_w.sh "${CPU_SRC}" "${TESTNAME}"
         done
     fi
 else
-    echo "Specified CPU directory - \"${CPU_SRC}\" not found, Please check CPU directory exists"
+    echo "Specified CPU directory - \"${CPU_SRC}\" not found, Please check that you have entered CPU directory as 1st arguement and the CPU directory exists"
 fi

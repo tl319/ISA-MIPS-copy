@@ -14,7 +14,7 @@ PADDING="11"
 DEBUG_DIRECTORY="${ROOT}debug"
 if [ -d "${DEBUG_DIRECTORY}" ]
 then
->&2 echo "debug directory already created" >> ${ROOT}debug/${TESTCASE_w}.txt
+>&2 echo "debug directory already created" >| ${ROOT}debug/${TESTCASE_w}.txt
 else
 # >&2 echo "Creating debug directory..."
 mkdir ${ROOT}debug
@@ -105,7 +105,7 @@ fi
 
 
 >&2 echo "Assembling instructions..." >> ${ROOT}debug/${TESTCASE_w}.txt
->&2 ${ROOT}bin/assembler ${ROOT}testcases/${TESTCASE}.asm.txt >| ${ROOT}binary/${TESTCASE_w}.hex.txt
+>&2 ${ROOT}bin/assembler ${ROOT}testcases/${TESTCASE}.asm.txt >| ${ROOT}binary/${TESTCASE}.hex.txt 2>> ${ROOT}debug/${TESTCASE_w}.txt
 
 
 >&2 echo "CPU being tested for ${TESTCASE_w} testcase..." >> ${ROOT}debug/${TESTCASE_w}.txt
@@ -117,10 +117,11 @@ fi
 iverilog -g 2012 \
    ${CPU_SRC}/*.v ${ROOT}test_bench/*.v\
    -s mips_tb_w \
-   -Pmips_tb_w.RAM_INIT_FILE=\"${ROOT}binary/${TESTCASE_w}.hex.txt\" \
+   -Pmips_tb_w.RAM_INIT_FILE=\"${ROOT}binary/${TESTCASE}.hex.txt\" \
    -o ${ROOT}verilog_sim/mips_tb_${TESTCASE_w}
 
 COMPILE_RES=$?
+
 >&2 echo "Running test-bench..." >> ${ROOT}debug/${TESTCASE_w}.txt
 if [[ ${COMPILE_RES} -eq 0 ]]
 then
@@ -134,24 +135,39 @@ else
 fi
 
 if [[ "${HALT}" -ne 0 ]] ; then
-   printf "%-${PADDING}s %-${PADDING}s Fail #CPU does not halt\n" ${TESTCASE_w} ${INSTRUCTION,,}
+   printf "%-${PADDING}s %-${PADDING}s Fail #CPU does not halt, caused by wait request\n" ${TESTCASE_w} ${INSTRUCTION}
    exit
 fi
 
 >&2 echo "Extracting memory output..." >> ${ROOT}debug/${TESTCASE_w}.txt
->&2 ${ROOT}bin/output_filter ${ROOT}output/${TESTCASE_w}.stdout >| ${ROOT}output/${TESTCASE_w}.out
+set +e
+${ROOT}bin/output_filter ${ROOT}output/${TESTCASE_w}.stdout >| ${ROOT}output/${TESTCASE_w}.out 2>> ${ROOT}debug/${TESTCASE_w}.txt
+FILTER_RES=$?
+set -e
+if [[ ${FILTER_RES} -ne 0 ]]
+then
+   >&2 echo "${ROOT}test/bin/output_filter not able to extract output, please check output file exists" >> ${ROOT}debug/${TESTCASE_w}.txt
+fi
 # echo "after filter $?"
+
 >&2 echo "Simulating output..." >> ${ROOT}debug/${TESTCASE_w}.txt
->&2 ${ROOT}bin/simulator < ${ROOT}binary/${TESTCASE_w}.hex.txt >| ${ROOT}sim_output/${TESTCASE_w}.out
+set +e
+${ROOT}bin/simulator < ${ROOT}binary/${TESTCASE}.hex.txt >| ${ROOT}sim_output/${TESTCASE_w}.out 2>> ${ROOT}debug/${TESTCASE_w}.txt
+SIM_RES=$?
+set -e
+if [[ ${SIM_RES} -ne 0 ]]
+then
+   >&2 echo "${ROOT}/bin/simulator not able to produce proper output, please check testcases are valid" >> ${ROOT}debug/${TESTCASE_w}.txt
+fi
 
 set +e
 >&2 echo "Comparing results..." >> ${ROOT}debug/${TESTCASE_w}.txt
-diff -iw ${ROOT}output/${TESTCASE_w}.out ${ROOT}sim_output/${TESTCASE_w}.out >> ${ROOT}debug/${TESTCASE_w}.txt
+diff -iw ${ROOT}output/${TESTCASE_w}.out ${ROOT}sim_output/${TESTCASE_w}.out >> ${ROOT}debug/${TESTCASE_w}.txt 2>> ${ROOT}debug/${TESTCASE_w}.txt
 RESULT=$?
 set -e
 
 if [[ "${RESULT}" -eq 0 ]] ; then
-   printf "%-${PADDING}s %-${PADDING}s Pass\n" ${TESTCASE_w} ${INSTRUCTION,,}
+   printf "%-${PADDING}s %-${PADDING}s Pass\n" ${TESTCASE_w} ${INSTRUCTION}
 else
-   printf "%-${PADDING}s %-${PADDING}s Fail\n" ${TESTCASE_w} ${INSTRUCTION,,}
+   printf "%-${PADDING}s %-${PADDING}s Fail #Caused by wait request\n" ${TESTCASE_w} ${INSTRUCTION}
 fi

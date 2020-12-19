@@ -13,7 +13,7 @@ PADDING="11"
 DEBUG_DIRECTORY="${ROOT}debug"
 if [ -d "${DEBUG_DIRECTORY}" ]
 then
->&2 echo "debug directory already created" >> ${ROOT}debug/${TESTCASE}.txt
+>&2 echo "debug directory already created" >| ${ROOT}debug/${TESTCASE}.txt
 else
 # >&2 echo "Creating debug directory..."
 mkdir ${ROOT}debug
@@ -104,7 +104,7 @@ fi
 
 
 >&2 echo "Assembling instructions..." >> ${ROOT}debug/${TESTCASE}.txt
->&2 ${ROOT}bin/assembler ${ROOT}testcases/${TESTCASE}.asm.txt >| ${ROOT}binary/${TESTCASE}.hex.txt
+>&2 ${ROOT}bin/assembler ${ROOT}testcases/${TESTCASE}.asm.txt >| ${ROOT}binary/${TESTCASE}.hex.txt 2>> ${ROOT}debug/${TESTCASE}.txt
 
 
 >&2 echo "CPU being tested for ${TESTCASE} testcase..." >> ${ROOT}debug/${TESTCASE}.txt
@@ -122,7 +122,7 @@ iverilog -g 2012 \
 COMPILE_RES=$?
 
 >&2 echo "Running test-bench..." >> ${ROOT}debug/${TESTCASE}.txt
-if [[ ${COMPILE_RES}  -eq 0 ]]
+if [[ ${COMPILE_RES} -eq 0 ]]
 then
    set +e
    ${ROOT}verilog_sim/mips_tb_${TESTCASE} >| ${ROOT}output/${TESTCASE}.stdout
@@ -139,19 +139,34 @@ if [[ "${HALT}" -ne 0 ]] ; then
 fi
 
 >&2 echo "Extracting memory output..." >> ${ROOT}debug/${TESTCASE}.txt
->&2 ${ROOT}bin/output_filter ${ROOT}output/${TESTCASE}.stdout >| ${ROOT}output/${TESTCASE}.out
+set +e
+${ROOT}bin/output_filter ${ROOT}output/${TESTCASE}.stdout >| ${ROOT}output/${TESTCASE}.out 2>> ${ROOT}debug/${TESTCASE}.txt
+FILTER_RES=$?
+set -e
+if [[ ${FILTER_RES} -ne 0 ]]
+then
+   >&2 echo "${ROOT}test/bin/output_filter not able to extract output, please check output file exists" >> ${ROOT}debug/${TESTCASE}.txt
+fi
 # echo "after filter $?"
+
 >&2 echo "Simulating output..." >> ${ROOT}debug/${TESTCASE}.txt
->&2 ${ROOT}bin/simulator < ${ROOT}binary/${TESTCASE}.hex.txt >| ${ROOT}sim_output/${TESTCASE}.out
+set +e
+${ROOT}bin/simulator < ${ROOT}binary/${TESTCASE}.hex.txt >| ${ROOT}sim_output/${TESTCASE}.out 2>> ${ROOT}debug/${TESTCASE}.txt
+SIM_RES=$?
+set -e
+if [[ ${SIM_RES} -ne 0 ]]
+then
+   >&2 echo "${ROOT}/bin/simulator not able to produce proper output, please check testcases are valid" >> ${ROOT}debug/${TESTCASE}.txt
+fi
 
 set +e
 >&2 echo "Comparing results..." >> ${ROOT}debug/${TESTCASE}.txt
-diff -iw ${ROOT}output/${TESTCASE}.out ${ROOT}sim_output/${TESTCASE}.out >> ${ROOT}debug/${TESTCASE}.txt
+diff -iw ${ROOT}output/${TESTCASE}.out ${ROOT}sim_output/${TESTCASE}.out >> ${ROOT}debug/${TESTCASE}.txt 2>> ${ROOT}debug/${TESTCASE}.txt
 RESULT=$?
 set -e
 
 if [[ "${RESULT}" -eq 0 ]] ; then
-   printf "%-${PADDING}s %-${PADDING}s Pass\n" ${TESTCASE} ${INSTRUCTION,,}
+   printf "%-${PADDING}s %-${PADDING}s Pass\n" ${TESTCASE} ${INSTRUCTION}
 else
-   printf "%-${PADDING}s %-${PADDING}s Fail\n" ${TESTCASE} ${INSTRUCTION,,}
+   printf "%-${PADDING}s %-${PADDING}s Fail\n" ${TESTCASE} ${INSTRUCTION}
 fi

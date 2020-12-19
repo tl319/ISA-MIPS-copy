@@ -1,4 +1,4 @@
-module mips_cpu_bus(
+module mips_cpu_bus_alt(
   input logic clk,
   input logic reset,
   output logic active,
@@ -10,8 +10,8 @@ module mips_cpu_bus(
   input logic waitrequest,
   output logic [31:0] writedata,
   output logic [3:0] byteenable,
-  input logic [31:0] readdata
-  //output logic [3:0] state,
+  input logic [31:0] readdata,
+  output logic [3:0] state
   //output logic [31:0] WriteRegData,
   //output logic RegWrite,
   //output logic [31:0] aluresult,
@@ -56,7 +56,7 @@ module mips_cpu_bus(
     logic [1:0] lrmuxLSB;
     logic [31:0] bout;
     logic [31:0] final_data;
-    logic [3:0] state;
+    //logic [3:0] state;
     logic link;
     logic [5:0] ir_opcode;
     logic [5:0] ir_function;

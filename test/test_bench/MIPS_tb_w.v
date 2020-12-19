@@ -18,7 +18,7 @@ module mips_tb_w;
     logic[31:0] register_v0;
     logic[3:0] byte_en;
     logic waitrequest;
-    
+
     mips_memory #(RAM_INIT_FILE) ramInst(clk, active, address, write, read, byte_en, waitrequest, writedata, readdata);
 
     mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata);
@@ -30,17 +30,15 @@ module mips_tb_w;
         clk=0;
         waitrequest=0;
         $display("CPU reset");
-        
         repeat (TIMEOUT_CYCLES) begin
             #10;
             clk = !clk;
-            
             #10;
             clk = !clk;
             waitrequest = !waitrequest;
             i=i+1;
             // $display("%d cycle",i);
-            
+
             //$display("state: %h", state);
             //$display("MemToReg: %b", MemToReg);
             //$display("final_data: %h", final_data);

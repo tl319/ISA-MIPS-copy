@@ -63,12 +63,12 @@ module mips_memory (
                 memory[simp_address+3] <= data_in[31:24];
             end
         end
-        if (read_en & !(waitrequest)) begin
+        if (read_en & !waitrequest) begin
             // $display("inside ram address %h",simp_address);
             data_out <= {memory[simp_address+3], memory[simp_address+2], memory[simp_address+1], memory[simp_address]};
         end
     end
-    always@(!active)begin
+    always@(!active & !(waitrequest))begin
             integer i;
             integer j;
             $display("----------");
@@ -77,14 +77,14 @@ module mips_memory (
                     $display("FINAL MEMORY : %h: %h", i ,memory[i]);
                 end
             end
-            
+
             for (j = 1024 ; j < 2048; j++) begin
                 if(memory[j] != 0 ) begin
                     $display("FINAL MEMORY : %0h: %h", j+3217031168-1024 , memory[j]);
                 end
             end
             $display("----------");
-           
+
     end
 
 
