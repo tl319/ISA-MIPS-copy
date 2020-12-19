@@ -4,15 +4,39 @@ addiu $3,$0,10
 addiu $4,$0,1
 addiu $5,$0,20
 addu $7,$0,$5
-#^number, interval and first address of linspace values
-jal to linspace function
-
-#v linespace function
+lui $12,49088
+addiu $12,12,56
+#^number, interval, first address and function address of linspace values
+jalr $12
+addiu $12,$12,36
+addiu $9,$0,9
+addiu $10,$0,4
+#^slope and offset of linear function
+jalr $12
+addiu $31,$31,0
+addiu $31,$31,0
+jr $0
+#Linspace function:
 addiu $6,$6,1
 sw $2,0($5)
 addu $2,$2,$4
-addu $5,$5,4
-branch back if $6 = $3
->branch delay slot
-jump/branch to start of linespace function
->branch delay slot
+addiu $5,$5,4
+#loop finished: if $6 = $3 branch to jr $31, else return to start of function
+beq $6,$3,2
+addiu $31,$31,0
+beq $0,$0,-7
+addiu $31,$31,0
+jr $31
+#Linear function:
+addiu $8,$8,1
+lw $2,0($7)
+mult $2,$9
+mflo $2
+addu $2,$2,$10
+sw $2,0($5)
+addiu $5,$5,4
+#loop finished: if $8 = $3 branch to jr $31, else return to start of function
+beq $8,$3,-9
+addiu $31,$31,0
+beq $0,$0,-10
+addiu $31,$31,0
