@@ -8,16 +8,15 @@ addiu $3,$0,4
 addiu $4,$0,9
 addiu $5,$0,20
 lui $20,49088
-addiu $20,$20,X
+addiu $20,$20,80
 jalr $20
 addiu $6,$5,0 
-addiu $3,$0,4
-addiu $4,$0,9
+addiu $3,$0,5
+addiu $4,$0,-3
 addiu $5,$5,8
-addiu $20,$20,Y
 jalr $20
 addiu $8,$5,0
-addiu $20,$20,Z
+addiu $20,$20,16
 jalr $20
 addiu $10,$5,8
 addiu $9,$10,4
@@ -28,14 +27,16 @@ jr $0
 
 #complex number constructor:
 sw $3,0($5)
-addiu $6,$5,4
-sw $4,0($6)
+addiu $27,$5,4
 jr $31
+sw $4,0($27)
 
 #multiplication member function:
 lw $16,0($6)
+addiu $7,$6,4
 lw $17,0($7)
 lw $18,0($8)
+addiu $9,$8,4
 lw $19,0($9)
 mult $16,$18
 mflo $11
@@ -49,5 +50,5 @@ mflo $13
 mult $17,$18
 mflo $14
 addu $13,$13,$14
-sw $13,0($15)
 jr $31
+sw $13,0($15)
