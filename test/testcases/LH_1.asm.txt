@@ -1,0 +1,22 @@
+#test LH, assuming ADDIU, LW, SW, JR to be reliable
+addiu $2,$0,65535
+addiu $4,$0,4
+sw $2,0($4)
+lh $5,0($4)
+#^if LH functions, v0 will go from 65537 to 1 as 65536 is the largest 16-bit value
+addiu $2,$0,65535
+sw $2,0($4)
+lh $6,2($4)
+#^same as above, but with different offsets: should load 256
+addiu $2,$0,65535
+sw $2,2($4)
+lh $7,2($4)
+#^same as above, but with two identical offsets
+addiu $2,$0,65535
+sw $2,0($4)
+lh $8,12($0)
+#^load from the address ahead of that saved to instead of using offsets -- not sure that this is supposed to work
+addu $5,$6,$5
+addu $7,$8,$7
+addu $2,$5,$7
+jr $0

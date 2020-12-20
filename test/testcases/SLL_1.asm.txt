@@ -1,0 +1,6 @@
+# By the end of the program $3 = 8'h00000028 and $2 = 8'h00000014
+addiu $2,$0,10
+sll $3,$2,2
+sw $3,0($0)
+sll $2,$2,1
+jr $0

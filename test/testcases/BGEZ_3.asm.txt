@@ -1,0 +1,22 @@
+#test BEQ assuming ADDIU, LW, SW, JR to be reliable
+addiu $3,$0,5
+addiu $4,$0,10
+addiu $5,$0,0
+bgez $5,5
+addiu $0,$0,0
+sw $4,20($0)
+bgez $5,5
+addiu $2,$0,16
+addiu $0,$0,0
+bgez $5,-4
+addiu $0,$0,0
+addiu $3,$0,6
+sw $3,0($0)
+jr $0
+addiu $0,$0,0
+jr $0
+addiu $0,$0,0
+jr $0
+#If BEQ properly takes only the second branch, v0 = 12
+#If the first is taken the second is skipped and v0 = 4, if neither is taken v0 = 17
+#Currently v0 is set to 5, and the PC then flies off to some higher value
