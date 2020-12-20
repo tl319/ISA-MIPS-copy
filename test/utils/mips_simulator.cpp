@@ -48,7 +48,7 @@ int32_t mips_simulate(vector<unsigned char>& mem, ofstream& Addresses)
     if(i>=1000000000) return 0xFF1FF1FF;
     if((PC == 0 && !prev_was_jump )|| (PC_delay_slot ==0 && prev_was_jump))
     {
-      Addresses<<0;
+      Addresses<<"00000000";
       //running = false;
       return registers[2];
     }
