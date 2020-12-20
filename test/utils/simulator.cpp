@@ -13,7 +13,7 @@ int main(/*int argc, char** argv*/) //or should w
       cerr << "ERR: Please include assembly program as program argument." << endl;
       exit(1);
   }*/
-  ofstream Addresses("filename.txt"); //test/sim_out/addresses.txt
+  ofstream Addresses("test/sim_output/memory_accesses.txt"); //test/sim_out/addresses.txt
   vector<unsigned char> mem;
   int32_t reg2= 0;
 
