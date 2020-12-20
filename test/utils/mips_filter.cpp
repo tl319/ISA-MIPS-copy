@@ -13,4 +13,5 @@ pair<string, string> get_address (string s)
 bool output_is_data(const string &s)
 {
     if (s == "FINAL MEMORY :") return true;
+    else return false;
 }
