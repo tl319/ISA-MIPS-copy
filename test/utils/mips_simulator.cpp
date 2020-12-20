@@ -13,8 +13,13 @@ unsigned int simp_address(uint32_t address)
   return (address<0xBFC00000) ? address : address - 0xBFC00000 + 0x00000400;
 }
 
+uint32_t big_address(unsigned int address)
+{
+  return (address<1023)? address : address - 0x00000400 + 0xBFC00000;
 
-int32_t mips_simulate(vector<unsigned char>& mem, fstream& Addresses)
+}
+
+int32_t mips_simulate(vector<unsigned char>& mem, ofstream& Addresses)
 {
     vector<int32_t> registers;
     for(int i = 0; i<32; i++)
@@ -43,6 +48,7 @@ int32_t mips_simulate(vector<unsigned char>& mem, fstream& Addresses)
     if(i>=1000000000) return 0xFF1FF1FF;
     if((PC == 0 && !prev_was_jump )|| (PC_delay_slot ==0 && prev_was_jump))
     {
+      Addresses<<0;
       //running = false;
       return registers[2];
     }
@@ -54,12 +60,12 @@ int32_t mips_simulate(vector<unsigned char>& mem, fstream& Addresses)
       if(!prev_was_jump)
       {
         instr = mem[PC_simple]+ (mem[PC_simple+1]<<8) + (mem[PC_simple+2]<<16) + (mem[PC_simple+3]<<24);
-        Addresses<<PC_simple<<endl;
+        Addresses<<to_hex8(big_address(PC_simple))<<endl;
       }
       else
       {
         instr =  mem[PC_delay_simple]+ (mem[PC_delay_simple+1]<<8) + (mem[PC_delay_simple+2]<<16) + (mem[PC_delay_simple+3]<<24);
-        Addresses<<PC_delay_simple<<endl;
+        Addresses<<to_hex8(big_address(PC_delay_simple))<<endl;
       }
 //cerr<<to_hex8(PC)<< " "<<instr<<endl;
       opcode = instr  >> 26; //mask the lowest 26 bits
@@ -332,27 +338,27 @@ registers[0] = 0;
         case 32://100000 //LB
           address = simp_address(registers[rs_index]+immediate);
           registers[rt_index] = (int8_t)mem[address];
-          Addresses<<address-(address%4)<<endl;
+          Addresses<<to_hex8(big_address(address-(address%4)))<<endl;
           break;
         case 36: //100100 LBU
           address = simp_address(registers[rs_index]+immediate);
           registers[rt_index] = (unsigned char)mem[address];
-          Addresses<<address-(address%4)<<endl;
+          Addresses<<to_hex8(big_address(address-(address%4)))<<endl;
           break;
         case 33: //100001 LH //what if the position is weird?
           address = simp_address(registers[rs_index]+immediate);
           registers[rt_index] = (int32_t)((int16_t)((mem[address+1]<<8)) + (int16_t)mem[address]);
-          Addresses<<address-(address%4)<<endl;
+          Addresses<<to_hex8(big_address(address-(address%4)))<<endl;
           break;
         case 37: //100101 LHU
           address = simp_address(registers[rs_index]+immediate);
           registers[rt_index] = ((uint16_t)mem[simp_address(registers[rs_index]+immediate+1)]<<8) + (unsigned char)mem[simp_address(registers[rs_index]+immediate)];
-          Addresses<<address-(address%4)<<endl;
+          Addresses<<to_hex8(big_address(address-(address%4)))<<endl;
           break;
         case 35: //bin:100011, LW what if addressing is incorrect???
           address = simp_address(registers[rs_index] + immediate);
           registers[rt_index] = (mem[simp_address(registers[rs_index] + immediate+3)]<<24) + (mem[simp_address(registers[rs_index]+immediate +2)]<<16) + (mem[simp_address(registers[rs_index]+immediate+1)]<<8) + mem[simp_address(registers[rs_index]+immediate)];
-          Addresses<<address-(address%4)<<endl;
+          Addresses<<to_hex8(big_address(address-(address%4)))<<endl;
           break;
         case 43: //vin:101011, SW what if addressing not correst? so doesn't start at 4*k address
           address = simp_address(registers[rs_index] + immediate +3);
@@ -360,18 +366,18 @@ registers[0] = 0;
           mem[simp_address(registers[rs_index] + immediate+2)] = (registers[rt_index]<<8)>>24;
           mem[simp_address(registers[rs_index] + immediate+1)] = (registers[rt_index]<<16)>>24;
           mem[simp_address(registers[rs_index] + immediate)] = (registers[rt_index]<<24)>>24; //lsB
-          Addresses<<address-(address%4)<<endl;
+          Addresses<<to_hex8(big_address(address-(address%4)))<<endl;
           break;
         case 40: //101000 SB
           address = simp_address(registers[rs_index] + immediate);
           mem[simp_address(registers[rs_index] + immediate)] = registers[rt_index]; //which byte to store??? lowest??
-          Addresses<<address-(address%4)<<endl;
+          Addresses<<to_hex8(big_address(address-(address%4)))<<endl;
           break;
         case 41://101001 SH
           address = simp_address(registers[rs_index]+immediate);
           mem[simp_address(registers[rs_index]+immediate)] = registers[rt_index]; //which half word to store??? lowest???
           mem[simp_address(registers[rs_index]+immediate+1)] = registers[rt_index]>>8;
-          Addresses<<address-(address%4)<<endl;
+          Addresses<<to_hex8(big_address(address-(address%4)))<<endl;
           break;
 
 
@@ -380,7 +386,7 @@ registers[0] = 0;
           reg_rt = registers[rt_index];
           address = simp_address(registers[rs_index] + immediate+3-vaddr);
           data = (mem[simp_address(registers[rs_index] + immediate+3-vaddr)]<<24) + (mem[simp_address(registers[rs_index]+immediate +2-vaddr)]<<16) + (mem[simp_address(registers[rs_index]+immediate+1-vaddr)]<<8) + mem[simp_address(registers[rs_index]+immediate-vaddr)];
-          Addresses<<address-(address%4)<<endl;
+          Addresses<<to_hex8(big_address(address-(address%4)))<<endl;
           if(vaddr == 0)
           {
           registers[rt_index] = ((uint32_t)registers[rt_index]<<8)>>8;
@@ -434,7 +440,7 @@ registers[0] = 0;
         registers[rt_index] = data;
         //registers[rt_index] += mem & 0x00000000;
         }
-        Addresses<<address-(address%4)<<endl;
+        Addresses<<to_hex8(big_address(address-(address%4)))<<endl;
 
           break;
         default:

@@ -18,7 +18,7 @@ module mips_tb;
     logic[31:0] register_v0;
     logic[3:0] byte_en;
     logic waitrequest;
-    
+
     mips_memory #(RAM_INIT_FILE) ramInst(clk, active, address, write, read, byte_en, waitrequest, writedata, readdata);
 
     mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata);
@@ -37,7 +37,7 @@ module mips_tb;
             clk = !clk;
             i=i+1;
             // $display("%d cycle",i);
-            
+
             //$display("state: %h", state);
             //$display("MemToReg: %b", MemToReg);
             //$display("final_data: %h", final_data);
@@ -81,6 +81,10 @@ module mips_tb;
         while (active) begin
             @(posedge clk);
             // $display( "v0 : %h",register_v0);
+            if(~waitrequest & (read | write))
+            begin
+              $display("MEM_ADDRESS: %h", address);
+            end
         end
         // $display( "v0 : %h",register_v0);
          //$dumpfile("cpu_all_waves.vcd");
