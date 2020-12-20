@@ -1,5 +1,5 @@
 #This test_case tests the ability of the CPU to execute general purpose programs: 
-#it creates a 0 to $3 linspace array in memory and applies a mathematic function to the values in the array, saving them to memory
+#it creates a 0 to [$3]-1 linspace array in memory and applies a mathematic function to the values in the array, saving them to memory
 addiu $8,$0,0
 #addiu $6,$0,0
 addiu $3,$0,10
@@ -22,13 +22,12 @@ jr $0
 #Linspace function:
 addiu $6,$6,1
 sw $2,0($5)
-addu $2,$2,$4
 addiu $5,$5,4
 #loop finished: if $6 = $3 branch to jr $31, else return to start of function
 beq $6,$3,2
 addiu $31,$31,0
-beq $0,$0,-7
-addiu $31,$31,0
+beq $0,$0,-6
+addu $2,$2,$4
 jr $31
 #Linear function:
 addiu $8,$8,1
