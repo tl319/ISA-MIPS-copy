@@ -1,0 +1,54 @@
+#This test_case tests the ability of the CPU to execute general purpose programs: 
+#it initialises two objects of a struct representing complex numbers a+bi then calls the multiplication member function (a+bi)(c+di)
+#The constructor reads a from $3 and b from $4 and saves the results as mem[$5] and mem[$5+4] 
+#The multiplication function reads a,b,c,d from mem$[6,$6+4,$8,$8+4] and saves the results as mem[$10] and mem[$10+4] 
+
+#initialise then multiply 4+9i and 5-3i
+addiu $3,$0,4
+addiu $4,$0,9
+addiu $5,$0,20
+lui $20,49088
+addiu $20,$20,80
+jalr $20
+addiu $6,$5,0 
+addiu $3,$0,5
+addiu $4,$0,-3
+addiu $5,$5,8
+jalr $20
+addiu $8,$5,0
+addiu $20,$20,16
+jalr $20
+addiu $10,$5,8
+addiu $9,$10,4
+lw $2,0($10)
+lw $29,0($9)
+addu $2,$2,$29
+jr $0
+
+#complex number constructor:
+sw $3,0($5)
+addiu $27,$5,4
+jr $31
+sw $4,0($27)
+
+#multiplication member function:
+lw $16,0($6)
+addiu $7,$6,4
+lw $17,0($7)
+lw $18,0($8)
+addiu $9,$8,4
+lw $19,0($9)
+mult $16,$18
+mflo $11
+mult $17,$19
+mflo $12
+subu $11,$11,$12
+sw $11,0($10)
+addiu $15,$10,4
+mult $16,$19
+mflo $13
+mult $17,$18
+mflo $14
+addu $13,$13,$14
+jr $31
+sw $13,0($15)

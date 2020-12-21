@@ -1,0 +1,35 @@
+#This test_case tests the ability of the CPU to execute general purpose programs: 
+# it defines a recursive function that calculates the nth power of a number c.
+# $2 contains the return value, $3 and $4 the arguments c and n, $5 and $6 values used to memorize function scopes. 
+addiu $3,$0,2
+addiu $4,$0,3
+addiu $5,$0,20
+lui $8,49088
+addiu $8,$8,36
+
+# Main:
+jalr $8
+addiu $5,$5,4
+addiu $30,$30,0
+jr $0
+
+# Recursive function:
+sw $31,0($5)
+# base case: n=0 (below)
+beq $0,$4,9
+addiu $30,$30,0
+# recursive f(n-1) call
+addiu $4,$4,-1
+jalr $8
+addiu $5,$5,4
+mult $2,$3
+mflo $2
+# gamma: end scope
+lw $6,0($5)
+jr $6
+addiu $5,$5,-4
+# return 1
+addiu $2,$0,1
+lw $6,0($5)
+jr $6
+addiu $5,$5,-4

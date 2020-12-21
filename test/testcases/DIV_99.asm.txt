@@ -1,0 +1,36 @@
+#This test_case tests the ability of the CPU to execute general purpose programs: 
+#it takes the rounded down mean of a sequence of values stored in memory by looping over the load and add code 
+#Set up memory:
+addiu $2,$0,34
+addiu $3,$0,4
+sw $2,0($3)
+addiu $2,$0,69
+addiu $3,$3,4
+sw $2,0($3)
+addiu $2,$0,100
+addiu $3,$3,4
+sw $2,0($3)
+addiu $2,$0,25
+addiu $3,$3,4
+sw $2,0($3)
+addiu $2,$0,0
+addiu $6,$0,0
+lui $7,49088
+addiu $7,$7,64
+#Load loop:
+#$4 is the load counter, end loop when = $3
+addiu $4,$4,4
+lw $5,0($4)
+addu $2,$2,$5
+beq $4,$3,3
+addiu $6,$6,1 
+#^branch delay
+jr $7
+addiu $0,$0,0 
+#^branch delay, can something useful fit here?
+#divide result to take mean
+#addu $2,$0,$6
+div $2,$6
+mflo $2
+jr $0
+
