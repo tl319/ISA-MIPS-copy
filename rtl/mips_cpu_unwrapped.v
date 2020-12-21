@@ -108,6 +108,7 @@ module mips_cpu_bus_alt(
     logic [4:0] linkadr;
     logic [4:0] finallinkadr;
     logic [1:0] condu;
+    logic bool_cnt;
 
 assign lrmuxLSB = alu2out;
 // assign writedata = regbout;

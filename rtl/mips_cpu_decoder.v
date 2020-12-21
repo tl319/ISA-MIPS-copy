@@ -35,7 +35,6 @@ module decoder(
     output logic [3:0] aluop,
     output logic link_en,
     output logic link_in,
-    input logic divdone,
     output logic divrst,
     output logic extend_mux,
     output logic byte_store_en,
@@ -455,11 +454,7 @@ module decoder(
         end else begin
         link_in = 0;
         end
-        if (divdone == 1 && (divu == 1 || div ==1)) begin
-        divrst = 1;
-        end else begin
         divrst =0;
-        end
         extend_mux = 1;
         byte_store_en = 0;
         half_store_en =0;
