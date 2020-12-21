@@ -19,9 +19,9 @@ module mips_tb;
     logic[3:0] byte_en;
     logic waitrequest;
 
-    mips_memory #(RAM_INIT_FILE) ramInst(clk, active, address, write, read, byte_en, waitrequest, writedata, readdata);
+    mips_memory #(RAM_INIT_FILE) ramInst(.clk(clk), .active(active), .address(address), .wr_en(write), .read_en(read), .byte_en(byte_en), .waitrequest(waitrequest), .data_in(writedata), .data_out(readdata));
 
-    mips_cpu_bus cpuInst(clk, rst, active, register_v0, address, write, read, waitrequest, writedata, byte_en, readdata);
+    mips_cpu_bus cpuInst(.clk(clk), .reset(rst), .active(active), .register_v0(register_v0), .address(address), .write(write), .read(read), .waitrequest(waitrequest), .writedata(writedata), .byteenable(byte_en), .readdata(readdata));
 
     //Generate clock
     initial begin
