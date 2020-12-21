@@ -202,10 +202,10 @@ if [[ "${RESULT1}" -eq 0 ]] && [[ "${RESULT2}" -eq 0 ]] ; then
   #if [[ "${RESULT2}" -eq 0]]
   #then
 
-    printf "%-${PADDING}s %-${PADDING}s Pass\n" ${TESTCASE} ${INSTRUCTION}
+    printf "%-${PADDING}s %-${PADDING}s Pass\n" ${TESTCASE} ${INSTRUCTION,,}
   #else
     #printf "%-${PADDING}s %-${PADDING}s Fail\n" ${TESTCASE} ${INSTRUCTION}
   #fi
 else
-   printf "%-${PADDING}s %-${PADDING}s Fail\n" ${TESTCASE} ${INSTRUCTION}
+   printf "%-${PADDING}s %-${PADDING}s Fail\n" ${TESTCASE} ${INSTRUCTION,,}
 fi

@@ -152,7 +152,7 @@ else
 fi
 
 if [[ "${HALT}" -ne 0 ]] ; then
-   printf "%-${PADDING}s %-${PADDING}s Fail #CPU does not halt, caused by wait request\n" ${TESTCASE_w} ${INSTRUCTION}
+   printf "%-${PADDING}s %-${PADDING}s Fail #CPU does not halt, caused by wait request\n" ${TESTCASE_w} ${INSTRUCTION,,}
    exit
 fi
 
@@ -202,7 +202,7 @@ RESULT2=$?
 set -e
 
 if [[ "${RESULT}" -eq 0 ]] && [[ "${RESULT2}" -eq 0 ]] ; then
-   printf "%-${PADDING}s %-${PADDING}s Pass\n" ${TESTCASE_w} ${INSTRUCTION}
+   printf "%-${PADDING}s %-${PADDING}s Pass\n" ${TESTCASE_w} ${INSTRUCTION,,}
 else
-   printf "%-${PADDING}s %-${PADDING}s Fail #Caused by wait request\n" ${TESTCASE_w} ${INSTRUCTION}
+   printf "%-${PADDING}s %-${PADDING}s Fail #Caused by wait request\n" ${TESTCASE_w} ${INSTRUCTION,,}
 fi
