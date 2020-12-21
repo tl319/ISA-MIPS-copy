@@ -42,7 +42,7 @@ int main(int argc, char** argv)
         }
     }
 
-    for(int i=address_index[2]+1; i<address_index[3]; i++){
+    for(int i=address_index[address_index.size()-2]+1; i<address_index[address_index.size()-1]; i++){
         tag_and_data.push_back(get_address(lines[i]));
     }
 
