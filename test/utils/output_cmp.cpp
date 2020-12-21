@@ -19,10 +19,12 @@ int main(int argc, char** argv)
 
   string line;
 
+  CPU_addresses.insert("BFC00000");
   while(getline(file1,line))
   {
     CPU_addresses.insert(line);
   }
+  CPU_addresses.insert("00000000");
 
   line = "";
   while(getline(file2,line))
