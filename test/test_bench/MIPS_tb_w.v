@@ -82,6 +82,10 @@ module mips_tb_w;
         while (active) begin
             @(posedge clk);
             // $display( "v0 : %h",register_v0);
+            if(~waitrequest & (read | write))
+            begin
+              $display("MEM_ADDRESS: %h", address);
+            end
         end
         // $display( "v0 : %h",register_v0);
          //$dumpfile("cpu_all_waves.vcd");

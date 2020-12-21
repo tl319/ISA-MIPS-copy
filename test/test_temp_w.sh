@@ -103,6 +103,23 @@ else
 g++ ${ROOT}utils/output_filter.cpp ${ROOT}utils/mips_filter.cpp -o ${ROOT}bin/output_filter
 fi
 
+FILE="${ROOT}bin/mem_access_filter"
+if [ -f "$FILE" ]
+then
+>&2 echo "mem_access_filter already created." >> ${ROOT}debug/${TESTCASE_w}.txt
+else
+>&2 echo "Creating mem_access_filter..." >> ${ROOT}debug/${TESTCASE_w}.txt
+g++ ${ROOT}utils/mem_access_filter.cpp ${ROOT}utils/mips_assembly.cpp -o ${ROOT}bin/mem_access_filter
+fi
+
+FILE="${ROOT}bin/output_cmp"
+if [ -f "$FILE" ]
+then
+>&2 echo "output_cmp already created." >> ${ROOT}debug/${TESTCASE_w}.txt
+else
+>&2 echo "Creating output_cmp..." >> ${ROOT}debug/${TESTCASE_w}.txt
+g++ ${ROOT}utils/output_cmp.cpp -o ${ROOT}bin/output_cmp
+fi
 
 >&2 echo "Assembling instructions..." >> ${ROOT}debug/${TESTCASE_w}.txt
 >&2 ${ROOT}bin/assembler ${ROOT}testcases/${TESTCASE}.asm.txt >| ${ROOT}binary/${TESTCASE}.hex.txt 2>> ${ROOT}debug/${TESTCASE_w}.txt
@@ -150,6 +167,19 @@ then
 fi
 # echo "after filter $?"
 
+
+>&2 echo "Extracting memory accesses..." >> ${ROOT}debug/${TESTCASE_w}.txt
+set +e
+${ROOT}bin/mem_access_filter < ${ROOT}output/${TESTCASE_w}.stdout > ${ROOT}output/${TESTCASE_w}_mem.out 2>> ${ROOT}debug/${TESTCASE_w}.txt
+FILTER_RES=$?
+set -e
+if [[ ${FILTER_RES} -ne 0 ]]
+then
+   >&2 echo "${ROOT}test/bin/mem_access_filter not able to extract output, please check output file exists" >> ${ROOT}debug/${TESTCASE_w}.txt
+fi
+
+
+
 >&2 echo "Simulating output..." >> ${ROOT}debug/${TESTCASE_w}.txt
 set +e
 ${ROOT}bin/simulator < ${ROOT}binary/${TESTCASE}.hex.txt >| ${ROOT}sim_output/${TESTCASE_w}.out 2>> ${ROOT}debug/${TESTCASE_w}.txt
@@ -164,9 +194,14 @@ set +e
 >&2 echo "Comparing results..." >> ${ROOT}debug/${TESTCASE_w}.txt
 diff -iw ${ROOT}output/${TESTCASE_w}.out ${ROOT}sim_output/${TESTCASE_w}.out >> ${ROOT}debug/${TESTCASE_w}.txt 2>> ${ROOT}debug/${TESTCASE_w}.txt
 RESULT=$?
+
+>&2 echo "Comparing memory accesses..." >> ${ROOT}debug/${TESTCASE_w}.txt
+./output_cmp ${ROOT}output/${TESTCASE_w}_mem.out ${ROOT}sim_output/memory_accesses.txt
+#diff -iw ${ROOT}output/${TESTCASE}.out ${ROOT}sim_output/${TESTCASE}.out >> ${ROOT}debug/${TESTCASE}.txt 2>> ${ROOT}debug/${TESTCASE}.txt
+RESULT2=$?
 set -e
 
-if [[ "${RESULT}" -eq 0 ]] ; then
+if [[ "${RESULT}" -eq 0 ]] && [[ "${RESULT2}" -eq 0 ]] ; then
    printf "%-${PADDING}s %-${PADDING}s Pass\n" ${TESTCASE_w} ${INSTRUCTION}
 else
    printf "%-${PADDING}s %-${PADDING}s Fail #Caused by wait request\n" ${TESTCASE_w} ${INSTRUCTION}
