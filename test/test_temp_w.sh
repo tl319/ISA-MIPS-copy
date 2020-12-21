@@ -196,7 +196,7 @@ diff -iw ${ROOT}output/${TESTCASE_w}.out ${ROOT}sim_output/${TESTCASE_w}.out >> 
 RESULT=$?
 
 >&2 echo "Comparing memory accesses..." >> ${ROOT}debug/${TESTCASE_w}.txt
-./output_cmp ${ROOT}output/${TESTCASE_w}_mem.out ${ROOT}sim_output/memory_accesses.txt
+./${ROOT}bin/output_cmp ${ROOT}output/${TESTCASE_w}_mem.out ${ROOT}sim_output/memory_accesses.txt
 #diff -iw ${ROOT}output/${TESTCASE}.out ${ROOT}sim_output/${TESTCASE}.out >> ${ROOT}debug/${TESTCASE}.txt 2>> ${ROOT}debug/${TESTCASE}.txt
 RESULT2=$?
 set -e

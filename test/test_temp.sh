@@ -192,7 +192,7 @@ diff -iw ${ROOT}output/${TESTCASE}.out ${ROOT}sim_output/${TESTCASE}.out >> ${RO
 RESULT1=$?
 
 >&2 echo "Comparing memory accesses..." >> ${ROOT}debug/${TESTCASE}.txt
-./output_cmp ${ROOT}output/${TESTCASE}_mem.out ${ROOT}sim_output/memory_accesses.txt
+./${ROOT}bin/output_cmp ${ROOT}output/${TESTCASE}_mem.out ${ROOT}sim_output/memory_accesses.txt
 #diff -iw ${ROOT}output/${TESTCASE}.out ${ROOT}sim_output/${TESTCASE}.out >> ${ROOT}debug/${TESTCASE}.txt 2>> ${ROOT}debug/${TESTCASE}.txt
 RESULT2=$?
 
