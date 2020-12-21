@@ -2,10 +2,11 @@
 # it defines a recursive function that calculates the nth number of the zero indexed Fibonacci sequence 1,1,2,3,5,...
 # $0, $3 contain the constants 0, 1; $4,$2 the argument and return value; $5, $6 are used to define scopes; $8 is the address of the function.
 addiu $3,$0,1
-addiu $4,$0,0
+addiu $4,$0,4
 addiu $5,$0,20
 lui $8,49088
 addiu $8,$8,36
+
 # Main:
 jalr $8
 addiu $5,$5,4
@@ -14,23 +15,27 @@ jr $0
 
 # Fibonacci function:
 sw $31,0($5)
+# base case: f(0) = f(1) = 1 (below)
 beq $0,$4,14
 addiu $30,$30,0
 beq $3,$4,12
 addiu $30,$30,0
+# recursive f(n-1) call
 addiu $4,$4,-1
 jalr $8
 addiu $5,$5,4
-addiu $7,$7,2
+addu $7,$0,$2
+# recursive f(n-2) call
 addiu $4,$4,-1
 jalr $8
 addiu $5,$5,4
+# return f(n-1) + f(n-2)
 addu $2,$2,$7
 lw $6,0($5)
 jr $6
 addiu $5,$5,-4
 # return 1
-addiu $2,$0,1
+addiu $2,$2,1
 lw $6,0($5)
 jr $6
 addiu $5,$5,-4
